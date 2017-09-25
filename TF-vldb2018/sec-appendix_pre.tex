@@ -1,0 +1,595 @@
+%\newcommand{\EQ}{\kw{EQ}}
+
+\addtolength{\parskip}{0.25cm}
+\newpage
+\section*{{\Large \sf APPENDIX A: Proofs}}
+\label{sec-app-proofs}
+
+\subsection*{Proof of Theorem~\ref{thm-esim-complexity}}
+
+We will next show  \uppercase\expandafter{\romannumeral 1}) the problem is \NP-complete in general case, and the special cases when $P$ expresses only `at most' and `exactly' semantics. Then we will show that  \uppercase\expandafter{\romannumeral 2}) the problem is in \PTIME when $P$ expresses only `at least' semantic.
+
+\stab
+\uppercase\expandafter{\romannumeral 1}). Our routine to show \uppercase\expandafter{\romannumeral 1}) is firstly prove that in general case, the problem is in \NP, and then show that when $f_p(u)$ is restricted to $[1,1]$ for each $u \in V_p$, the problem in the general case and two special cases with `at most' and exactly' semantic are \NP-hard. As this special condition is contained in the three cases, such that the problem in these three cases are \NP-hard.
+
+\etitle{Upper bound}.
+We show the \NP upper bound by providing an \NP algorithm to determine whether $P \eeps G$ in
+general case. Given a pattern graph $P$, a data graph $G$, the algorithm works as follows.
+\be
+\item Guess a subgraph $G_s(V_s,E_s)$ of $G$;
+\item Check whether the following conditions hold:
+\bi
+\item [(a)] whether $G_s$ is a matched subgraph of $P$ in $G$ via graph simulation (with match relation $\Reps_D$);
+\item [(b)] whether for each query node $u\in V_p$, the number of nodes $v\in V_s$ with $(u, v)\in \Reps_D$ falls into $f_p(u)$.
+\ei
+If yes, return `Yes', otherwise return to Step~1.
+\ee
+
+Note that the algorithm correctly determines whether $P \eeps G$. Moreover, the algorithm is in \NP since step~2 can be checked in \PTIME (quadratic time, indeed).
+
+\etitle{Lower bound}.
+We next show that it is \NP-hard to determine whether $P \eeps G$ even when $f_p(u)=[1,1]$ for each $u \in V_p$, by reduction from the 3\SAT\ problem, which is known \NP-complete~\cite{}.
+
+An instance of the 3\SAT\ problem is given a collection $W=\{c_1,c_2,\cdots,c_m\}$ of clauses on a finite set of variables $U=\{x_1,x_2,\cdots,x_n\}$, such that $|c_j|=3$ for $1 \leq j \leq m$, and $c_j$ is of the form $\ell_1^j\vee \ell_2^j\vee \ell_3^j$, and $\ell_j^r$ is either
+$x_i$ or $\overline{x_i}$, for $i\in [1, n]$ and $r\in [1, 3]$. The problem is to determine whether there exists a truth assignment for $U$ that satisfies all the clauses in $C$.
+
+Given an instance $W$ and $U$ of the 3\SAT\ problem, we construct an instance of extended graph simulation problem, that is, a pattern graph $P(V_p$, $E_p$, $l_p$, $f_p)$, a data graph $G(V$, $E$, $l$, $w)$, such that all the clauses in $W$ are satisfiable if and only if $P \eeps G$.
+
+\stab
+1. We define $G(V$, $E$, $l$, $w)$ as follows:
+\be
+\item [(1)]$V$ consists of $m+2nm$ nodes, $C_1$, $C_2$, $\ldots$, $C_m$, $X_1^1$, $X_1^2$, $\ldots$, $X_1^m$, $\overline{X_1^1}$, $\overline{X_1^2}$, $\ldots$, $\overline{X_1^m}$, $\ldots$, $X_n^1$, $X_n^2$, $\ldots$, $X_n^m$, $\overline{X_n^1}$, $\overline{X_n^2}$, $\ldots$, $\overline{X_n^m}$, where $C_j$ corresponds to the clause $c_j$ in $W$ of 3\SAT problem, $X_i^1$, $X_i^2$, $\ldots$, $X_i^m$ and $\overline{X_i^1}$, $\overline{X_i^2}$, $\ldots$, $\overline{X_i^m}$ correspond to the literals $x_i$ and $\overline{x_i}$ in 3\SAT\ problem respectively.
+\item [(2)]$E = E_1 \cup E_2$
+\be
+\item [(a)]$E_1$ consists of edges as follows: for each clause $c_j$ composed of $\ell_1^j\vee \ell_2^j\vee \ell_3^j$ where $\ell_s^j$ ($s\in [1,3], j\in [1, m]$) is a literal that is either $x_i$ or $\overline{x_i}$ ($i\in [1, n]$) for some variable $x_i$, there exists $3m$ edges in $G$, $(C_j, \kw{p}((\ell_1^j)^1))$, \ldots, $(C_j, \kw{p}((\ell_1^j))^m)$, $(C_j, \kw{p}((\ell_2^j)^1))$, \ldots, $(C_j, \kw{p}((\ell_2^j)^m))$, $(C_j, \kw{p}((\ell_3^j)^1))$, \ldots, $(C_j,
+    \kw{p}((\ell_3^j)^m))$, where $\kw{p}((\ell_s^j))^t) = X_i^t$ if $\ell_s^j = x_i$ and $\kw{p}((\ell_k^j))^t) = \overline{X_i^t}$ if $\ell_k^j = \overline{x_i}$ ($t\in[1,m]$).
+\item [(b)]$E_2$ consists of edges as follows: suppose $E_3$ consists of edges that connect any two nodes among the set of $2nm$ nodes $\{X_i^p|\forall i \in [1,n], p \in [1,m]\}$, \ie $\{(X_i^p, X_j^q)| \forall i,j \in [1,n], p,q \in [1,m]\}$; $E_4$ consists of the edges as $\{(X_i^p, \overline{X_i^q})| \forall i \in [1,n], p,q \in [1,m]\}$. Then we get $E_2=E_3/E_4$.
+\ee
+\item [(3)]$l$: labeling function is defined as follows:
+\be
+\item [(a)]$l(C_j)$=`$C_j$', for any $j \in [1,m]$;
+\item [(b)]$l(X_i^j)$=`X', $l(\overline{X_i^j})$=`X', for any $i \in [1,n]$ and $j \in [1,m]$;
+\ee
+\item [(4)]$w$: weighting function is defined as $w(e)=1$, for any $e \in E$.
+\ee
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorem 3
+\begin{figure}[tb!]
+\begin{center}
+\includegraphics[scale=0.5]{./fig/complexity_egs.eps}
+\caption{Data graph $G$ and pattern graph $P$ for the proof of
+  Theorem~\ref{thm-esim-complexity}}
+\label{fig-esim-complexity}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Intuitively, $G$ is to encode clauses $c_j$($j \in [1,m]$) and all truth assignments to variables $x_i$($i\in[1,n])$of 3\SAT\ problem. More specifically, (a) we encode clauses $c_j$ in terms of nodes $C_j$ and those edges connecting $C_j$ to $X_i^j$ in
+$G$; (b) we use subgraphs of $G$ to encode truth assignments to variables $x_i$: a variable $x_i$ is set to true when a subgraph contains a node $X_i^{k_1}$ for some $k_1$ in $[1, m]$, and for any $k\in[1,m]$, $\overline{X_i^k}$ is not in the subgraph, and vice versa.
+
+Observe the following.
+(1) A subgraph $G_s$ is able to encode a truth assignment only when
+node $X_i^{k_1}$ and $\overline{X_i^{k_2}}$ does not co-exist in
+$G_s$, for any $i\in[1,n]$ and $k_1, k_2\in[1, m]$. We call this
+kind of subgraphs {\em valid} subgraphs, if they also contain nodes
+$C_1$, \ldots, $C_m$.
+(2) A valid subgraph $G_s$ may correspond to multiple truth assignments
+when there exist some $i\in [1,n]$ such that for any
+$k_1,k_2\in[1,m]$, all $X_i^{k_1}$ and $\overline{X_i^{k_2}}$ nodes
+are not in $G_s$. In this case, $G_s$ does not encode a truth
+assignment for variable $x_i$. Obviously, a subgraph $G_s$ uniquely
+determines a complete truth assignment, \ie determines the truth
+values of all variables $x_i$, when it is a
+valid subgraph and for each $i\in[1, n]$, there exists $k\in[1,
+m]$ such that either $X_i^k$ or $\overline{X_i^k}$ is in $G_s$. We
+call $G_s$ a {\em complete valid} subgraph of $G$. Note that we can
+get at least one complete valid subgraph $G_s'$ of $G$ by expanding an
+incomplete valid subgraph $G_s$ while ensuring it is always valid, without
+changing the truth assignment to those variables $x_i$ that is already
+encoded by $G_s$.
+(3) Every truth assignment corresponds to a complete valid subgraph.
+(4) The truth assignment $\mu_{G_S}$ encoded by a complete valid
+subgraph $G_s$ evaluate clause $C_j$ in 3\SAT\ problem to true if and only
+if there exists an edge connecting node $C_j$ and some node with
+label `X', \ie some node $X_i^k$ or $\overline{X_i^k}$, for some
+$i\in[1,n], k\in[1,m]$.
+
+\stab
+2. We define $P(V_p$, $E_p$, $l_p$, $f_p)$ as follows:
+\be
+\item [(1)]$V_p$ consists of $2m$ nodes, $C_1'$, $C_2'$, $\ldots$, $C_m'$, $X_1'$, $X_2'$, $\ldots$, $X_m'$.
+\item [(2)]$E_p = E_{p1} \cup E_{p2}$, where $E_{p1}$ consists of the edges connecting each $C_j'$ to $X_j'$, for each $j \in [1,m]$; $E_{p2}$ consists of edges $\{(X_i',X_j')| \forall i,j \in [1,m]\}$, \ie graph(\{$X_1'$,$X_2'$,$\ldots$,$X_m'$\}, $E_{p2}$) is a complete graph.
+\item [(3)]$l_p$: labeling function is defined as follows:
+\be
+\item [(a)]$l_p(C_j')$=`$C_j$', for any $j \in [1,m]$;
+\item [(b)]$l(X_j')$=`X', $l(\overline{X_j'})$=`X', for any $j \in [1,m]$;
+\ee
+\item [(4)]$f_p$: $f_p(u)=[1,1]$, for any $u \in V_p$.
+\ee
+
+Intuitively, if $P$ matches $G$ via node bounded simulation. Then it must be (1) $C_j'$ in $P$ matches $C_j$ in $G$, for each $j \in [1,m]$; and (2) $X_j'$ in $P$ matches  $X_i^k$ or $\overline{X_i^k}$ in $G$ for each $j \in [1,m]$, any $i \in [1,n]$, $k \in [1,m]$.
+
+Note that if $P \eeps G$ with match relation $\Reps_s$, $G_s$ is the matched subgraph of $G$ \wrt $\Reps_s$. From the analysis above we know that $G_s$ must be a valid subgraph and for any $i\in[1,n]$ and $k_1, k_2\in[1,m]$, nodes $X_i^{k_1}$ and $\overline{X_i^{k_2}}$ cannot be in $G_{\Reps_s}$ simultaneously since nodes $X_i'$ in $P$ form into a complete graph.
+
+We are now ready to show that $P \eeps G$ if and only if there exists a truth assignment $\mu_X$ to variables $x_i(i\in[1,n])$ such that all the clauses in $W$ are satisfiable.
+
+\stab
+$\Rightarrow$
+Suppose $P$ matches $G$ via extended graph simulation with match relation $\Reps_s$. As shown above, the match subgraph $G_s$ must be a valid subgraph of $G$. Note there exists an edge connecting each node $C_j$ with a node with label `X' ($\forall j\in [1,m]$), thus the truth assignment $\mu_{G_s}$ encoded by the valid subgraph $G_s$ evaluate clause $C_j$ in 3\SAT\ problem to true. Thus there exists a truth assignment $\mu_{G_{cs}}$ that is encoded by an expanded complete valid subgraph $G_{cs}$ of $G_s$ in $G$ such that all the clauses in $W$ are satisfiable.
+
+\stab
+$\Leftarrow$
+Assume that there exists a truth assignment $\mu_X$ such that all the clauses in $W$ are satisfiable. Then there exists a corresponding complete valid subgraph $G_{cs}$ of
+$G$ that encodes $\mu_X$, and moreover, each node $C_j$ ($1 \leq i \leq m$) is connected to some nodes with label `X' in $G_{cs}$. According to the definition of 3\SAT\ problem, each clause $c_j$ is of the form $\ell_1^j\vee \ell_2^j\vee \ell_3^j$, such that there must exists at least one literal $\ell_k^j$ ($k \in [1,3]$) with value be true ensuring clause $c_j$ is true. Thus there exists a subgraph $G_s$ of $G_{cs}$ that (1) each node $C_j$ in $G_s$ is connected to only one node with label `X'; and (2) each node label with `X' is connected to only one node $C_j$ in $G_s$; (3) as for any $i\in[1,n]$ and $k_1, k_2\in[1,m]$, nodes $X_i^{k_1}$ and $\overline{X_i^{k_2}}$ cannot be in $G_{\Reps_s}$ simultaneously, thus all the nodes with label `X' form a complete graph. Therefore, $P\eeps G_s$, and by the definition of extended graph simulation(graph simulation), thus $P\eeps G$.
+
+%%%%%%%%%%%%%At-least-ptime-algorithm%%%%%%%%%%%
+\stab
+\uppercase\expandafter{\romannumeral 2}). We next provide a \PTIME algorithm that determines whether $P \eeps G$ with `at least' semantic. Given a pattern graph $P$, a data graph $G$, the algorithm works as follows.
+\be
+\item Compute the maximum match relation $\Reps$ of $P$ and $G$ via graph simulation.
+\item For each $u \in V_p$, $f_p(u)=[x_u,|V_p|]$  if $|\Reps(u)| < x_u$, return `No'.
+\item Return `Yes' after checking all the nodes in $P$.
+\ee
+
+Note that the algorithm correctly determines whether $P \eeps G$ with `at least' semantic in quadratic time.
+
+\subsection*{Proof of Theorem~\ref{thm-esim-den-opt-complexity}}
+
+The problem in general case and special cases with `exactly' and `at most' semantic are \NP-hard, as their corresponding extended graph simulation decision problems are \NP-hard.
+We next show the problem in special case with `at least' semantic is \NP-hard.
+
+We first show the problem is in \NP and then show it is \NP-hard.\\
+\etitle{Upper bound}.
+We show the \NP upper bound by providing an \NP algorithm. Given a pattern graph $P$,
+a data graph $G$, and a positive rational number $\xi$, the algorithm works as follows.
+\be
+\item Guess a subgraph $G_s$ of $G$;
+\item Check whether the following conditions hold:
+\bi
+\item [(a)] whether $G_s$ is a matched subgraph of $P$ in $G$ via graph simulation (with match relation $R_D$);
+\item [(b)] whether for each query node $u\in V_p$, the number of nodes $v\in V_s$ with $(u, v)\in \Reps_D$ falls into $f_p(u)$.
+\item [(c)] whether the density $\eta_{G_s}$ is no less than $\xi$.
+\ei
+If yes, return `Yes', otherwise return to Step~1.
+\ee
+
+Note that the algorithm correctly determines whether there exists a matched subgraph of $P$ in $G$ and the density of the matched subgraph is no less than $\xi$. Moreover, the algorithm is in \NP since step~2 can be checked in \PTIME (quadratic time, indeed).
+
+\etitle{Lower bound}.
+We next show the problem is \NP-hard by reduction from the $k$-clique problem, which is known \NP-complete~\cite{}.
+
+An instance of $k$-clique is given a undirected graph $G_c(V_c,E_c)$ and an integer $k \leq |V_c|$, and is to determine whether there exists a $k$-clique in $G_c$. Given an instance $G_c$ and $k$ of the $k$-clique problem, we construct an instance of densest extended graph simulation with `at least' semantic problem, that is, a pattern graph $P(V_p$, $E_p$, $l_p$, $f_p)$, a data graph $G(V$, $E$, $l$, $w)$, and a positive rational number $\xi$, such that there exists a $k$-clique in $G_c$ if and only if $P \eeps_{den} G$ with `at least' semantic \wrt $\xi$.
+\be
+\item We define $P(V_p$, $E_p$, $l_p$, $f_p)$ as follows:
+\bi
+\item [(1)] $V_q = \{u_1,u_2,u_3,u_4,u_5\}$, where the labels $l_p(u_1)$ and $l_p(u_2)$ of nodes $u_1$ and $u_2$ are `A', the label $l_p(u_3)$ of node $u_3$ is `B', the labels $l_p(u_4)$ and $l_p(u_5)$ of nodes $u_4$ and $u_5$ are `C'.
+\item [(2)] $E_q = \{(u_1, u_2), (u_1, u_3), (u_2, u_3), (u_3, u_4), (u_3, u_5), (u_4, u_5)\}$.
+\item [(3)] We already know that for each node $u$ in $V_q$, $f_p$ is assigned to be $[x_u, |V_q|]$. Then we set $x_{u_1}, x_{u_2},x_{u_3},x_{u_4}$ and $x_{u_5}$ of nodes $u_1, u_2, u_3, u_4$ and $u_5$ to be $n_1, n_1, 1, k$ and $k$, respectively.
+\ei
+\item We define $G(V$, $E$, $l$, $w)$ as follows:
+\bi
+\item [(1)] $V = V_1 \cup \{v_0\} \cup V_2$ where
+\bi
+\item [(a)] $V_1$ consists of $n_1$ nodes, all with label `A';
+\item [(b)] the label $l(v_0)$ of $v_0$ is `B';
+\item [(c)] $V_2$ consists of $n_2=|V_c|$ nodes (where $V_c$ is the set of nodes in the instance of the $k$-clique problem), all with label `C', and $n_2\leq\sqrt{2n_1^2+2n_1}-n_1-1$.
+\ei
+\item [(2)] $E = E_1 \cup E_{v_0} \cup E_2$ where
+\bi
+\item [(a)] $E_1$ consists of $\frac{n_1(n_1-1)}{2}$ edges with nodes in $V_1$, $E_1=\{(v,v')|v,v'\in V_1\}$, namely, $(V_1,E_1)$ is a complete graph with $n_1$ nodes labeled with `A';
+\item [(b)] $E_{v_0}=\{(v_0,v_1)|v_1\in V_1\}\cup\{(v_0,v_2)|v_2\in V_2\}$, that is, a set of $n_1+n_2$ edges that connect $v_0$ with all nodes in $V_1$ and $V_2$.
+\item [(c)] $E_2$ is derived according to $E_c$ of $G_c$. More specifically, $V_2$ consists of $n_2=|V_c|$ nodes, for each $(v_1, v_2)\in E_c$, there exists an edges $(v_1, v_2)$ in $E$.
+\item [(d)] the weight of each edge in $E$ is set to 1.
+\ei
+\item [(3)] We set $\xi=\frac{n_1^2+n_1+k^2+k}{2(n_1+k+1)}$.
+\ei
+\ee
+
+We next show that $G_c$ has a k-clique if and only if $P \eeps_{den} G$ with `at least' semantic \wrt $\xi$.
+
+\stab
+{$\Rightarrow$}
+Assume $G_c$ has a k-clique with a set $V_c^* \subseteq V_c$ of $k$ nodes. We will show that the subgraph $G_s(V_s=V_1\cup\{v_0\}\cup V^*, E_s=E_1\cup E_{v_0}\cup E^*)$ of $G$ matches $P$ via densest extended graph simulation with `at least' semantic, where $V^*$ corresponds to $V_c^*$, consisting $k$ nodes in $V_2$, and $E^*$ consists of $\frac{k(k-1)}{2}$ edges connecting each pair of nodes in $V^*$.Obviously, $G_s$ matches $P$ via extended graph simulation; and then, the density $\eta_{G_s}=\frac{n_1^2+n_1+k^2+k}{2(n_1+k+1)}$, is no less than $\xi$ (equal to, indeed).
+
+\stab
+{$\Leftarrow$}
+Suppose there exists a subgraph $G_s(V_s,E_s)$ that matches $P$ via densest extended graph simulation with `at least' semantic. Obviously $V_s=V_1\cup\{v_0\}\cup V^*$ and $E_s=E_1\cup E_{v_0}\cup E^*$, where $E^*=\{(v,v')|v,v'\in V^*\}$. Due to the symmetrical structural character of pattern graph $P$, for any node $v \in V_{G_s}$, and $v \in mat(u_4)$, $v$ must be contained in $mat(u_5)$, where node $u_4$ and $u_5$ are mentioned in the definition for $P$, and vice versa. Thus $V^*$ contains at least $k$ nodes in $V_2$, and the density $\eta_{G_s}$ is no less than $\frac{n_1^2+n_1+k^2+k}{2(n_1+k+1)}$. We next show that $(V^*,E^*)$ must be a $k$-clique, namely, there exists a $k$-clique in $G_c$.
+Let $|V^*|=n^*$ and $|E^*|=m^*$. Then $k \leq n^* \leq n_2$ and $k-1 \leq m^* \leq \frac{n^*(n^*-1)}{2}$. We can find the density of $G_s$ is
+
+
+\[\begin{split}
+\eta_{G_s} =
+\frac{\frac{n_1(n_1-1)}{2}+n_1+n^*+m^*}{n_1+n^*+1} \leq \frac{\frac{n_1(n_1-1)}{2}+n_1+ n^* +
+  \frac{n^*(n^*-1)}{2}}{n_1+n^*+1}\\
+  \leq \frac{\frac{n_1(n_1-1)}{2} + n_1 + k + \frac{k(k-1)}{2}}{n_1 + k + 1} = \xi
+\end{split}\]
+
+
+Note that:
+\be
+\item the first inequality follows from the fact that the density is larger when $(V^*,E^*)$ constitutes a complete subgraph of $(V_2,E_2)$ with $n^*$ nodes;
+\item the second inequality holds when $k \leq n^* \leq n_2 \leq \sqrt{2n_1^2+2n_1}-n_1-1$, $\eta_{G_s}$ decreases when $n^*$ increases, and the equality holds when $n^*=k$.
+\ee
+Apparently, when there exists such a subgraph $G_s$ that matches $P$ \wrt $\xi$, we have that $(V^*,E^*)$ of $G_s$ must be a $k$-clique. Thus we can easily find that there exists a corresponding $k$-clique in $G_c$.
+
+
+\subsection*{Proof of Theorem~\ref{thm-esim-dia-opt-complexity}}
+
+The problem in general case and special cases with `exactly' and `at most' semantic are \NP-hard, as their corresponding extended graph simulation decision problems are \NP-hard.
+We next show the problem in special case with `at least' semantic is \NP-hard.
+
+We first show the problem is in \NP and then show it is \NP-hard.\\
+\etitle{Upper bound}.
+We show the \NP upper bound by providing an \NP algorithm. Given a pattern graph $P$,
+a data graph $G$, and a positive rational number $\varphi$, the algorithm works as follows.
+\be
+\item Guess a subgraph $G_s$ of $G$;
+\item Check whether the following conditions hold:
+\bi
+\item [(a)] whether $G_s$ is a matched subgraph of $P$ in $G$ via graph simulation (with match relation $R_D$);
+\item [(b)] whether for each query node $u\in V_p$, the number of nodes $v\in V_s$ with $(u, v)\in \Reps_D$ falls into $f_p(u)$.
+\item [(c)] whether the diameter $dia_{G_s}$ is no more than $\varphi$.
+\ei
+If yes, return `Yes', otherwise return to Step~1.
+\ee
+
+Note that the algorithm correctly determines whether there exists a matched subgraph of $P$ in $G$ and the diameter of the matched subgraph is no more than $\varphi$. Moreover, the algorithm is in \NP since step~2 can be checked in \PTIME (quadratic time, indeed).
+
+\etitle{Lower bound}.
+We next show the problem is \NP-hard by reduction from the $k$-clique problem, which is known \NP-complete~\cite{}.
+
+An instance of $k$-clique is given a undirected graph $G_c(V_c,E_c)$ and an integer $k \leq |V_c|$, and is to determine whether there exists a $k$-clique in $G_c$. Given an instance $G_c$ and $k$ of the $k$-clique problem, we construct an instance of minimum-diameter extended graph simulation with `at least' semantic problem, that is, a pattern graph $P(V_p$, $E_p$, $l_p$, $f_p)$, a data graph $G(V$, $E$, $l$, $w)$, and a positive rational number $\varphi$, such that there exists a $k$-clique in $G_c$ if and only if $P \eeps_{dia} G$ with `at least' semantic \wrt $\varphi$.
+\be
+\item We define $P(V_p$, $E_p$, $l_p$, $f_p)$ as follows:
+\bi
+\item [(1)] $V_q = \{u_1, \ldots, u_t, v_1, v_2, w_1, \ldots, w_t\}$, $t \geq 1$, where the labels $l_p(v_1)$ and $l_p(v_2)$ of nodes $v_1$ and $v_2$ are `A', the labels $l_p(u_1)$ and $l_p(w_1)$ of nodes $u_1$ and $w_1$ are `$B_1$', the labels $l_p(u_2)$ and $l_p(w_2)$ of nodes $u_2$ and $w_2$ are `$B_2$', $\ldots$, and the labels $l_p(u_t)$ and $l_p(w_t)$ of nodes $u_t$ and $w_t$ are `$B_t$'.
+\item [(2)] $E_q$ = \{$(u_t, u_{t-1})$, $(u_{t-1}, u_{t-2})$, \ldots, $(u_2, u_1)$, $(u_1, v_1)$, $(v_1, v_2)$, $(v_2, w_1)$, $(w_1, u_2)$, \ldots, $(w_{t-2}, w_{t-1})$, $(w_{t-1}, w_t)\}$.
+\item [(3)] We already know that for each node $u$ in $V_q$, $f_p$ is assigned to be $[x, +\infty]$. Then we set $x_{u_1}$, $\ldots$, $x_{u_t}$, $x_{v_1}$, $x_{v_2}$, $x_{w_1}$, $\ldots$, $x_{w_t}$ of nodes $u_1$, $\ldots$, $u_t$, $v_1$, $v_2$, $w_1$, $\ldots$, $w_t$ all to be $k$.
+\ei
+\item We define $G(V$, $E$, $l$, $w)$ as follows:
+\bi
+\item [(1)] $V = V_0 \cup V_1 \cup V_2 \cup \ldots \cup V_t$ where
+\bi
+\item [(a)] $V_0$ consists of $n_1=|V_c|$ nodes (where $V_c$ is the set of nodes in the instance of the $k$-clique problem), all with label `A',
+\item [(b)] $V_1$ consists of $n_1$ nodes, all label with `$B_1$'; $V_2$ consists of $n_1$ nodes, all label with `$B_2$'; \ldots; $V_t$ consists of $n_1$ nodes, all label with `$B_t$';
+\ei
+\item [(2)] $E = E_0 \cup E_1 \cup E_2 \cup \ldots \cup E_t$ where
+\bi
+\item [(a)] $E_0$ is derived according to $E_c$ of $G_c$. More specifically, $V_1$ consists of $n_1=|V_c|$ nodes, for each $(v_1, v_2)\in E_c$, there exists an edges $(v_1, v_2)$ in $E_1$.
+\item [(b)] $E_1$ consists of $n_1$ edges connect each node in $V_1$ to one node in $V_0$, that is, for each $v' \in V_1$, there exists only one node $v \in V_0$, there is an edge $(v', v)$ in $E_1$, and there is no other node $v'' \in V_1$ with an edge $(v'', v)$ in $E_1$. Then the same holds for $E_i$ where $2 \leq i \leq t$, $E_i$ consists of $n_1$ edges connect each node in $V_i$ to one node in $V_{i-1}$.
+\item [(c)] the weight of each edge in $E$ is set to 1.
+\ei
+\item [(3)] We set $\varphi=2t+1$.
+\ei
+\ee
+
+Intuitively, each node label with `A' in $G$ is connected with a subgraph ($\{v_1, $\ldots$, v_t\}$, $\{(v_1, v_2), $\ldots$, (v_{t-1}, v_t)\}$, $l(v_i)=`B_i'$, $w(e)=1$), and the diameter of the subgraph is $t-1$.
+
+We next show that $G_c$ has a k-clique if and only if $P \eeps_{dia} G$ with `at least' semantic \wrt $\varphi$.
+
+\stab
+{$\Rightarrow$}
+Assume $G_c$ has a k-clique with a set $V_c^* \subseteq V_c$ of $k$ nodes. We will show that the subgraph $G_s(V_s=V_0^* \cup V_1^* \cup \ldots \cup V_t^*$, $E_s=E_0^* \cup E_1^* \cup \ldots \cup E_t^*$) of $G$ matches $P$ via minimum-diameter extended graph simulation with `at least' semantic, where (1) $V_0^*$ corresponds to $V_c^*$, consisting $k$ nodes in $V_0$, and $E_0^*$ consists of $\frac{k(k-1)}{2}$ edges connecting each pair of nodes in $V_0^*$; (2) for $1 \leq j \leq t$, $V_j^*$ consists of $k$ nodes in $V_j$, and $E_j^*$ consists of $k$ edges connecting nodes in $V_j^*$ with nodes in $V_{j-1}^*$. Obviously, $G_s$ matches $P$ via extended graph simulation; and moreover, the diameter $dia_{G_s}=2t+1$, is no more than $\varphi$ (equal to, indeed).
+
+\stab
+{$\Leftarrow$}
+Suppose there exists a subgraph $G_s(V_s,E_s)$ that matches $P$ via minimum-diameter extended graph simulation with `at least' semantic. Assuming $V_s=V_0^* \cup V_1^* \cup \ldots \cup V_t^*$, according to the character of pattern graph $P$, $V_0^*$ consists of at least $k$ nodes in $V_0$ and $V_1^*$ consists of at least $k$ nodes in $V_1$, and the same holds for $V_2$, $\ldots$, $V_t$. If there is a node $v_0 \in V_0^*$, the connected node $v_1 \in V_1$ must be contained in $V_1^*$, sequentially, the connected nodes $v_j \in V_j$ must be contained in $V_j^*$, for $2 \leq j \leq t$, thus we have $|V_0^*|=|V_1^*|=\ldots=|V_t^*| \geq k$. Assume $E_s=E_0^* \cup E_1^* \cup \ldots \cup E_t^*$, where $E_0^*$ consists edges connecting nodes in $V_0^*$, and $E_1^*$ consists of $|V_1^*|$ edges connecting nodes in $V_1^*$ with nodes in $V_0^*$, and similarly for $E_2$, $\ldots$, $E_t$. Apparently, each node in $G_s$ label with `A' is connected with a subgraph with diameter $t-1$. As the diameter of $G_s$ is no more than $\varphi$, we say that $E_0^*$ must contain the edges connecting each pair of nodes in $V_0^*$, such that $dia_{G_s}=2t+1$, equal with $\varphi$. If not, the diameter of $G_s$ must be greater than $\varphi$.
+
+Apparently, we have shown that when there exists such a subgraph $G_s$ that matches $P$ \wrt $\varphi$, we have that subgraph ($V_0^*$, $E_0^*$) of $G_s$ must be a clique with no less than $k$ nodes. Thus we can easily find that there exists a corresponding $k$-clique in $G_c$.
+
+%%%%%%%%%%%%%Approximation hardness%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}
+\label{thm-esim-den-appro-hardness}
+Unless \NP = P, the exactly and at most case of densest extended graph simulation problem cannot be approximated within any factor in \PTIME.
+\end{theorem}
+
+\subsection*{Proof of Theorem~\ref{thm-esim-den-appro-hardness}}
+We can prove it by contradiction. Suppose there exists a \PTIME $\alpha$-approximation algorithm $\aleph$ can solve densest extended graph simulation problem in exactly (at most) case, where $\alpha$ represents any variables and constants. Then by executing $\aleph$, we can get a result matched subgraph $G_{rs}$ with density $\xi$, supposing the density of the optimal matched subgraph is $\xi^*$, such that $\xi\leq\alpha\xi^*$. This implies that the algorithm $\aleph$ can correctly determines the densest extended graph simulation problem in exactly (at most) case in \PTIME, which contradicts the complexity of the problem in Theorem~\ref{thm-esim-den-opt-complexity}. Thus we say that there exists no bounded approximation algorithm for the exactly (at most) case of densest extended graph simulation problem.
+
+NEED a L-reduction.........
+
+\begin{theorem}
+\label{thm-esim-dia-appro-hardness}
+Unless \NP = P, the exactly and at most case of minimum-diameter extended graph simulation problem cannot be approximated within any factor in \PTIME.
+\end{theorem}
+
+\subsection*{Proof of Theorem~\ref{thm-esim-dia-appro-hardness}}
+It can be proved similar with Theorem~\ref{thm-esim-den-appro-hardness}.
+
+\section*{{\Large \sf APPENDIX B: added}}
+
+\subsection*{1. Introduction}
+\stitle{Related work}.
+There is a considerable amount of study related to our work can be classified into three categories: team formulation, keywords on graphs, graph pattern matching and graph density.
+
+\stitle{Team formulation}. Lappas et al.~\cite{Lappas09} is the first to consider team formulation problem while minimizing the communication cost. By formalizing communication cost as diameter and the total weights of minimum spanning tree(MST) induced by the team, Lapps et al have proved the problem is \NP-hard, and they have proposed an approximation algorithms for minimizing the diameter with a guarantee 2 and a greedy algorithm with no approximation ratio for MST. Authors of~\cite{Kargar11} proposed a new communication cost function of minimizing the sum of distances between each pair of skill holders and provided a 2-approximation algorithm. They also introduced the problem of finding a team of experts with a leader while considering another new communication cost function of minimizing the the sum of distance between the leader and each of the skill holders in the team. Authors of~\cite{Chengte10,GajewarS12} generalized this problem to the case where for each required skill, multiple  experts possessing the skill are desired. \cite{Chengte10} utilized MST as the metric of communication cost, but they have proposed algorithms with no approximation ratio. In \cite{GajewarS12}, density based measures are used as objectives, they have proposed a 3-approximation algorithm for single skill team formation problem(sTF), and  greedy algorithm with no approximation ratio for multiple skill team formation problem(mTF).
+
+\stitle{Keywords on Graphs}.
+
+
+
+\stitle{Graph pattern matching}. Graph pattern matching is often defined according to subgraph isomorphism~\cite{Aggarwal10,Galla06}, an \NP-complete problem. However, it is too restrictive to catch sensible matches in most cases, as it requires match subgraphs to have exactly the same topology as the pattern graph. Subsequently, to reduce the time complexity, graph simulation~\cite{ccs} has been adopted for pattern graph matching which can be determined in quadratic time. It devotes to preserve the child relationship of pattern graph, but it may fail to capture the topology of graphs and yield false matches or too large a match relation. To rectify these problems, strong simulation~\cite{MaCFHW11} imposes two additional constraints on graph simulation: the duality to preserve both parent and child relationships, also referred to as dual simulation~\cite{MaCFHW11}, and the locality to eliminate excessive matches. It is capable of capturing the topology in graph pattern matching and can be determined in cubic time.
+
+\stitle{Graphs density}.
+As mentioned above, \cite{GajewarS12} has utilized density as a measure of collaborative compatibility, and the problem of finding densest subgraphs has been well-studied these years. Given a undirected data graph, finding a subgraph with maximum density~\cite{Goldberg84} can be solved optimally in polynomial time. However when there is a size constraint specified, the densest-k-subgraph problem, namely, finding a densest subgraph with exactly $k$ vertices becomes \NP-hard~\cite{FeigeML01,FeigePK01}. The algorithm developed by Feige et al. achieves the best approximation ratio for now~\cite{FeigePK01}. Andersen et al~\cite{Andersen09} considered the problem of finding dense subgraphs with specified upper and lower bounds on the number of vertices, the densest-at-least-k-subgraph (Dalks) problem and the densest-at-most-k-subgraph (Damks) problem. Khuller et al~\cite{Khuller09} have shown that Dalks is \NP-complete. Andersen et al have shown that Damks is nearly as hard to approximate as Dks and gave constant factor approximation algorithms for Dalks.
+
+
+\subsection*{2. Extended Graph Simulation}
+
+\subsection*{2.2. Graph Pattern Matching Revisited}
+\begin{prop}
+\label{prop-specialcase-clique}
+Given a pattern graph $P(V_p$,$E_p)$, which is a clique, and the capacity on all the pattern nodes is $[|V_p|, |V_p|]$, and given a data graph $G(V_g$,$E_g)$. If $P \eeps G$, and the matched subgraph is $G_s$, then $G_s$ may be a clique with $|V_p|$ nodes.
+\end{prop}
+
+As shown in Fig.~\ref{fig-cliquecase}, $P \eeps G$, the matched subgraphs $G_{s1}$ is a clique, while $G_{s2}$ is not a clique.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorem 3
+\begin{figure}[tb!]
+\begin{center}
+\includegraphics[scale=0.4]{./fig/cliquecase.eps}
+\caption{Data graph $G$ and pattern graph $P$ for Proposition~\ref{prop-specialcase-clique}}
+\label{fig-cliquecase}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{2.3. Group Recommendations}
+
+We know from Theorem~\ref{thm-esim-complexity} that given pattern graph $P$ and data graph $G$, it is \NP-complete to determine whether $P \eeps G$. Consequently, there may be exponential subgraphs of $G$ that matches $P$ via extended graph simulation. In the context of group recommendation, the user may want to search for the subgraph $G_s$ with high match quality, \ie the group with all members collaborating effectively.\cite{} has proposed a novel method utilizing density, the definition has been mentioned in Section~\ref{sec-gpm}, to measure the collaborative quality of a group formation.
+
+In this section, we utilize density as a measure to tackle with the problem of searching for the best group, \ie finding group with excellent collaborative affinity proportional to the density of the induced subgraph.
+
+\stitle{Densest extended graph simulation}. Given pattern graph $P$, data graph $G$, and a positive rational number $\xi$. Data graph $G$ {\em matches} pattern graph $P$  via {\em densest extended graph simulation}, denoted by $P \eeps_{den} G$, if there exists a connected subgraph $G_s[V_s, E_s]$ in $G$ that satisfies the following:
+
+\vspace{0.5ex}
+\ni(1) $P \eeps G$ with the maximum match relation $\Reps$;
+
+\vspace{0.5ex}
+\ni(2) the density of $G_s$ is is no less than $\xi$;
+
+\begin{theorem}
+\label{thm-esim-den-opt-complexity}
+Given pattern graph $P$, data graph $G$, and a positive rational number $\xi$. It is \NP-complete to determine whether $P \eeps_{den} G$.
+\end{theorem}
+
+\textbf{Proof} We prove that in general case, three special cases are all \NP-complete: the `exactly', the `at least', the `at most' semantic.\\
+
+We utilize another metric diameter as a measure to deal with the problem of searching for the best group, \ie finding group with any two members communicate efficiently and effectively in a short distance.
+
+\stitle{Minimum-diameter extended graph simulation}. Given pattern graph $P$, data graph $G$, and a positive rational number $\varphi$. Data graph $G$ {\em matches} pattern graph $P$  via {\em densest extended graph simulation}, denoted by $P \eeps_{dia} G$, if there exists a connected subgraph $G_s[V_s, E_s]$ in $G$ that satisfies the following:
+
+\vspace{0.5ex}
+\ni(1) $P \eeps G$ with the maximum match relation $\Reps$;
+
+\vspace{0.5ex}
+\ni(2) the diameter of $G_s$ is is no more than $\varphi$;
+
+\begin{theorem}
+\label{thm-esim-dia-opt-complexity}
+Given pattern graph $P$, data graph $G$, and a positive rational number $\xi$. It is \NP-complete to determine whether $P \eeps_{dia} G$.
+\end{theorem}
+
+\textbf{Proof} We prove that in general case, three special cases are all \NP-complete: the `exactly', the `at least', the `at most' semantic.
+
+\subsection*{3. Computing Extended Graph Simulations}
+
+\subsubsection*{3.1 Algorithms for graph pattern matching via maximum-density extended graph simulation}
+
+\textbf{\emph{general case}}\\
+We will now provide an algorithm for graph pattern matching via maximum-density extended graph simulation in general case.
+\begin{figure}[t]
+\vspace{-2ex}
+\begin{center}
+{\small
+
+\myhrule \vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/}Pattern graph $P(V_p$, $E_p$, $f_p)$,
+data graph $G(V$,$E$,$w)$.\\
+{\sl Output:\/} The matched subgraph $G_{maxs}$ of $G$ with large density $w.r.t.$ $P$\\
+\bcc \quad $S_G$:=GraphSimulation$(G,P)$;\\
+\icc \quad constructs the set of connected components\\
+\quad $\{G_{c1}, G_{c2}, \cdots, G_{cn}\}$ of $G$ \wrt $\{S_{c1}, S_{c2}, \cdots, S_{cn}\}$ and $P$;\\
+\icc \quad for each ${G_c}_i (1 \leq i\leq n)$ do\\
+\icc \quad\quad ${G_{cds}}_i$:=Densubgraph(${G_c}_i$, ${S_c}_i$, $P$);\\
+\icc $G_{maxs}:=\arg\min_{1 \leq i\leq n}{G_{cds}}_i$;\\
+\icc return $G_{maxs}$;
+}
+
+\mat{0ex}{
+\textbf{Procedure GraphSimulation}$(G,P)$\\
+\sstab {\sl Input:\/}Pattern graph $P(V_P$, $E_P$, $f_P)$,
+data graph $G(V$,$E$,$w)$.\\
+{\sl Output:\/} The maximum match relation $S_G$ of $P$ and $G$\\
+\bcc \quad for each $v \in V_P$ do\\
+\icc \quad\quad sim($v$):=\{$u$ $|$ $u$ is in $G$ and $l_P(u)=l_G(v)$\};\\
+\icc \quad while there are changes do\\
+\icc \quad\quad for each edge $(v,v')$ in $E_P$ and each node $u \in sim(v)$ do\\
+\icc \quad\quad\quad if there is no edge $(u,u')$ in $G$ with $u' \in sim(v')$\\
+\icc \quad\quad\quad then sim($v$):=sim($v$)$\backslash$\{$u$\};\\
+\icc \quad\quad if sim($v$)=$\emptyset$ then return $\emptyset$;\\
+\icc $S_G$:=\{$(v,u)$ $|$ $v \in V_P$, $u \in sim(v)$\};\\
+\icc return $S_G$;\\
+}
+
+\mat{0ex}{
+\textbf{Procedure Densubgraph}$(G,P)$\\
+\sstab {\sl Input:\/} Pattern graph $P(V_P$, $E_P$, $f_P)$, data graph $G_c(V_c$, $E_c$, $w_c)$,\\
+ \quad\quad\quad match relation $S_c$.\\
+{\sl Output:\/}  The matched subgraph $G_{cds}$ of $G_c$ with large density $\wrt$ $P$.\\
+\bcc \quad while $G_c$ not satisfy the supremum capacity requirements on all the pattern nodes\\
+\icc \quad\quad for each $v \in V_c$ do\\
+\icc \quad\quad\quad $AFW[v]:=\sum_{vv' \in E_c}{w_{vv'}}$;\\
+\icc \quad\quad $v_{min}:=\arg\min_{v\in V_c}AFW[v]$;\\
+\icc \quad\quad \{$AFN[v_{min}], S_c$\}:=incrementalAlg($P,G_c,S_c,v_{min}$);\\
+\icc \quad\quad remove $AFN[v_{min}]$ and the related edges from $G_c$;\\
+\icc \quad\quad if there is a pattern node $u$ having $|$sim$(u)| < inf(l_p(u))$ (sim$(u)\in S_c$)\\
+\icc \quad\quad then return $\emptyset$;\\
+\icc $G_{cds}:=G_c;$\\
+\icc return $G_{cds}$;
+}
+
+\mat{0ex}{
+\textbf{Procedure incrementalAlg}$(P, G_c, S_c, v)$\\
+\sstab {\sl Input:\/} Pattern graph $P(V_p, E_p, l_p, f_p)$, data graph $G_c(V_c,E_c,l_c,w_c)$,\\
+\quad\quad\quad the node $v$ to be removed from $G_c$, and the old maximum match $S_c$.\\
+{\sl Output:\/} The set $\Delta$ of affected nodes in $G_c$ and the new maximum match $S_c$.\\
+\bcc \quad $AFF$:= all the adjacent edges of $v$;\\
+\icc \quad $wSet:=\emptyset$; $\Delta:=\{v\}$;\\
+\icc \quad for all $(v,v')\in AFF$ do\\
+\icc \quad\quad for all $(u,u')\in E_p$ having $v' \in mat(u')$ and $v\in mat(u)$ do\\
+\icc \quad\quad\quad if $adjacent(l_p(u),v')\cap mat(u)=\emptyset$ then\\
+\icc \quad\quad\quad\quad $wSet$.push($(u',v')$);\\
+\icc \quad\quad\quad\quad while ($wSet\neq \emptyset$) do\\
+\icc \quad\quad\quad\quad\quad $(u',v'):=wSet$.pop();\\
+\icc \quad\quad\quad\quad\quad $\Delta:=\Delta\cup \{v'\}$; $S_c:=S_c\backslash\{(u',v')\}$;\\
+\icc \quad\quad\quad\quad\quad for all $(u',u'')\in E_p$ do\\
+\icc \quad\quad\quad\quad\quad\quad for all $v''\in adjacent(l_p(u''),v')\cap mat(u'')$ do\\
+\icc \quad\quad\quad\quad\quad\quad\quad if $adjacent(l_p(u'),v'')\cap mat(u')=\emptyset$ then \\
+\icc \quad\quad\quad\quad\quad\quad\quad\quad $wSet$.push($(u'',v'')$);\\
+\icc if there is a pattern node $u$ having mat($u$)=$\emptyset$ then\\
+\icc return $\Delta$ and $S_c$;
+}
+
+\vspace{-2.5ex} \myhrule
+
+}
+\end{center}
+\vspace{-4ex}
+\caption{Filter } \label{cenAlg-Select}
+\vspace{-3ex}
+\end{figure}
+
+
+
+\be
+\item step 1: compute simulation relation $R$ of $P$ and $G$, as well as the matched subgraph $G_R$ of $P$ in $G$;
+\item step 2: select the node $v$ that has the least negative impact on the overall density of the matched subgraph;
+\item step 3: remove $v$ from the matched subgraph, as well as those related nodes and edges that are not valid due the the removal of $v$ according to the decremental method, check whether the remaining subgraph satisfy the bound requirements.\\
+    \textbf{repeat} step 2 and 3 until all the at-most bounds hold, and output the last subgraph of $G_R$ as result, otherwise return `No'.
+\ee
+
+\stitle{Remark}.  There are several points can be optimized in the algorithm.
+\be
+\item [(1)] The time complexity of the algorithm is $O(|V||P||G|)$.
+\item [(2)] The algorithm devotes to search for subgraphs with great density, but the probability it cannot find any subgraphs satisfying the node-bounded requirements is high. We could conduct the optimization of balancing the accuracy and density, such as the removing order of nodes.
+\item [(3)] Combine with incremental algorithm.(decremental method utilized in step3)
+\item [(4)] Connectivity check $O(|G|)$.
+\ee
+
+\textbf{\emph{at least case}}\\
+In at least case, due to the complexity of the problem, there maybe exists an approximation algorithm with good property.
+
+\stitle{Remark}.  A basic $O(n)$-approximation algorithm is as below, by only executing graph simulation.
+\be
+\item step 1: compute simulation relation $R$ of $P$ and $G$, as well as the matched subgraph $G_R$ of $P$ in $G$;
+\item step 2: check whether any connected component of $G_R$ satisfy the node-bounded requirements and return the subgraph, otherwise return `No'.
+\ee
+
+\subsubsection*{3.2 Algorithms for graph pattern matching via minimum-diameter extended graph simulation}
+
+\textbf{\emph{general case}}\\
+We will now provide an algorithm for graph pattern matching via minimum-diameter extended graph simulation in general case.
+
+\begin{figure}[t]
+\vspace{-2ex}
+\begin{center}
+{\small
+
+\myhrule \vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/}Pattern graph $P(V_p$, $E_p$, $f_p)$,
+data graph $G(V$,$E$,$w)$.\\
+{\sl Output:\/} The matched subgraph $G_{mins}$ of $G$ with large density $w.r.t.$ $P$\\
+\bcc \quad $S_G$:=GraphSimulation$(G,P)$;\\
+\icc \quad constructs the set of connected components\\
+\quad $\{G_{c1}, G_{c2}, \cdots, G_{cn}\}$ of $G$ \wrt $\{S_{c1}, S_{c2}, \cdots, S_{cn}\}$ and $P$;\\
+\icc \quad for each ${G_c}_i (1 \leq i\leq n)$ do\\
+\icc \quad\quad ${G_{cms}}_i$:=MinDiasubgraph(${G_c}_i$, ${S_c}_i$, $P$);\\
+\icc $G_{mins}:=\arg\min_{1 \leq i\leq n}{G_{cms}}_i$;\\
+\icc return $G_{mins}$;
+}
+
+\mat{0ex}{
+\textbf{Procedure GraphSimulation}$(G,P)$\\
+\sstab {\sl Input:\/}Pattern graph $P(V_P$, $E_P$, $f_P)$,
+data graph $G(V$,$E$,$w)$.\\
+{\sl Output:\/} The maximum match relation $S_G$ of $P$ and $G$\\
+\bcc \quad for each $v \in V_P$ do\\
+\icc \quad\quad sim($v$):=\{$u$ $|$ $u$ is in $G$ and $l_P(u)=l_G(v)$\};\\
+\icc \quad while there are changes do\\
+\icc \quad\quad for each edge $(v,v')$ in $E_P$ and each node $u \in sim(v)$ do\\
+\icc \quad\quad\quad if there is no edge $(u,u')$ in $G$ with $u' \in sim(v')$\\
+\icc \quad\quad\quad then sim($v$):=sim($v$)$\backslash$\{$u$\};\\
+\icc \quad\quad if sim($v$)=$\emptyset$ then return $\emptyset$;\\
+\icc $S_G$:=\{$(v,u)$ $|$ $v \in V_P$, $u \in sim(v)$\};\\
+\icc return $S_G$;\\
+}
+
+\mat{0ex}{
+\textbf{Procedure MinDiasubgraph}$(G,P)$\\
+\sstab {\sl Input:\/} Pattern graph $P(V_P$, $E_P$, $f_P)$, data graph $G_c(V_c$, $E_c$, $w_c)$,\\
+ \quad\quad\quad match relation $S_c$.\\
+{\sl Output:\/}  The matched subgraph $G_{cms}$ of $G_c$ with large density $\wrt$ $P$.\\
+\bcc \quad while $G_c$ not satisfy the supremum capacity requirements on all the pattern nodes\\
+\icc \quad randomly pick a node $v \in V_c$;\\
+\icc \quad for each $v' \in V_c$ do\\
+\icc \quad\quad $dis[v']$:=the total weight of the path from $v$ to $v'$;\\
+\icc \quad $v_{max}:=\arg\max_{v' \in V_c}dis[v']$;\\
+\icc \quad\quad \{$AFN[v_{max}], S_c$\}:=incrementalAlg($P,G_c,S_c,v_{max}$);\\
+\icc \quad\quad remove $AFN[v_{max}]$ and the related edges from $G_c$;\\
+\icc \quad\quad if there is a pattern node $u$ having $|$sim$(u)| < inf(l_p(u))$ (sim$(u)\in S_c$)\\
+\icc \quad\quad then return $\emptyset$;\\
+\icc $G_{cms}:=G_c;$\\
+\icc return $G_{cms}$;
+}
+
+\mat{0ex}{
+\textbf{Procedure incrementalAlg}$(P, G_c, S_c, v)$\\
+\sstab {\sl Input:\/} Pattern graph $P(V_p, E_p, l_p, f_p)$, data graph $G_c(V_c,E_c,l_c,w_c)$,\\
+\quad\quad\quad the node $v$ to be removed from $G_c$, and the old maximum match $S_c$.\\
+{\sl Output:\/} The set $\Delta$ of affected nodes in $G_c$ and the new maximum match $S_c$.\\
+\bcc \quad $AFF$:= all the adjacent edges of $v$;\\
+\icc \quad $wSet:=\emptyset$; $\Delta:=\{v\}$;\\
+\icc \quad for all $(v,v')\in AFF$ do\\
+\icc \quad\quad for all $(u,u')\in E_p$ having $v' \in mat(u')$ and $v\in mat(u)$ do\\
+\icc \quad\quad\quad if $adjacent(l_p(u),v')\cap mat(u)=\emptyset$ then\\
+\icc \quad\quad\quad\quad $wSet$.push($(u',v')$);\\
+\icc \quad\quad\quad\quad while ($wSet\neq \emptyset$) do\\
+\icc \quad\quad\quad\quad\quad $(u',v'):=wSet$.pop();\\
+\icc \quad\quad\quad\quad\quad $\Delta:=\Delta\cup \{v'\}$; $S_c:=S_c\backslash\{(u',v')\}$;\\
+\icc \quad\quad\quad\quad\quad for all $(u',u'')\in E_p$ do\\
+\icc \quad\quad\quad\quad\quad\quad for all $v''\in adjacent(l_p(u''),v')\cap mat(u'')$ do\\
+\icc \quad\quad\quad\quad\quad\quad\quad if $adjacent(l_p(u'),v'')\cap mat(u')=\emptyset$ then \\
+\icc \quad\quad\quad\quad\quad\quad\quad\quad $wSet$.push($(u'',v'')$);\\
+\icc if there is a pattern node $u$ having mat($u$)=$\emptyset$ then\\
+\icc return $\Delta$ and $S_c$;
+}
+
+\vspace{-2.5ex} \myhrule
+
+}
+\end{center}
+\vspace{-4ex}
+\caption{Filter } \label{cenAlg-Select}
+\vspace{-3ex}
+\end{figure}
+
+\be
+\item step 1: compute simulation relation $R$ of $P$ and $G$, as well as the matched subgraph $G_R$ of $P$ in $G$;
+\item step 2: randomly pick a node $v$ in $G_R$ and calculate the distances to all the nodes in $G_R$;
+\item step 3: remove the node that is farthest from $v$, removing the related nodes and edges  according to the decremental method, check whether the remaining subgraph satisfy the bound requirements.\\
+    \textbf{repeat} step 3 until the there exists any at-least bound does not hold, and output the last subgraph of $G_R$ as result, otherwise return `No'.
+\ee
+
+\stitle{Remark}.  The time complexity of the algorithm is $O(|V||P||G|)$. There are several points can be optimized in the algorithm.
+\be
+\item [(1)] In step3, remove a set of nodes that is farthest from $v$ instead of only one node.(Binary search)
+\item [(2)] In step2, instead of randomly pick a node $v$ in $G_R$, we can randomly pick a node in the set of nodes with same label which have the least cardinality.
+\item [(2)] Combine with incremental algorithm.(decremental method utilized in step3)
+\ee
+
+\textbf{\emph{at least case}}\\
+In at least case, due to the complexity of the problem, there maybe exists an approximation algorithm with good property.

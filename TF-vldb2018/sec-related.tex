@@ -1,0 +1,121 @@
+\section{Related Work}
+\label{sec-related}
+
+%We categorize the related work as follows.
+
+
+\stitle{Team formation}. There has been a host of work on team formation by minimizing the communication cost of team members, defined with the diameter, density, minimum spanning tree, Steiner tree, and sum of pairwise member distances among others~\cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12,LiTongCao15}.
+Similar to~\cite{Kargar11}, we are to find the top-$k$ teams. However,
+\cite{Kargar11} adopted Lawler's procedure \cite{Lawler1972}, which makes it hard to work on large data graphs. We also adopted {\em density}  as the communication cost, which shows a better performance~\cite{GajewarS12}. However, we further require that all team members are {\em close to each other} (located in the same balls), along the same lines as~\cite{Lappas09,Kargar11}.  Moreover, graph pattern matching has been used to search single experts, instead of a team of experts~\cite{FanWWXin13}. Different from these work, we introduce {\em structural constraints}, in terms of graph pattern matching~\cite{FanLMTWW10,MaCFHW14}, into team formation.
+
+\eat{Team formulation with minimum communication cost in  terms of the diameter and minimum spanning tree was firstly studied in~\cite{Lappas09},
+followed by
+
+Afterwards, authors of~\cite{Kargar11,Kargar11,GajewarS12,SamikKVM12} extended and proposed new communication cost metrics or incorporated more constraints. \cite{GajewarS12,realTeamForm13} incorporated the number requirements for each required skill considering real-life factors, \cite{SamikKVM12} incorporated constraints ensures that no user is overloaded by the task assignment, and \cite{LiTongCao15} proposed the team member replacement problem to efficiently find a good candidate to replace a unavailable team member.
+
+
+
+
+ simply maximizing density may return a quite large team and not practical in real life. We not only require the density to be large, but also require the distance between team members to be closed, as ~\cite{Lappas09,Kargar11} do.
+
+
+  and~\cite{realTeamForm13},
+ we incorporate the density metric as the communication cost, and the capacity constraint into
+
+
+ while the others are devoted to find only one best team. However, the adaption of Lawler's
+
+
+Our work differs from the prior work in the following. By adopting graph pattern matching semantic for team formation, (1) we can assign structural constraints between different skills, while ~\cite{Lappas09,Kargar11,realTeamForm13} only require the diameter or MST or the sum of distance between members of the team to be small, which can all be ensured by our model(the diameter bound in $r$-simulation semantic).
+
+(2) We find top-$k$ best teams which is same with ~\cite{Kargar11}, while the others are devoted to find only one best team. However, the adaption of Lawler's procedure to find top-$k$ answers ~\cite{Kargar11} adopted prohibited it to execute on large data graphs. Because it execute $k$ rounds algorithms to find $k$ answers.
+
+(3) We adopted density as proposed in ~\cite{GajewarS12} as our communication cost metric to rank for top-$k$ results. As illustrate by them, the density based communication cost is thus performing better than the previous. However, simply maximizing density may return a quite large team and not practical in real life. We not only require the density to be large, but also require the distance between team members to be closed, as ~\cite{Lappas09,Kargar11} do.
+
+(4) We can assign upper and lower bound for each required skill, at this point, closer to our work is ~\cite{realTeamForm13}, however, it cannot satisfy other requirements.....
+
+(5) A common shortcoming is that previous algorithms cannot execute on large data graphs which is essential in the big data era.
+
+Closer to this work is ~\cite{FanWWXin13}, they have adopted graph pattern matching semantic to search for experts satisfying topology constraints. However, they could not find a team of experts for a given task.
+
+
+}
+
+
+
+\stitle{Graph pattern matching}. Recently, {\em graph simulation} \cite{infsimu95} and its extensions have been introduced for graph pattern matching~\cite{FanLMTWW10,FanLMTW11,MaCFHW14,Guanfeng15}, in which {\em strong simulation} introduces duality and locality into simulation~\cite{MaCFHW14}, and shows a good balance between its computational complexity and its ability to preserve graph topology.
+$R$-simulation proposed in this work is an extension of strong simulation on undirected graphs with capacity constraints on pattern graphs.
+
+
+\eat{
+Closer to our work is ~\cite{MaCFHW14}. It proposed strong simulation, imposing two additional constraints on graph simulation: duality and locality. It is capable of capturing the topology in graph pattern matching and can be determined in cubic time.
+
+, via subgraph isomorphism~\cite{Ullmann76}, an \NP-complete problem. To lower its complexity, various extensions of graph simulation have been considered instead~\cite{FanLMTWW10,FanLMTW11,MaCFHW14,Guanfeng15}. Graph simulation can be determined in quadratic time. However, the low complexity may cause the extended notions fail to capture the topology of graphs, and yield false matches or too large a match relation. Closer to our work is ~\cite{MaCFHW14}. It proposed strong simulation, imposing two additional constraints on graph simulation: duality and locality. It is capable of capturing the topology in graph pattern matching and can be determined in cubic time. This work differs from strong simulation in that we combine capacity bounds on pattern nodes to find matches satisfying the capacity requirements.
+}
+
+
+
+\stitle{Incremental computations}. Incremental algorithms (see \cite{inc-survey} for a survey) have proven usefulness in a variety of areas,
+and have been studied for both graph pattern matching~\cite{FanLMTWW10,FanWW13-tods} and team formation \cite{ArisLuca12}.
+However, \cite{FanLMTWW10,FanWW13-tods} only consider data changes,
+and \cite{ArisLuca12} only consider continuous coming new tasks. In this work, we both deal with pattern and data updates for $r$-simulation, and allow both node/edge insertions and deletions, which is a much more general setting that has not been studied in \cite{ArisLuca12,FanLMTWW10,FanWW13-tods}.
+
+
+
+\eat{
+, and
+For graph pattern matching problem, ~\cite{FanLMTWW10,FanWW13-tods} have proposed incremental algorithms dealing with data changes defined in terms of graph simulation, bounded simulation and subgraph isomorphism.
+
+
+%\cite{FanWW2014} investigated the issue to answer graph pattern queries using graph pattern views.
+%For team formation problem, \cite{GastonMarie05} studied the team formation problem on multi-agent networks in a setting where agents could adapt their network connectivity.
+\cite{ArisLuca12} proposed the online algorithms that assemble teams to deal with continuous coming tasks. team data inc.
+
+
+Our work differs from the prior work in the following.
+(1) \cite{FanLMTWW10,FanWW13-tods} focused on dynamic computing strategies only concerning with data changes, while we provided a unified framework to deal with both data and pattern changes.
+(2) For pattern change issue, \cite{FanWW2014} focused on accelerating the process to answer new queries with stored graph views, which are not capable to handle pattern changes.
+%\cite{ArisLuca12} focussed more on the load balancing aspect when dealing with a series of tasks. While we focus on immediately answering queries of users with given pattern changes to the original patterns.
+(3) \cite{FanLMTWW10,FanWW13-tods} have proved there exist bounded algorithms for single-data-edge deletion updates based on conventional incremental algorithms. However, existing approaches based on conventional incremental algorithms are proved unbounded when pattern incremental is concerned for any pattern update. Thus, we proposed a partition based framework comes with theoretical bounds in terms of \affballsx and \affballaccs that are essential for any incremental algorithms.
+}
+
+
+\stitle{Top-k queries}. Although top-$k$ queries (see~\cite{IlyasBS08} for a survey) have been investigated for both graph pattern matching and team formation~\cite{FanWW2013,Kargar11}.
+However, to our knowledge, neither team formation nor graph pattern matching  has been studied in a dynamic setting for top-$k$ queries.
+
+
+\eat{
+There has been works exploring top-$k$ query answering in both graph pattern matching and team formation~\cite{FanWW2013,Kargar11}.
+\cite{FanWW2013} studied the diversified top-$k$ graph pattern matching problem defined in terms of simulation.
+\cite{Kargar11} designed a procedure to find top-$k$ teams, which is an adaption of Lawler's procedure~\cite{Lawler1972} for calculating the top-$k$ answers to discrete optimization problems.
+This work differs from them in that besides finding top-$k$ teams in a static case, we consider finding top-$k$ teams in a pattern and data incremental manner.
+Closer to this work is \cite{EVMK12}, which devoted to discover top-$k$ dense subgraphs in a stream of graphs.
+It proposed a procedure with early termination property, a superior property which can accelerate the top-$k$ computing process.
+However, they utilize a sliding window to find top-$k$ dense subgraphs only contained in the window, such that their top-$k$ procedure is similar with the static case.
+It is difficult to use early termination for incremental algorithms. We define the {\em early return property}, an analogy to the early termination property for traditional top-$k$ algorithms and prove that our dynamic framework pertains this property.
+}
+
+
+
+\eat{
+
+\stitle{Team formulation}. finding a team of exports
+group recommendations
+\stitle{Keywords on Graphs}.
+\stitle{Graph pattern matching}.
+Subgraph Isomorphism; Graph Simulation; Dual Simulation; strong simulation.
+\stitle{Graphs density}.
+\stitle{Diversity}.
+
+\stitle{Graph pattern matching}.
+Graph pattern matching is often defined according to subgraph isomorphism~\cite{Aggarwal10,Galla06}, an \NP-complete problem. However, it is too restrictive to catch sensible matches in most cases, as it requires match subgraphs to have exactly the same topology as the pattern graph. Subsequently, to reduce the time complexity, graph simulation~\cite{ccs} has been adopted for pattern graph matching which can be determined in quadratic time. It devotes to preserve the child relationship of pattern graph, but it may fail to capture the topology of graphs and yield false matches or too large a match relation. To rectify these problems, strong simulation~\cite{MaCFHW11} imposes two additional constraints on graph simulation: the duality to preserve both parent and child relationships, also referred to as dual simulation~\cite{MaCFHW11}, and the locality to eliminate excessive matches. It is capable of capturing the topology in graph pattern matching and can be determined in cubic time.
+
+\stitle{Team formulation}.
+Lappas et al.~\cite{Lappas09} is the first to consider team formulation problem while minimizing the communication cost. By formalizing communication cost as diameter and the total weights of minimum spanning tree(MST) induced by the team, Lapps et al have proved the problem is \NP-hard, and they have proposed an approximation algorithms for minimizing the diameter with a guarantee 2 and a greedy algorithm with no approximation ratio for MST. Authors of~\cite{Kargar11} proposed a new communication cost function of minimizing the sum of distances between each pair of skill holders and provided a 2-approximation algorithm. They also introduced the problem of finding a team of experts with a leader while considering another new communication cost function of minimizing the the sum of distance between the leader and each of the skill holders in the team. Authors of~\cite{GajewarS12} generalized this problem to the case where for each required skill, multiple  experts possessing the skill are desired.
+%\cite{Chengte10} utilized MST as the metric of communication cost, but they have proposed algorithms with no approximation ratio.
+In \cite{GajewarS12}, density based measures are used as objectives, they have proposed a 3-approximation algorithm for single skill team formation problem(sTF), and  greedy algorithm with no approximation ratio for multiple skill team formation problem(mTF).
+
+\stitle{Graphs density}.
+As mentioned above, \cite{GajewarS12} has utilized density as a measure of collaborative compatibility, and the problem of finding densest subgraphs has been well-studied these years. Given a undirected data graph, finding a subgraph with maximum density~\cite{Goldberg84} can be solved optimally in polynomial time. However when there is a size constraint specified, the densest-k-subgraph problem, namely, finding a densest subgraph with exactly $k$ vertices becomes \NP-hard~\cite{FeigeML01,FeigePK01}. The algorithm developed by Feige et al. achieves the best approximation ratio for now~\cite{FeigePK01}. Andersen et al~\cite{Andersen09} considered the problem of finding dense subgraphs with specified upper and lower bounds on the number of vertices, the densest-at-least-k-subgraph (Dalks) problem and the densest-at-most-k-subgraph (Damks) problem. Khuller et al~\cite{Khuller09} have shown that Dalks is \NP-complete. Andersen et al have shown that Damks is nearly as hard to approximate as Dks and gave constant factor approximation algorithms for Dalks.
+
+}

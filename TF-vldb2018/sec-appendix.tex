@@ -1,0 +1,461 @@
+\newpage
+%\addtolength{\parskip}{0.25cm}
+%\newpage
+
+\addtolength{\parskip}{0.25cm}
+
+\vspace{2ex}
+\noindent
+{\large \textbf{Appendix A: Detailed Algorithms}}
+\label{sec-apd-algorithms}
+
+\noindent
+{\textbf{1. Procedure \rgraphsim (Section~\ref{subsec-teamF})}}
+
+\vspace{-2ex}
+\begin{figure}[h!]
+%\vspace{-2ex}
+\begin{center}
+{\small
+\myhrule
+\vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$, ball $\ball([v, r])$.\\
+{\sl Output:\/} The perfect subgraph $G_s$ of $\ball{[v,r]}$ \wrt $P$.\\
+\sstab \bcc \hspace{1ex} \= \For each $u \in V_{P}$ \Do\\
+\icc \>\hspace{2ex}\= $\matchs(u)$ := \{$w | w$ is in $\ball{[v, r]}$ and $l_P(u)\in l(w)$\};\\
+\icc \> \While there are changes \Do\\
+\icc \>\> \For each edge ($u, u'$) in $E_P$ and each node $w \in \matchs(u)$ \Do\\
+\icc \>\>\hspace{2ex}\= \If there is no edge ($w, w'$) in $\ball{[v, r]}$ with $w' \in \matchs(u')$ \Then\\
+\icc \>\>\>\hspace{2ex}\= $\matchs(u)$ := $\matchs(u) \setminus \{w\}$;\\
+\icc \> \If there exists $|\matchs(u)|\not\in f_{P}(u)$ \Then \Return $\emptyset$;\\
+\icc \> $\Reps$ := \{$(u,w) | u \in V_{P}, w \in \matchs(u)$\};\\
+\icc \> Construct the perfect subgraph $G_s$ \wrt $\Reps$;\\
+\icc \> \Return $G_s$;\\
+}
+
+\vspace{-5.5ex} \myhrule
+}
+\end{center}
+\vspace{-4ex}
+\caption{Procedure \rgraphsim} \label{alg-rsim}
+\vspace{-2ex}
+\end{figure}
+
+As shown in Fig~\ref{alg-rsim}, given $P$ and ball $\ball{[v, r]}$,
+\rgraphsim finds the perfect subgraph of $P$ and $\ball{[v, r]}$.
+For each node $u$ in $V_{P}$, it first computes the set $\matchs(u)$ of candidate matches $w$ containing the label of $u$ (lines 1-2),
+and then removes nodes from $\matchs(u)$ iteratively (lines 3-6).
+A node $w$ is removed from $\matchs(u)$ if there is a adjacent node $u'$ of $u$,
+but there exists no adjacent node $w'$ of $w$ such that $w'\in \matchs(u')$.
+Finally, it checks whether the capacity bound on each node $u$ is satisfied (line 7).
+If so, \rgraphsim constructs the perfect subgraph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 9-10).
+
+
+\noindent
+{\textbf{2. Algorithm \minp (Section~\ref{subsec-batch-opt})}}
+
+\vspace{-2ex}
+\begin{figure}[h!]
+%\vspace{-2ex}
+\begin{center}
+{\small
+\myhrule \vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/} Pattern graph $P(V_P$, $E_P)$.\\
+{\sl Output:\/} A minimum equivalent pattern graph $P_m$ of $P$.\\
+\sstab \bcc \hspace{1ex}\= \If $P$ is not a satisfiable pattern graph \Then \Return \bf{null}.\\
+\icc \> Compute the maximum match relation $\Reps$ of $P \eps P$;\\
+\icc \> Compute equivalent classes of nodes in $P$ based on $\Reps$;\\
+\icc \> Create a node for each equivalent class in $P_m$;\\
+\icc \> Connect different equivalent classes by necessary edges in $P_m$;\\
+\icc \> Compute the intersection of capacity bounds on nodes in each\\
+\>\hspace{0.5ex} equivalent class and put on the node in $P_m$;\\
+\icc \> \Return $P_m$;\\
+}
+\vspace{-6ex}
+
+\myhrule
+}
+\end{center}
+\vspace{-4ex}
+\caption{Algorithm \minp} \label{alg-minp}
+\vspace{-2ex}
+\end{figure}
+
+As shown in Fig.~\ref{alg-minp}, given a pattern $P$, \minp returns a minimum equivalent pattern $P_m$ of $P$.
+It firstly checks to see whether $P$ is satisfiable (line 1).
+If so, it computes the maximum match relation $\Reps$ by treating $P$ as both pattern and data graph via graph simulation (line 2),
+and then computes equivalent classes for nodes in $P$ such that $u$ and $w$ are in the same class iff both $(u, w)\in \Reps$ and $(w, u)\in \Reps$(line 3).
+It constructs $P_m$ (lines 4-6) by
+(a) creating a class node for $P_m$ for each equivalent class,
+(b) connecting the class nodes for $P_m$ iff there exist edges in $P$ connecting two pattern nodes which belong to two equivalent classes, and
+(c) computing the intersection of capacity bounds on pattern nodes in each equivalent class and put on the corresponding class node in $P_m$.
+\looseness=-1
+
+\vspace{-2ex}
+\etitle{Correctness \& Complexity}. The correctness of \minp is assured by following.
+(1) The maximum match relations returned by $P$ and $P_{m}$ on any data graph $G$ are always same via graph simulation.
+(2) The generated capacity bound on each node in $P_{m}$ assures that, the matched nodes of $P_{m}$ in $G$ always satisfy all capacity bounds on the nodes in $P$, which are in the same equivalent class.
+Till now, $P\equiv P_{m}$;
+(3) For any $P'$ that $P'\equiv P_{m}$, $|P_{m}|\leq|P'|$.
+Algorithm \minp is in $O(|P|^2)$ time, by the time complexity of graph simulation.
+
+\noindent
+{\textbf{3. Algorithm \kw{PFrag} (Section~\ref{subsec-framework})}}
+
+Algorithm \kw{PFrag} works by connecting the {\em pattern fragmentation} problem to the
+{\sc $(k, \nu)$-Balanced Partition} problem.
+It is to divide the nodes of a graph into $k$ components such that each component is of size no more than $\nu\cdot\frac{|V|}{k}$, and the number of edges between different components is minimized.
+As illustrated before, the $(k,\nu)$-balanced partition problem,
+though is not approximable in general, has a number of sophisticated heuristic algorithms~\cite{AndreevR06}.
+
+\vspace{-2ex}
+\begin{figure}[h!]
+\begin{center}
+{\small
+\begin{center}
+\myhrule \vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/} \= Pattern graph $P(V_{P},E_{P})$, integer $h$.\\
+{\sl Output:\/} An $h$-fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\} of $P$.\\
+\sstab \bcc \hspace{0.5ex} \= $k$ := $h$; $\nu$ := $h$; $M_P$ := $|P|$; $M_C$ := 0;\\
+\icc \> $({P}^\nu_{f1}, \ldots, {P}^\nu_{fh}, C^\nu)$ := $\kw{BalanceP}(k,\nu)$; \\
+\icc \> $M^\nu_P$ := $\kw{max}\{|{P}^\nu_{f1}|, \ldots, |{P}^\nu_{fh}|\}$; $M^\nu_C$ := $|C^\nu|$;\\
+\icc\> \While $\kw{max}\{M_P, M_C\} > \kw{max}\{M^\nu_P, M^\nu_C\}$ \Do\\
+\icc \>\hspace{2ex}\= ${P}_{f1}$ := ${P}^\nu_{f1}$, \ldots, ${P}_{fh}$ := ${P}^\nu_{fh}$;\\
+\icc \>\hspace{2ex}\= $C$ := $C^\nu$; $M_P$ := $M^\nu_P$; $M_C$ := $M^\nu_C$;\\
+\icc \>\> \If $M^\nu_P \geq M^\nu_C$ \Then $\nu := \frac{\nu}{2}$ \Else $\nu := \frac{3\nu}{2}$;\\
+\icc \>\> $({P}^\nu_{f1}, \ldots, {P}^\nu_{fh}, C)$ := $\kw{BalanceP}(k,\nu)$;\\
+\icc \>\> $M^\nu_P$ := $\kw{max}\{|{P}^\nu_{f1}|, \ldots, |{P}^\nu_{fh}|\}$; $M^\nu_C$ := $|C^\nu|$;\\
+\icc \> \Return \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\};
+}
+\vspace{-2.5ex} \myhrule
+\end{center}
+}
+\end{center}
+\vspace{-4ex}
+\caption{Algorithm \kw{PFrag} \label{alg-pfrag}}
+\vspace{-2ex}
+\end{figure}
+
+As shown in Fig.~\ref{alg-pfrag}, given $P$ and integer $h$,
+\kw{PFrag} finds an $h$-fragmentation for $P$ by recursively invoking algorithm $\kw{BalanceP}(k,\nu)$ for the {\sc $(k,\nu)$-Balanced partition} problem ($\nu\geq 1$) with different $\nu$,
+such that the final returned $h$-fragmentation strikes a balance between the size of each fragment ${P}_{fi}$ and the size of the cut $C$.
+More specifically, \kw{PFrag} maintains $M_P$ and $M_C$ as the size of the largest fragment ${P}_{fi}$ and the size of the cut respectively.
+Initially, it sets $M_P$ to $|P|$ and $M_C$ to 0 (line~1).
+It then invokes \kw{BalanceP} with both $k$ and $\nu$ being $h$, \ie has no constraints on the size of fragments of $P$ (line~2).
+After that, it iteratively checks whether the generated $h$-fragmentation can be improved (line~4) by adjusting $\nu$ in a {\em binary search style} (lines~4-9).
+If the current size $M^\nu_P$ of the largest fragment is no smaller than the size $M^\nu_C$ of the cut,
+it invokes \kw{BalanceP} with $h$ and $\frac{\nu}{2}$, or with $h$ and $\frac{3\nu}{2}$ otherwise (line~7).
+It returns the $h$-fragmentation if it cannot be improved anymore (line~10).
+
+\etitle{Correctness \& Complexity}.
+The correctness is obvious as \kw{PFrag} always returns an $h$-fragmentation.
+Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{BalanceP}}$ is the complexity of the algorithm for the {\sc $(k,\nu)$-Balanced Partition} problem. Indeed, \kw{PFrag} calls at most $\log h$ times \kw{BalanceP}, as $\nu\geq 1$.
+\looseness=-1
+
+
+\vspace{1ex}
+\noindent
+{\large \textbf{Appendix B: Detailed Proofs}}
+\label{sec-apd-proofs}
+
+\noindent
+{\textbf{1. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
+
+Incremental complexity is defined in terms of LP (locally persistent) graph algorithms \cite{Reps96}.
+We also adopt the notion to prove unboundedness of graph algorithms for \dynteamF.
+
+\vspace{-1.5ex}
+The proofs below strictly follows the one in \cite{Reps96}.
+
+\vspace{-1.5ex}
+\begin{figure}[h!]
+\label{fig-inc-complexity-data}
+\begin{center}
+\includegraphics[scale=0.31]{./fig/inc-complexity-proof-data.eps}
+\end{center}
+\vspace{-3ex}
+\caption{Unboundedness of unit data update}
+\vspace{-2ex}
+\end{figure}
+
+\etitle{(I) \dynteamF\, is unbounded for unit data update}.
+%Following \cite{Reps96, FanWW13-tods},
+Consider the following pattern and data graph, and unit data updates.
+Let data graph $G$ consist of two chains ($a_1$, $b_1$, $c_1$, \ldots, $a_n$, $b_n$, $c_n$) and ($a_{n+1}$, $b_{n+1}$, $c_{n+1}$, \ldots, $a_{2n}$, $b_{2n}$, $c_{2n}$) where $a_i$, $b_i$ and $c_i$ have labels $A$, $B$ and $C$ respectively.
+Let pattern graph be a triangle with nodes $a$, $b$ and $c$ with labels $A$, $B$ and $C$ respectively.
+Consider two unit edge insertions $\delta_1$ = $(c_n$, $a_{n+1})^+$ and $\delta_2$ = $(c_{2n}$, $a_1)^+$,
+and set $k = 1$ and $r$ = $6n$.
+Let $H_1$ and $H_2$ denote the graphs $G\oplus \delta_1$ and $G\oplus \delta_2$, respectively.
+Obviously, $L_{k}(P, G) = L_{k}(P, H_1) = L_{k}(P, H_2) = \emptyset$,
+while $L_{k}(P, H_1\oplus \delta_2) \neq \emptyset$.
+Assume that there exists a locally persistent incremental algorithm ${\cal A}$ for \dynteamF.
+Let $Trace(G', \delta')$ denote the sequence of steps executed by ${\cal A}$ in processing some update $\delta'$ to some graph $G'$.
+Now consider the following two instances: the application of update $\delta_2$ to $G$ and the application of update $\delta_2$ to graph $H_1$.
+Obviously, the update process must behave differently in these two cases, and $Trace(G, \delta_2)$ must be different from $Trace(H_1, \delta_2)$
+(because many nodes of $H_1\oplus \delta_2$ are affected, while no node in $G\oplus \delta_2$ is affected).
+Since a locally persistent algorithm makes no use of global storage, this can happen only both $Trace(G, \delta_2)$ and $Trace(H_1, \delta_2)$ include a visit to some node $w$ that contains different information in the graphs $G$ and $H_1$.
+However, $H_1$ was obtained from $G$ by applying update $\delta_1$.
+Hence the information at node $w$ must have been changed during the updating of applying $\delta_1$ to $G$.
+Therefore, $Trace(G, \delta_1)$ must also contain a visit to node $w$.
+As a characteristic of locally persistent algorithms is that if a node $w$ is visited during the updating of applying change $\delta'$ to graph $G'$,
+then every node on some path in $G'$ from a modified node of $\delta'$ to $w$ must have been visited.
+Therefore, $Trace(G, \delta_1)$ and $Trace(G, \delta_2)$ both contain a visit to $w$,
+from the nodes in $\delta_1$ and $\delta_2$, respectively.
+Thus, $Trace(G, \delta_1)$ and $Trace(G, \delta_2)$ include visits to every node on the path from $c_n$ or $a_{n+1}$ to $c_{2n}$ or $a_1$ respectively.
+Hence, the time taken for processing update $\delta_1$ to $G$ plus the time taken for processing update $\delta_2$ to $G$ must be no smaller than the distance between $c_n$ or $a_{n+1}$ to $c_{2n}$ or $a_1$, \ie $n$, which is not a constant.
+However, $|\kw{AFF}|$ in both cases are 1, such that the complexity of the incremental algorithm ${\cal A}$ cannot be measured by a function of $|\kw{AFF}|$.
+Thus, ${\cal A}$ is not a bounded locally persistent incremental algorithm.
+%which contradicts the assumption.
+
+\vspace{-1.5ex}
+That is, \dynteamF\, is unbounded even for $k=1$ and unit data update.
+\looseness=-1
+
+\vspace{-1ex}
+\begin{figure}[h!]
+\label{fig-inc-complexity-pattern}
+\begin{center}
+\includegraphics[scale=0.31]{./fig/inc-complexity-proof-pattern.eps}
+\end{center}
+\vspace{-3ex}
+\caption{Unboundedness of unit pattern update}
+\vspace{-1.5ex}
+\end{figure}
+
+\vspace{-1ex}
+\etitle{(II) \dynteamF\, is unbounded for unit pattern update}.
+Consider the following pattern and data graph, and unit pattern updates.
+Let data graph $G$ be a cycle ($a'_1$, $b'_1$, $c'_1$, $d'_1$, \ldots, $a'_m$, $b'_m$, $c'_m$, $d'_m$, $a'_1$),
+where $a'_i$, $b'_i$, $c'_i$ and $d'_i$ have labels $A$, $B$, $C$ and $D$ respectively.
+Let pattern graph be a cycle ($a_1$, $b_1$, $c_1$, $d_1$, \ldots, $a_n$, $b_n$, $c_n$, $d_n$, $a_{n+1}$, $b_{n+1}$, $c_{n+1}$, $d_{n+1}$, \ldots, $a_{2n}$, $b_{2n}$, $c_{2n}$, $d_{2n}$, $a_1$) and two extra edges ($a_1$, $c_1$) and ($b_{n+1}$, $d_{n+1}$),
+where $a_i$, $b_i$, $c_i$ and $d_i$ have labels $A$, $B$, $C$ and $D$ respectively.
+Consider two unit edge deletions $\delta_1$ = $(a_1$, $c_1)^-$ and $\delta_2$ = $(b_{n+1}$, $d_{n+1})^-$,
+and set $k = 1$ and $r$ = $4m$.
+Let $H_1$ and $H_2$ denote the graphs $P\oplus \delta_1$ and $P\oplus \delta_2$, respectively.
+Obviously, $L_{k}(P, G) = L_{k}(H_1, G) = L_{k}(H_2, G) = \emptyset$,
+while $L_{k}(H_1\oplus \delta_2, G) \neq \emptyset$.
+Assume there exists a locally persistent incremental algorithm ${\cal A}$ for \dynteamF.
+Let $Trace(P', \delta')$ denote the sequence of steps executed by ${\cal A}$ in processing some update $\delta'$ to some pattern $P'$.
+Now consider two instances: the application of update $\delta_2$ to $P$ and the application of update $\delta_2$ to $H_1$.
+Obviously, the update process must behave differently in these two cases, and $Trace(P, \delta_2)$ must be different from $Trace(H_1, \delta_2)$
+(because many nodes in $G$ for $H_1\oplus \delta_2$ are affected, while no node in $G$ for $P\oplus \delta_2$ is affected).
+Since a locally persistent algorithm makes no use of global storage,
+this can happen only both $Trace(P, \delta_2)$ and $Trace(H_1, \delta_2)$ include a visit to some node $w$ that contains different information in $P$ and $H_1$.
+However, $H_1$ was obtained from $P$ by applying $\delta_1$.
+Hence the information at node $w$ must have been changed during the updating of applying $\delta_1$ to $P$.
+Therefore, $Trace(P, \delta_1)$ must also contain a visit to node $w$.
+%As a characteristic of locally persistent algorithms is that if a node $w$ is visited during the updating of applying update $\delta'$ to pattern $P'$,
+%then every node in some path in $P'$ from a modified node of $\delta'$ to $w$ must have been visited.
+According to the characteristics of locally persistent algorithms as illustrated in the data updates case,
+$Trace(P, \delta_1)$ and $Trace(P, \delta_2)$ both contain a visit to $w$,
+from the nodes in $\delta_1$ and $\delta_2$, respectively.
+Thus, $Trace(P, \delta_1)$ and $Trace(P, \delta_2)$ include visits to every node on the path from $a_1$ or $c_1$ to $b_{n+1}$ or $d_{n+1}$ respectively.
+Hence, the time taken for processing $\delta_1$ to $P$ plus the time taken for processing $\delta_2$ to $P$ must be no smaller than the distance between $a_1$ or $c_1$ to $b_{n+1}$ or $d_{n+1}$, \ie $4n$, which is not a constant.
+However, $|\kw{AFF}|$ in both cases are 1, such that the complexity of algorithm ${\cal A}$ cannot be measured by a function of $|\kw{AFF}|$.
+Thus, ${\cal A}$ is not a bounded locally persistent incremental algorithm.
+%which contradicts the assumption.
+That is, \dynteamF\, is unbounded even for $k=1$ and unit pattern update.
+
+\vspace{-1.5ex}
+(1) and (2) together prove that \dynteamF\, is unbounded even for $k=1$ and unit pattern or data update.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[tb!]
+%\begin{widepage}
+\vspace{-2ex}
+\begin{center}
+%\hspace{-5.5ex}
+\subfigure[{\scriptsize Varying $|V_{P}|$ (\youtube)}]{\label{fig-exp-semantic-youtube-diameter}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-diameter.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $|V_{P}|$ (\youtube)}]{\label{fig-exp-semantic-youtube-density}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-density.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $|V_{P}|$ (\youtube)}]{\label{fig-exp-semantic-youtube-capacity}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-capacity.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $|V_{P}|$ (\youtube)}]{\label{fig-exp-semantic-youtube-link}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-link.eps}}
+\vspace{-2.5ex}
+
+%\hspace{-5.5ex}
+\subfigure[{\scriptsize Varying $k$ (\youtube)}]{\label{fig-exp-semantic-youtube-diameter-varyk}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-diameter-varyk.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $k$ (\youtube)}]{\label{fig-exp-semantic-youtube-density-varyk}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-density-varyk.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $k$ (\youtube)}]{\label{fig-exp-semantic-youtube-capacity-varyk}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-capacity-varyk.eps}}
+\hspace{0.2ex}
+\subfigure[{\scriptsize Varying $k$ (\youtube)}]{\label{fig-exp-semantic-youtube-link-varyk}
+\includegraphics[scale=0.37]{./fig/youtube-semantic-link-varyk.eps}}
+\vspace{-2.0ex}
+
+\end{center}
+\vspace{-2.0ex}
+\caption{Performance evaluation of \optgrouprec for top-$k$ team formation problem}
+\label{exp-semantic-effectiveness-youtube}
+%\end{widepage}
+%\vspace{-0.5ex}
+\end{figure*}
+
+
+\begin{figure*}[tb!]
+%\begin{widepage}
+\vspace{-1.5ex}
+\begin{center}
+%\hspace{-5.5ex}
+\subfigure[{\scriptsize Varying $|\Delta P|$ (deletions)}]{\label{fig-exp-patinc-del-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-deletion.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta P|$ (insertions)}]{\label{fig-exp-patinc-ins-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-insertion.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta P|$ (capacity)}]{\label{fig-exp-patinc-cap-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-capchange.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta P|$ (hybrid updates)}]{\label{fig-exp-patinc-hyb-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-hybrid.eps}}
+\vspace{-2.5ex}
+
+%\hspace{-5.5ex}
+\subfigure[{\scriptsize Varying $|\Delta G|$ (deletions)}]{\label{fig-exp-datainc-del-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-data-deletion.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta G|$ (insertions)}]{\label{fig-exp-datainc-ins-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-data-insertion.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta G|$ (hybrid updates)}]{\label{fig-exp-datainc-hyb-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-data-hybrid.eps}}
+\hspace{-1.7ex}
+\subfigure[{\scriptsize Vary $(|\Delta P|,|\Delta G|)$ (simultaneous)}\hspace{-4.5ex}]{\label{fig-exp-hyb-patdata-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-data.eps}}
+\vspace{-2.5ex}
+
+%\hspace{-5.5ex}
+\subfigure[{\scriptsize Varying $|\Delta P|$ in update sets}]{\label{fig-exp-patinc-multi-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-multi.eps}}
+%\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $|\Delta G|$ in update sets}]{\label{fig-exp-datainc-multi-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-data-multi.eps}}
+%\hspace{-1.7ex}
+\subfigure[{\scriptsize Varying $(|\Delta P|,|\Delta G|)$ in update sets}\hspace{-5.5ex}]{\label{fig-exp-hyb-datapat-multi-youtube}
+\includegraphics[scale=0.395]{./fig/youtube-pattern-data-multi.eps}}
+%\hfill
+\vspace{-2.5ex}
+
+\end{center}
+\vspace{-2.0ex}
+\caption{Performance evaluation of \inc for dynamic top-$k$ team formation problem (\youtube)}
+\label{exp-inc-youtube}
+%\end{widepage}
+\vspace{-4ex}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\noindent
+{\textbf{2. Proof of Proposition~\ref{prop-fragmentation}}}
+
+The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
+is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
+(a) $\max_i |P_{fi}| \leq r_1\cdot\frac{|P|}{h}$ and (b) $|C|\leq r_2|P|$.
+
+\vspace{-2ex}
+\etitle{Upper bound.} We show the \NP upper bound by providing an \NP algorithm to determine whether there exists an $h$-fragmentation of $P$.\,Given $P$, the algorithm works as follows.
+\looseness=-1
+
+\vspace{-1.8ex}
+\sstab{(1)} Guess an $h$-fragmentation ${\cal P}_h$ of $P$.
+
+\vspace{-1.8ex}
+\sstab{(2)} Check whether it satisfies restrictions of $r_1$ and $r_2$ (conditions (a) and (b) in the definition of $\kw{dOFGP}$).
+If so, return yes, otherwise go to the first step and guess another instance.
+
+\vspace{-1.5ex}
+The algorithm is in \NP since step~(2) can be checked in \PTIME (liner time, indeed).
+
+\vspace{-2.5ex}
+\etitle{Lower bound.}
+We next show that it is \NP-hard to determine whether there exists an $h$-fragmentation and remains \NP-hard even when $h$ = 2,
+by reduction from the {\em minimum cut} problem, which is known \NP-complete\footnote{\small http://www.nada.kth.se/$\sim$viggo/wwwcompendium/node85.html}.
+
+\vspace{-2ex}
+An instance of the minimum cut problem is given an undirected graph $H=(V_{H},E_{H})$ and a positive integer $m$,
+to find a set $S \subseteq E_{H}$ of edges whose removal leaves two disjoint connected components, with $|S|\leq m$.
+
+\vspace{-2ex}
+Given an instance of the minimum cut problem,
+we construct an instance of $h$-fragmentation problem.
+It can be achieved by taking $H$ as $P$, and setting $h=2$, $r_1=h$ and $r_2 = m/|P|$.
+Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.
+
+
+\noindent
+{\textbf{3. Proof of Theorem~\ref{thm-compose}}}
+
+We will prove the theorem by induction.
+Given pattern $P(V_P,E_P)$ and its fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\},
+we use $P^{C}(V_{P^{C}},E_{P^{C}})$ to denote the pattern with $V_{P^{C}}$=$V_P$ and $E_{P^{C}}$=$E_P/C$.
+%we use $P^{C}(V_P,E_P/C)$ to denote the pattern with the same node set $V_P$ with $P$, and edges excluding the cut $C$ from $E_P$.
+Graph simulation is an iterative process to remove unmatched nodes from the candidate nodes,
+as illustrated in Fig.~\ref{alg-rsim} (lines~1-6).
+We utilize $M_{C}^{k}$ (resp. $M_{i}^{k}$, $M^{k}$) to denote the match relation for $P^{C}$ (resp. $P_{fi}$, $P$) in $\ball{}$ in the $kth$ iteration.
+By the definition of graph simulation, we have $M_{C}^{k}$ = $\bigcup_{i=1}^{h}M_{i}^{k}$.
+To prove $M\subseteq\bigcup_{i=1}^{h}M_{i}$,
+we next prove $M^{k}\subseteq M_{C}^{k}$ for each iteration instead.
+
+\vspace{-1.8ex}
+\sstab{(1)} For $k=0$, \ie the initialization step of graph simulation algorithm,
+the algorithm computes the set of candidate matches for each pattern node with the same label.
+As $P$ and $P^{C}$ have exactly the same node set, we have $M^{0}= M_{C}^{0}$.
+
+\vspace{-1.8ex}
+\sstab{(2)} For $k=n$ $(n\geq 0)$, if $M^{n}\subseteq M_{C}^{n}$ exists, we prove $M^{n+1}\subseteq M_{C}^{n+1}$ exists in the $(n+1)th$ iteration.
+Suppose both $(u,w)\in M^{n}$ and $(u,w)\in M_{C}^{n}$ exist,
+and in the $(n+1)th$ iteration, $(u,w)$ is removed from $M_{C}^{n}$ if there is a adjacent node $u'$ of $u$ in $P_{C}$,
+but there exists no adjacent node $w'$ of $w$ in $G$ such that $(u',w')\in M_{C}^{n}$.
+Therefore, $(u,w)$ must be removed from $M^{n}$ as $E_{P^{C}} \subseteq E_{P}$,
+that is, the edge $(u,u')$ in $E_{P^{C}}$ must belong to $E_{P}$.
+Thus, we have $M^{n+1}\subseteq M_{C}^{n+1}$.
+
+\vspace{-1.5ex}
+By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
+
+\vspace{1ex}
+\noindent
+{\large \textbf{Appendix C: Extra Experiments}}
+\label{sec-apd-exp}
+
+\vspace{-0.5ex}
+The experimental results on a real-life dataset \youtube are reported here.
+
+{\em \youtube}~\cite{youtubeWeb} contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
+
+\vspace{-1.8ex}
+\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis, \denalk on \youtube \wrt three measurements.
+The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
+We find \optgrouprec strikes a balance at capturing the practical requirements.
+
+\vspace{-1.8ex}
+\stitle{Exp-2: Efficiency of \inc for one set of updates}. Varying the amount of updates in one update set from 4.5\% to 45\% for pattern updates, 2.5\% to 25\% for data updates, and (4.5\%, 2.5\%) to (31.5\%, 17.5\%) for simultaneous updates, the results are reported in Fig.~\ref{fig-exp-patinc-del-youtube} to~\ref{fig-exp-hyb-patdata-youtube}.
+We find \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\Delta P$, $\Delta G)$ are no more than 31.5\%, 20\% and (27\%, 15\%).
+%for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
+
+\vspace{-1.8ex}
+\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of updates,
+varying the amount of updates from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
+and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
+We evaluated the average time took by \inc to process these sets of updates one by one.
+The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
+We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous updates respectively.
+
+\vspace{-1.8ex}
+\stitle{Exp-4: Physical storage of auxiliary structures}. It takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
+\ie 50.8\% compared with the original dataset.
