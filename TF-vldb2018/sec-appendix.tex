@@ -10,7 +10,7 @@
 \label{sec-apd-algorithms}
 
 \noindent
-{\textbf{1. Procedure \rgraphsim (Section~\ref{subsec-teamF})}}
+{\textbf{1. Procedure \rgraphsim (Section~\ref{sec-tsimAlg})}}
 
 \vspace{-2ex}
 \begin{figure}[h!]
@@ -20,7 +20,7 @@
 \myhrule
 \vspace{-2ex}
 \mat{0ex}{
-\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$, ball $\ball([v, r])$.\\
+\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$ and ball $\ball([v, r])$.\\
 {\sl Output:\/} The perfect subgraph $G_s$ of $\ball{[v,r]}$ \wrt $P$.\\
 \sstab \bcc \hspace{1ex} \= \For each $u \in V_{P}$ \Do\\
 \icc \>\hspace{2ex}\= $\matchs(u)$ := \{$w | w$ is in $\ball{[v, r]}$ and $l_P(u)\in l(w)$\};\\
@@ -51,7 +51,7 @@ but there exists no adjacent node $w'$ of $w$ such that $w'\in \matchs(u')$.
 Finally, it checks whether the capacity bound on each node $u$ is satisfied (line 7).
 If so, \rgraphsim constructs the perfect subgraph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 9-10).
 
-
+\eat{%%EAT
 \noindent
 {\textbf{2. Algorithm \minp (Section~\ref{subsec-batch-opt})}}
 
@@ -100,11 +100,12 @@ It constructs $P_m$ (lines 4-6) by
 Till now, $P\equiv P_{m}$;
 (3) For any $P'$ that $P'\equiv P_{m}$, $|P_{m}|\leq|P'|$.
 Algorithm \minp is in $O(|P|^2)$ time, by the time complexity of graph simulation.
+}%%%EAT
 
 \noindent
-{\textbf{3. Algorithm \kw{PFrag} (Section~\ref{subsec-framework})}}
+{\textbf{3. Algorithm \kw{PFrag} (Section~\ref{sec-dynamictopk})}}
 
-Algorithm \kw{PFrag} works by connecting the {\em pattern fragmentation} problem to the
+\kw{PFrag} works by connecting the {\em pattern fragmentation} problem to the
 {\sc $(k, \nu)$-Balanced Partition} problem.
 It is to divide the nodes of a graph into $k$ components such that each component is of size no more than $\nu\cdot\frac{|V|}{k}$, and the number of edges between different components is minimized.
 As illustrated before, the $(k,\nu)$-balanced partition problem,
@@ -117,7 +118,7 @@ though is not approximable in general, has a number of sophisticated heuristic a
 \begin{center}
 \myhrule \vspace{-2ex}
 \mat{0ex}{
-\sstab {\sl Input:\/} \= Pattern graph $P(V_{P},E_{P})$, integer $h$.\\
+\sstab {\sl Input:\/} \= Pattern graph $P(V_{P},E_{P})$ and integer $h$.\\
 {\sl Output:\/} An $h$-fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\} of $P$.\\
 \sstab \bcc \hspace{0.5ex} \= $k$ := $h$; $\nu$ := $h$; $M_P$ := $|P|$; $M_C$ := 0;\\
 \icc \> $({P}^\nu_{f1}, \ldots, {P}^\nu_{fh}, C^\nu)$ := $\kw{BalanceP}(k,\nu)$; \\
@@ -150,6 +151,7 @@ If the current size $M^\nu_P$ of the largest fragment is no smaller than the siz
 it invokes \kw{BalanceP} with $h$ and $\frac{\nu}{2}$, or with $h$ and $\frac{3\nu}{2}$ otherwise (line~7).
 It returns the $h$-fragmentation if it cannot be improved anymore (line~10).
 
+\vspace{-1.5ex}
 \etitle{Correctness \& Complexity}.
 The correctness is obvious as \kw{PFrag} always returns an $h$-fragmentation.
 Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{BalanceP}}$ is the complexity of the algorithm for the {\sc $(k,\nu)$-Balanced Partition} problem. Indeed, \kw{PFrag} calls at most $\log h$ times \kw{BalanceP}, as $\nu\geq 1$.
@@ -162,7 +164,11 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 \label{sec-apd-proofs}
 
 \noindent
-{\textbf{1. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
+{\textbf{1. Proof of Theorem~\ref{thm-tsim-radius}}}
+
+
+\noindent
+{\textbf{2. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
 
 Incremental complexity is defined in terms of LP (locally persistent) graph algorithms \cite{Reps96}.
 We also adopt the notion to prove unboundedness of graph algorithms for \dynteamF.
@@ -359,9 +365,40 @@ That is, \dynteamF\, is unbounded even for $k=1$ and unit pattern update.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\noindent
+{\textbf{3. Proof of Theorem~\ref{thm-compose}}}
+
+We will prove the theorem by induction.
+Given pattern $P(V_P,E_P)$ and its fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\},
+we use $P^{C}(V_{P^{C}},E_{P^{C}})$ to denote the pattern with $V_{P^{C}}$=$V_P$ and $E_{P^{C}}$=$E_P/C$.
+%we use $P^{C}(V_P,E_P/C)$ to denote the pattern with the same node set $V_P$ with $P$, and edges excluding the cut $C$ from $E_P$.
+Graph simulation is an iterative process to remove unmatched nodes from the candidate nodes,
+as illustrated in Fig.~\ref{alg-rsim} (lines~1-6).
+We utilize $M_{C}^{k}$ (resp. $M_{i}^{k}$, $M^{k}$) to denote the match relation for $P^{C}$ (resp. $P_{fi}$, $P$) in $\ball{}$ in the $kth$ iteration.
+By the definition of graph simulation, we have $M_{C}^{k}$ = $\bigcup_{i=1}^{h}M_{i}^{k}$.
+To prove $M\subseteq\bigcup_{i=1}^{h}M_{i}$,
+we next prove $M^{k}\subseteq M_{C}^{k}$ for each iteration instead.
+
+\vspace{-1.8ex}
+\sstab{(1)} For $k=0$, \ie the initialization step of graph simulation algorithm,
+the algorithm computes the set of candidate matches for each pattern node with the same label.
+As $P$ and $P^{C}$ have exactly the same node set, we have $M^{0}= M_{C}^{0}$.
+
+\vspace{-1.8ex}
+\sstab{(2)} For $k=n$ $(n\geq 0)$, if $M^{n}\subseteq M_{C}^{n}$ exists, we prove $M^{n+1}\subseteq M_{C}^{n+1}$ exists in the $(n+1)th$ iteration.
+Suppose both $(u,w)\in M^{n}$ and $(u,w)\in M_{C}^{n}$ exist,
+and in the $(n+1)th$ iteration, $(u,w)$ is removed from $M_{C}^{n}$ if there is a adjacent node $u'$ of $u$ in $P_{C}$,
+but there exists no adjacent node $w'$ of $w$ in $G$ such that $(u',w')\in M_{C}^{n}$.
+Therefore, $(u,w)$ must be removed from $M^{n}$ as $E_{P^{C}} \subseteq E_{P}$,
+that is, the edge $(u,u')$ in $E_{P^{C}}$ must belong to $E_{P}$.
+Thus, we have $M^{n+1}\subseteq M_{C}^{n+1}$.
+
+\vspace{-1.5ex}
+By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
+
 
 \noindent
-{\textbf{2. Proof of Proposition~\ref{prop-fragmentation}}}
+{\textbf{4. Proof of Proposition~\ref{prop-fragmentation}}}
 
 The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
 is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
@@ -396,37 +433,22 @@ we construct an instance of $h$-fragmentation problem.
 It can be achieved by taking $H$ as $P$, and setting $h=2$, $r_1=h$ and $r_2 = m/|P|$.
 Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.
 
+\noindent
+{\textbf{5. Proof of Proposition~\ref{prop-canaffballs}}}
+
+We will prove the proposition by contradiction.
+When $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.
+\identifyaffball identifies \affballsx who already match with each fragment of $P$;
+Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
+there must exist an update in $\Delta P$ on $P_{fi}$,
+such that the ball may match with the updated fragment $P_{fi}\oplus \Delta P$.
+Therefore, \identifyaffball filters out the balls that do not match with a fragment of $P$, and there are no pattern updates on the fragment.
 
 \noindent
-{\textbf{3. Proof of Theorem~\ref{thm-compose}}}
-
-We will prove the theorem by induction.
-Given pattern $P(V_P,E_P)$ and its fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\},
-we use $P^{C}(V_{P^{C}},E_{P^{C}})$ to denote the pattern with $V_{P^{C}}$=$V_P$ and $E_{P^{C}}$=$E_P/C$.
-%we use $P^{C}(V_P,E_P/C)$ to denote the pattern with the same node set $V_P$ with $P$, and edges excluding the cut $C$ from $E_P$.
-Graph simulation is an iterative process to remove unmatched nodes from the candidate nodes,
-as illustrated in Fig.~\ref{alg-rsim} (lines~1-6).
-We utilize $M_{C}^{k}$ (resp. $M_{i}^{k}$, $M^{k}$) to denote the match relation for $P^{C}$ (resp. $P_{fi}$, $P$) in $\ball{}$ in the $kth$ iteration.
-By the definition of graph simulation, we have $M_{C}^{k}$ = $\bigcup_{i=1}^{h}M_{i}^{k}$.
-To prove $M\subseteq\bigcup_{i=1}^{h}M_{i}$,
-we next prove $M^{k}\subseteq M_{C}^{k}$ for each iteration instead.
-
-\vspace{-1.8ex}
-\sstab{(1)} For $k=0$, \ie the initialization step of graph simulation algorithm,
-the algorithm computes the set of candidate matches for each pattern node with the same label.
-As $P$ and $P^{C}$ have exactly the same node set, we have $M^{0}= M_{C}^{0}$.
-
-\vspace{-1.8ex}
-\sstab{(2)} For $k=n$ $(n\geq 0)$, if $M^{n}\subseteq M_{C}^{n}$ exists, we prove $M^{n+1}\subseteq M_{C}^{n+1}$ exists in the $(n+1)th$ iteration.
-Suppose both $(u,w)\in M^{n}$ and $(u,w)\in M_{C}^{n}$ exist,
-and in the $(n+1)th$ iteration, $(u,w)$ is removed from $M_{C}^{n}$ if there is a adjacent node $u'$ of $u$ in $P_{C}$,
-but there exists no adjacent node $w'$ of $w$ in $G$ such that $(u',w')\in M_{C}^{n}$.
-Therefore, $(u,w)$ must be removed from $M^{n}$ as $E_{P^{C}} \subseteq E_{P}$,
-that is, the edge $(u,u')$ in $E_{P^{C}}$ must belong to $E_{P}$.
-Thus, we have $M^{n+1}\subseteq M_{C}^{n+1}$.
-
-\vspace{-1.5ex}
-By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
+{\textbf{6. Proof of Proposition~\ref{prop-affected-datainc}}}
+	
+The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
+\identifyaffball filters out the balls that cannot match all fragments,	and there are no data updates on the ball.
 
 \vspace{1ex}
 \noindent
@@ -434,12 +456,15 @@ By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 \label{sec-apd-exp}
 
 \vspace{-0.5ex}
-The experimental results on a real-life dataset \youtube are reported here.
 
-{\em \youtube}~\cite{youtubeWeb} contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
+We also used another real-life dataset {\em \youtube}~\cite{youtubeWeb} for experimental verification.
+It contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
+
+\vspace{-1.5ex}
+The experimental results on \youtube are reported here.
 
 \vspace{-1.8ex}
-\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis, \denalk on \youtube \wrt three measurements.
+\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis, \denalk on \youtube \wrt four quality measures.
 The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
 We find \optgrouprec strikes a balance at capturing the practical requirements.
 

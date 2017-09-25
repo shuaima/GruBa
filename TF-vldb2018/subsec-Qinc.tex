@@ -57,16 +57,6 @@ then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffb
 
 The proof is deferred to Appendix.
 
-\eat{
-\proofS
-When $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.
-\identifyaffball identifies \affballsx who already match with each fragment of $P$;
-Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
-there must exist an update in $\Delta P$ on $P_{fi}$,
-such that the ball may match with the updated fragment $P_{fi}\oplus \Delta P$.
-Therefore, \identifyaffball filters out the balls that do not match with a fragment of $P$, and there are no pattern updates on the fragment.
-\eop}
-
 
 %\vspace{1ex}
 \stitle{Lazy update policy}. To reduce computation, \incp only updates the partial relations for \affballsx in $\tilde{M}(P,G)$ for computing  $L_k(P\oplus \Delta P, G)$.
