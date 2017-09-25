@@ -557,16 +557,16 @@ Shuai Ma \hspace{2ex} Jia Li \hspace{2ex} Chunming Hu \hspace{2ex} Xudong Liu \h
 
 \begin{abstract}
 Finding a list of $k$ teams of experts, referred to as {\em top-$k$ team formation}, with the required skills and high collaboration compatibility has been extensively studied.
-However, existing methods do not consider the specific collaboration relationships among team members, \ie structural constraints, which are typically needed in practice.
-In this paper, we first propose a novel graph pattern matching approach for top-$k$ team formation, which incorporates structural constraints and capacity bounds.
-\revise{
-Furthermore, we formulate and study the dynamic top-$k$ team formation problem, on account of that team formation is accompanied with a highly dynamic environment,
-to continuously process both user input and data updates,
-which as far as we know, has never been considered by previous study.}
+However, existing methods have not considered the specific collaboration relationships among different team members, \ie structural constraints, which are typically needed in practice.
+In this study, we first propose a novel graph pattern matching approach for top-$k$ team formation, which incorporates both structural constraints and capacity bounds.
+Second, we formulate and study the dynamic top-$k$ team formation problem due to the growing need of a dynamic environment.
+To continuously deal with both pattern and data updates, we develop an unified incremental approach with an optimization to handle continuous pattern and data updates, separately and simultaneously. 
 \eat{
+To
+which as far as we know, has never been considered by previous study.
 Different with existing work on devising incremental algorithms for data updates that can only compute changes to results in response to updates, there are no incremental algorithms for pattern updates with performance guarantees due to the inherent hardness, which to our knowledge has not been investigated before.
 }%%%EAT
-We then develop an unified incremental approach with an optimization to handle continuous pattern and data updates, separately and simultaneously. Using real-life and synthetic data, we  finally demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) top-$k$ team formation.
+Finally, using real-life and synthetic data, we conduct an extensive experimental study to show the effectiveness and efficiency of our graph pattern matching approach for (dynamic) top-$k$ team formation.
 \end{abstract}
 
 
