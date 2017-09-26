@@ -53,7 +53,7 @@ Pattern graphs are typically small, and we only consider  satisfiable patterns i
 \revise{
 \stitle{Incremental computing for radius varied balls}. Recall that given $G$, $P$, $k$ and $r$, \teamF\,is to find top-$k$ teams within balls $\ball{[v, t]}$, where $v \in V$ and $t \in [1,r]$.
 %centered at each node in $G$ with radius $t$ varying from 1 to $r$.
-However, it is extremely costly to construct all such balls, \ie $r|V|$ balls, to compute perfect subgraphs residing in them. 
+However, it is extremely costly to construct all such balls, \ie $r\cdot|V|$ balls, to compute perfect subgraphs residing in them. 
 Instead, \grouprec only constructs and computes the matches for a number of $|V|$ balls, \ie the set of balls $\ball{[v, r]}$ 
 where $v \in V$ and radius is $r$ , 
 and then incrementally computes the perfect subgraphs for balls $\ball{[v, t]}$ ($t \in [1,r-1]$) from the match graphs for ball $\ball{[v, r]}$ who shares the same center node. The correctness of \grouprec is assured by the theorem below.

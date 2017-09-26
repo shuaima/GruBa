@@ -272,6 +272,7 @@ By storing $\tilde{M}(P,G)$, we can get $\bigcup_{i=1}^{h}M_{i}$ for a ball $\ba
 Then we can do an update computation on $M_i$ while leaving other parts unchanged. That is, to compute $P_{fi}\oplus\Delta P(\ball{})$ instead of $P\oplus\Delta P(\ball{})$, and to combine $P_{fi}\oplus\Delta P(\ball{})$ with the other parts to derive $P\oplus\Delta P(\ball{})$.
 Even better, the updates $\Delta P$ on $C$ of $P$ only involve with the combination process, avoiding the computation for any pattern fragments.
 
+\vspace{0.8ex}
 Intuitively, we want (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
 Thus we define the {\em pattern fragmentation} problem. Given $P$ and a positive integer $h$, it is to find
 an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
