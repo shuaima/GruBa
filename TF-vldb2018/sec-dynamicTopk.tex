@@ -273,10 +273,10 @@ Then we can do an update computation on $M_i$ while leaving other parts unchange
 Even better, the updates $\Delta P$ on $C$ of $P$ only involve with the combination process, avoiding the computation for any pattern fragments.
 
 \vspace{0.8ex}
-Intuitively, we want (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
+\revise{During the incremental process, we typically want} (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
 Thus we define the {\em pattern fragmentation} problem. Given $P$ and a positive integer $h$, it is to find
-an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
-\revise{The bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size
+an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized. 
+\revise{Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size
 	while minimizing the cut size between pattern fragments.}
 
 \eat{%%%EAT2017-8-2}
@@ -286,7 +286,6 @@ an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|
 Intuitively, we want (1)  to avoid skewed updates by making all fragments roughly the same size and (2) to  minimize the efforts to assemble the partial matches of all fragments.
 }%%%EAT2017-8-2
 
-\vspace{0.5ex}
 The problem is intractable, as shown below.
 
 \vspace{-0.5ex}
