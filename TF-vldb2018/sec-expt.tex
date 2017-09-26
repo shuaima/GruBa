@@ -8,29 +8,29 @@
 \begin{center}
 	
 \subfigure[{\scriptsize Varying $|V_{P}|$ (\citationd)}]{\label{fig-exp-semantic-citation-diameter}
-\includegraphics[scale=0.37]{./fig/citation-semantic-diameter.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-diameter.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $|V_{P}|$ (\citationd)}]{\label{fig-exp-semantic-citation-density}
-\includegraphics[scale=0.37]{./fig/citation-semantic-density.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-density.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $|V_{P}|$ (\citationd)}]{\label{fig-exp-semantic-citation-capacity}
-\includegraphics[scale=0.37]{./fig/citation-semantic-capacity.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-capacity.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $|V_{P}|$ (\citationd)}]{\label{fig-exp-semantic-citation-link}
-\includegraphics[scale=0.37]{./fig/citation-semantic-link.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-link.eps}}
 \vspace{-2.5ex}
 
 \subfigure[{\scriptsize Varying $k$ (\citationd)}]{\label{fig-exp-semantic-citation-diameter-varyk}
-\includegraphics[scale=0.37]{./fig/citation-semantic-diameter-varyk.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-diameter-varyk.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $k$ (\citationd)}]{\label{fig-exp-semantic-citation-density-varyk}
-\includegraphics[scale=0.37]{./fig/citation-semantic-density-varyk.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-density-varyk.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $k$ (\citationd)}]{\label{fig-exp-semantic-citation-capacity-varyk}
-\includegraphics[scale=0.37]{./fig/citation-semantic-capacity-varyk.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-capacity-varyk.eps}}
 \hspace{0.2ex}
 \subfigure[{\scriptsize Varying $k$ (\citationd)}]{\label{fig-exp-semantic-citation-link-varyk}
-\includegraphics[scale=0.37]{./fig/citation-semantic-link-varyk.eps}}
+\includegraphics[scale=0.38]{./fig/citation-semantic-link-varyk.eps}}
 \vspace{-2.0ex}
 \end{center}
 
@@ -50,12 +50,13 @@ We conducted four sets of experiments to evaluate the performance of
 (3) \inc \wrt continuous sets of pattern and data updates; and
 (4) the extra space cost of auxiliary structures used by \inc.
 
-
+\vspace{-0.2ex}
 \stitle{Experimental Settings.} We use the following settings.
 
 %\subsection{Experimental Settings}
 %We used the following real-life and synthetic datasets.
-\etitle{Data graphs.} We used a real-life and a synthetic dataset.
+\vspace{-0.3ex}
+\etitle{Data graphs.} We used two real-life and a synthetic dataset.
 
 \ni (1) {\em \citationd}~\cite{citationWeb} contains 1.39M paper nodes and 3.02M paper-paper citation edges.
 We used its undirected version, where edges indicate the relevance relationship. We generated 200 labels based on phrase clustering of paper titles.
@@ -64,6 +65,8 @@ We used its undirected version, where edges indicate the relevance relationship.
 
 \ni (2) We adopted the LFR-benchmark graph model~\cite{AndreaSF08} to generate synthetic graphs (\synthetic) with community structure as existed in real-life networks. It is controlled by three parameters: the number $n$ of nodes, the average degree $d$ of nodes, and the number $l$ of node labels.
 %Given $n, d$, and $l$, the generator produces a graph with $n$ nodes, $n*d/2$ edges, and the nodes are labeled from a set of $l$ labels.
+
+\ni (3) We also used real-life data \youtube~\cite{youtubeWeb} (see Appendix). 
 
 \etitle{Pattern generator}.
 We implemented a generator to produce pattern graphs, controlled by 4 parameters:
@@ -104,7 +107,7 @@ Hence, we report the effectiveness of these algorithms on a sampled data graph w
 %\looseness=-1
 
 
-\stitle{Exp-2: Effectiveness of \optgrouprec}.  We generated pattern graphs for \optgrouprec, and the corresponding queries (labels requirements) for \mindia, \minsumdis and \denalk, and manually checked the quality of matches returned by them. 
+\stitle{Exp-2: Effectiveness of \optgrouprec}.  We generated pattern graphs for \optgrouprec, and the corresponding queries (labels requirements) for \mindia, \minsumdis and \denalk, and checked the quality of matches returned by them. 
 \looseness=-1
 
 \eat{%%%
