@@ -166,6 +166,11 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 \noindent
 {\textbf{1. Proof of Theorem~\ref{thm-tsim-radius}}}
 
+\revise{
+Proofs
+
+}
+
 
 \noindent
 {\textbf{2. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
@@ -402,6 +407,7 @@ By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 \noindent
 {\textbf{4. Proof of Proposition~\ref{prop-fragmentation}}}
 
+\revise{
 The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
 is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
 (a) $\max_i |P_{fi}| \leq r_1\cdot\frac{|P|}{h}$ and (b) $|C|\leq r_2|P|$.
@@ -433,13 +439,12 @@ to find a set $S \subseteq E_{H}$ of edges whose removal leaves two disjoint con
 Given an instance of the minimum cut problem,
 we construct an instance of $h$-fragmentation problem.
 It can be achieved by taking $H$ as $P$, and setting $h=2$, $r_1=h$ and $r_2 = m/|P|$.
-Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.
+Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.}
 
 \noindent
 {\textbf{5. Proof of Proposition~\ref{prop-canaffballs}}}
 
-We will prove the proposition by contradiction.
-When $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.
+\warn{The proposition is correct as when $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.}
 \identifyaffball identifies \affballsx who already match with each fragment of $P$;
 Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
 there must exist an update in $\Delta P$ on $P_{fi}$,
@@ -450,7 +455,7 @@ Therefore, \identifyaffball filters out the balls that do not match with a fragm
 {\textbf{6. Proof of Proposition~\ref{prop-affected-datainc}}}
 	
 The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
-\identifyaffball filters out the balls that cannot match all fragments,	and there are no data updates on the ball.
+\identifyaffball filters out the balls that cannot match all $h$ pattern fragments,	and there are no data updates on the ball.
 
 \vspace{1ex}
 \noindent
