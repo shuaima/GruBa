@@ -352,27 +352,6 @@ The correctness of \incp is assured by the correctness of \identifyaffball (Prop
 \incp is in $O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|$ + $r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|$) + $r|P \oplus \Delta P||\affballsx|$+$|\Delta P|)$ time \wrt $\Delta P$, while $r$ is small, \ie 2 or 3 (See full version~\cite{fullvldb18}).
 
 
-\eat{
-\stitle{Correctness \& complexity analysis}. The correctness of \incp \wrt $\Delta P$ is assured by
-the correctness of (a) \identifyaffball (by Proposition~\ref{prop-canaffballs});
-(b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved previously, and of \patedgeinsert. Indeed, \patedgeinsert only removes
-nodes that are no longer valid matches in each $M(P_{fi}, \ball{[v,r]})$;
-(c) \comb, whose analysis follows the same way as for \patedgeinsert; and
-(d) the early return property (by Lemma~\ref{lemma-approximation-bound}).
-
-Procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$ time, where it takes $O(2^{h}\cdot|\Delta P|)$ time to update \bfc, $O(2^{h}\cdot h)$ to do the AND-operation, and $O(||\affballsx||)$ to identify \affballsx.
-%Thus, procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$.
-As $h$ is typically small, \eg 2 to 5, thus \identifyaffball is in $O(|\Delta P|+||\affballsx||)$;
-\patedgeinsert is in $O(|M(P_{fi}, \ball{[v,r]})|+|V_{P_{fi}}||E_{\ball{[v,r]}}|)$ time.
-Indeed, the recursive process for checking invalid nodes in $M(P_{fi}, \ball{[v,r]})$ is bounded by $O(|V_{P_{fi}}||E_{\ball{[v,r]}}|)$,
-and the process to update $M(P_{fi}, \ball{[v,r]})$ is bounded by the size of its changes, which is monotonically decreasing;
-According to \patedgeinsert,
-\comb is in $O(|\bigcup^{h}_{i=1} M(P_{fi}\oplus\Delta P_{fi},\ball{[v,r]})|+|V_{P\oplus \Delta P}||E_{\ball{[v,r]}}|)$ time.
-
-Putting these together, algorithm \incp is in
-$O(|\Delta P|$ + $\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|+|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|) + |P \oplus \Delta P||\affballsx|)$ time \wrt $\Delta P$.
-}%%%EAT
-
 %\vspace{0.5ex}
 \stitle{Remarks}. The running time of \incp is determined by $P$, $\Delta P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
 Hence the part for pattern updates in Theorem~\ref{thm-framework-inc} is proved.

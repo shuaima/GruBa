@@ -71,15 +71,6 @@ auxiliary structures by invoking procedures \identifyaffball, \incmatch and \com
 $O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See~\cite{fullvldb18}).
 \looseness=-1
 
-\eat{
-The correctness of \incd \wrt $\Delta G$ is assured by the correctness of
-\identifyaffball (by Proposition~\ref{prop-affected-datainc}) and procedures \incmatch and \comb (proved along the same lines as for pattern updates).
-	
-One can verify that procedure \identifyaffball is in $O(|\affballsx|)$ time,
-\incmatch is in $O(|P||\affballsx|)$ time, and \comb is in $O(\bigcup_{i\in[1,h]}|M(P_{fi}, \widehat{G\oplus\Delta G})|)$ time.
-Thus, algorithm \incd is in
-$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx} \bigcup_{i\in[1,h]}|M(P_{fi}, \widehat{G\oplus\Delta G})|+|P||\affballsx|)$ time \wrt $\Delta G$.}%%%EAT
-
 
 \stitle{Remarks}. Note that the running time of \incd is determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$,
 and hence the part for data updates in Theorem~\ref{thm-framework-inc} is proved. This also completes the proof of Theorem~\ref{thm-framework-inc}.
