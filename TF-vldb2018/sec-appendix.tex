@@ -103,7 +103,7 @@ Algorithm \minp is in $O(|P|^2)$ time, by the time complexity of graph simulatio
 }%%%EAT
 
 \noindent
-{\textbf{3. Algorithm \kw{PFrag} (Section~\ref{sec-dynamictopk})}}
+{\textbf{2. Algorithm \kw{PFrag} (Section~\ref{sec-dynamictopk})}}
 
 \kw{PFrag} works by connecting the {\em pattern fragmentation} problem to the
 {\sc $(k, \nu)$-Balanced Partition} problem.
@@ -167,8 +167,46 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 {\textbf{1. Proof of Theorem~\ref{thm-tsim-radius}}}
 
 \revise{
-Proofs
+We will prove Theorem~\ref{thm-tsim-radius} (1) firstly.
+We know that $P\eps \ball{[v, t]}$, and $M_t$ is a match relation for $P$ in $\ball{[v, t]}$.
+Since $\ball{[v, t]}$ is a subgraph of $\ball{[v, r]}$, 
+there must exist a binary relation $M_r$ such that for any $(u, v) \in M_t$, where $u$ is a pattern node and $v$ is the matched data node of $u$ in $\ball{[v, t]}$, 
+$(u, v) \in M_r$ holds, where $v$ is the matched data node of $u$ in $\ball{[v, r]}$, \ie $M_t \subset M_r$.
+Since $M_t$ is a match relation for $P$ in $\ball{[v, t]}$ and $M_t \subset M_r$, by the definition of graph simulation, then $P\eps \ball{[v, r]}$ and $M_r$ is a match relation for $P$ in $\ball{[v, r]}$.	
 
+\vspace{-1ex}	
+We will prove Theorem (2) using the lemma below. 
+
+\vspace{-2.7ex}
+\begin{lemma}
+	\label{lemma-innerball}
+	For any data graphs $G_1$ and $G_2$, pattern graph $P$. If $G_1$ is a subgraph of $G_2$,
+	then $M_1 \subset M_2$, where $M_i$ $(i=1,2)$ is the maximum match relation for $P$ in $G_i$ via graph simulation. 
+\end{lemma}
+\vspace{-2.5ex}
+
+We next prove the lemma and then use the lemma to prove Theorem~\ref{thm-tsim-radius} (2).
+
+\vspace{-2.3ex}
+\stitle{Proofs of Lemma~\ref{lemma-innerball}:} We will prove the lemma by contradiction. 
+We know that $G_1$ is a subgraph of $G_2$, and suppose $M_1 \not\subset M_2$.
+That is, there exists a pair of nodes $(u, v) \in M_1$, where $u$ is a pattern node 
+and $v$ is the matched data node of $u$, but $(u, v) \not\in M_2$.
+By the definition of graph simulation, from $(u, v) \in M_1$, we know that for any child node $u'$ of $u$ in $P$,
+there exists a child node $v'$ of $v$ in $G_1$ such that $(u', v') \in M_1$.
+From $(u, v) \not\in M_2$, we know that there exists a child node $u''$ of $u$ in $P$, 
+but there exist no child nodes $v''$ of $v$ in $G_2$, such that $(u'', v'') \eps M_2$.
+The process to compute maximum match relations for graph simulation is a recursive process to 
+remove invalid matches from the initialized match relations $M$.
+Because there exist no $u''$ in $G_2$ such that $(u'', v'') \eps M_2$, so $(u, v)$ is removed from $M_2$.
+As $G_1$ is a subgraph of $G_2$, so $(u, v)$ should also be removed from $M_1$, 
+such that $(u, v) \not\in M_1$.
+This contradicts the assumption that $(u, v) \in M_1$, and we get the lemma proved.
+\eop
+
+\vspace{-1.5ex}
+By Lemma~\ref{lemma-innerball}, since $\ball{[v, t]}$ is a subgraph of $\ball{[v, r]}$, then $M' \subset M$.
+By the definition of match graphs, since $M' \subset M$, then $G'_s$ is a subgraph of $G_s$.
 }
 
 
