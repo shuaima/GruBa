@@ -522,12 +522,12 @@ The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
 
 The correctness of \incp \wrt $\Delta P$ is assured by
 the correctness of (a) \identifyaffball (by Proposition~\ref{prop-canaffballs});
-(b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved, and of \patedgeinsert. Indeed, \patedgeinsert only removes
+(b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved in Section~\ref{sec-tsimAlg}, and the correctness of of \patedgeinsert. Indeed, \patedgeinsert only removes
 nodes that are no longer valid matches in each $M(P_{fi}, \ball{[v,r]})$;
-(c) \comb, whose analysis follows the same way as for \patedgeinsert; and
+(c) \comb, whose analysis follows the same way as that for \patedgeinsert; and
 (d) the early return property (by Lemma~\ref{lemma-approximation-bound}).
 
-\vspace{-1ex}
+\vspace{-1.5ex}
 Procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$ time, where it takes $O(2^{h}\cdot|\Delta P|)$ time to update \bfc, $O(2^{h}\cdot h)$ to do the AND-operation, and $O(||\affballsx||)$ to identify \affballsx.
 %Thus, procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$.
 As $h$ is typically small, \eg 2 to 5, thus \identifyaffball is in $O(|\Delta P|+||\affballsx||)$;
@@ -537,7 +537,7 @@ and the process to update $M(P_{fi}, \ball{[v,r]})$ is bounded by the size of it
 According to \patedgeinsert,
 \comb is in $O(|\bigcup^{h}_{i=1} rM(P_{fi}\oplus\Delta P_{fi},\ball{[v,r]})|+r|V_{P\oplus \Delta P}||E_{\ball{[v,r]}}|)$ time.
 
-\vspace{-1ex}
+\vspace{-1.5ex}
 Putting these together, algorithm \incp is in
 $O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|+r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|) + r|P \oplus \Delta P||\affballsx|$ +$|\Delta P|)$ time \wrt $\Delta P$.
 
@@ -546,14 +546,14 @@ $O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|+r|M(P
 {\textbf{2. Algorithm \incd (Section~\ref{subsec-Ginc})}}
 
 The correctness of \incd \wrt $\Delta G$ is assured by the correctness of
-\identifyaffball (by Proposition~\ref{prop-affected-datainc}) and procedures \incmatch and \comb (proved along the same lines as for pattern updates).
+\identifyaffball (by Proposition~\ref{prop-affected-datainc}) and procedures \incmatch and \comb,
+which can be proved along the same lines as for pattern updates.
 
-\vspace{-1ex}
+\vspace{-1.5ex}
 One can verify that procedure \identifyaffball is in $O(|\affballsx|)$,
 \incmatch for all fragments and all \affballsx is in $O(|P||\affballsx|)$ time, and \comb is in $O(\bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|$ + $r|V_{P}||E_{\widehat{G\oplus\Delta G}}|)$ time.
-Thus, algorithm \incd is in
+Therefore, algorithm \incd is in
 $O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx} \bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|+r|P||\affballsx|)$ time \wrt $\Delta G$.
-\looseness=-1
 
 \vspace{1ex}
 \noindent
