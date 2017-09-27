@@ -105,9 +105,9 @@ We are now ready to present algorithm \grouprec for \teamF{}.
 It firstly checks whether $P$ is satisfiable (line 1). 
 If so, for each ball $\ball{[v,r]}$ in $G$, it computes the maximum core $\ball{}_{C}$ of $\ball{[v,r]}$, and checks whether the early termination condition holds (lines 3-6).
 If so, it returns the current top-$k$ densest perfect subgraphs as top-$k$ teams;
-otherwise, it computes the perfect subgraph $G_{s}$ of $P$ in $\ball{[v,r]}$ via team simulation by invoking \rgraphsim (line 7, see Appendix),
+otherwise, it computes the perfect subgraph $G_{s}$ of $P$ in $\ball{[v,r]}$ via team simulation by invoking \rgraphsim (line 7, see full version~\cite{fullvldb18}),
 an adaption from graph simulation~\cite{infsimu95,FanLMTWW10} and checking capacity bounds (line 8).
-It then computes perfect subgraphs $G'_{s}$ of $P$ in inner balls $\ball{[v,t]}$ by invoking \incsim, an extension of the incremental algorithm in \cite{FanWW13-tods} and checking capacity bounds (lines 9-11, see Appendix).}
+It then computes perfect subgraphs $G'_{s}$ of $P$ in inner balls $\ball{[v,t]}$ by invoking \incsim, an extension of the incremental algorithm in \cite{FanWW13-tods} and checking capacity bounds (lines 9-11, see~\cite{fullvldb18}).}
 %Procedure \rgraphsim is deferred to the appendix, which is an adaption from graph simulation~\cite{infsimu95,FanLMTWW10}.}
 %by extending from directed to undirected graphs,  incorporating the capacity constraint check, and only maintaining the capacity bounds satisfied perfect subgraphs.
 

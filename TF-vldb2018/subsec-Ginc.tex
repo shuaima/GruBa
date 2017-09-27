@@ -35,7 +35,7 @@ then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffb
 %the top-k perfect graphs in $G\oplus \Delta G$ for $P$ must be contained in \affballsx.
 \end{prop}
 
-The proof is deferred to Appendix.
+The proof is deferred to the full version~\cite{fullvldb18}.
 
 Different from pattern updates, procedure \incmatch recomputes partial match relations in $\tilde{M}(P,G)$
 for each pattern fragment of $P$ in each {\em structural affected} ball;
@@ -68,7 +68,7 @@ auxiliary structures by invoking procedures \identifyaffball, \incmatch and \com
 
 \stitle{Correctness \& complexity analyses}. The correctness of \incd \wrt $\Delta G$ follows from Proposition~\ref{prop-affected-datainc} and the correctness of \incmatch and \comb.
 \incd is overall in
-$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See Appendix).
+$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See~\cite{fullvldb18}).
 \looseness=-1
 
 \eat{
