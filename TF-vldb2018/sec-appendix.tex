@@ -168,7 +168,7 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 
 \revise{
 We will prove Theorem~\ref{thm-tsim-radius} (1) firstly.
-We know that $P\eps \ball{[v, t]}$, and suppose that $M_t$ is a match relation for $P$ in $\ball{[v, t]}$.
+We know that $P\eps \ball{[v, t]}$, and suppose that $M_t$ is a binary match relation for $P$ in $\ball{[v, t]}$.
 Since $\ball{[v, t]}$ is a subgraph of $\ball{[v, r]}$, 
 there must exist a binary relation $M_r$ such that for any $(u, v) \in M_t$, where $u$ is a pattern node and $v$ is the matched data node of $u$ in $\ball{[v, t]}$, 
 $(u, v) \in M_r$ holds, where $v$ is the matched data node of $u$ in $\ball{[v, r]}$, \ie $M_t \subset M_r$.
@@ -220,14 +220,14 @@ We also adopt the notion to prove unboundedness of graph algorithms for \dynteam
 The proofs below strictly follows the one in \cite{Reps96}.
 
 \vspace{-1.5ex}
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \label{fig-inc-complexity-data}
 \begin{center}
 \includegraphics[scale=0.31]{./fig/inc-complexity-proof-data.eps}
 \end{center}
 \vspace{-3ex}
 \caption{Unboundedness of unit data update}
-\vspace{-2ex}
+\vspace{-4ex}
 \end{figure}
 
 \etitle{(I) \dynteamF\, is unbounded for unit data update}.
@@ -264,14 +264,14 @@ That is, \dynteamF\, is unbounded even for $k=1$ and unit data update.
 \looseness=-1
 
 \vspace{-1ex}
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \label{fig-inc-complexity-pattern}
 \begin{center}
 \includegraphics[scale=0.31]{./fig/inc-complexity-proof-pattern.eps}
 \end{center}
 \vspace{-3ex}
 \caption{Unboundedness of unit pattern update}
-\vspace{-1.5ex}
+\vspace{-4ex}
 \end{figure}
 
 \vspace{-1ex}
@@ -396,7 +396,7 @@ That is, \dynteamF\, is unbounded even for $k=1$ and unit pattern update.
 \subfigure[{\scriptsize Vary $(|\Delta P|,|\Delta G|)$ in update sets}\hspace{-8.5ex}]{\label{fig-exp-hyb-datapat-multi-youtube}
 \includegraphics[scale=0.38]{./fig/youtube-pattern-data-multi.eps}}
 \hspace{0.2ex}
-\subfigure[{\scriptsize Storage sizes}]{\label{fig-exp-extraspace}
+\subfigure[{\scriptsize Storage sizes}]{\label{fig-exp-youtube-extraspace}
 \includegraphics[scale=0.38]{./fig/youtube-space.eps}}
 \vspace{-2ex}
 
@@ -545,5 +545,6 @@ The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-
 We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous updates respectively.
 
 \vspace{-1.8ex}
-\stitle{Exp-4: Physical storage of auxiliary structures}. It takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
+\stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
+it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
 \ie 50.8\% compared with the original dataset.
