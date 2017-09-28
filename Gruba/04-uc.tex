@@ -1,0 +1,159 @@
+\section{User Clusterer}
+\label{sec:uc}
+
+%clear points
+%road map
+%detail of each step, with motivation
+%proof if applicable
+%self-explain
+
+Providing the \textit{Feature Data}, User Clusterer takes the charge of grouping each user concerned into a proper cluster.
+Algorithm \ref{alg:uc} illustrates such overall procedure.
+
+The idea is to enumerate a number of clustering trials (line \ref{enu}) and select the optimal solution with the best coefficient value ($v$ in line \ref{opti}).
+In principle, each trial (referred by $t$ in line \ref{enu}) first performs a clustering task (line \ref{task}; to be detailed in section \ref{sec:cluster}), resulting a cluster (by $l(u)$) for each user $u$ (line \ref{l}); 
+then, each user obtains a coefficient value $v(u)$ stemmed from the in/out-cluster distances (lines \ref{v-b}--\ref{v-e}; shall be illustrated in section \ref{sec:compu});
+finally, the averaged coefficient value of all users serves as the coefficient value of the current trial, written as $v(t)$ (line \ref{avg}), by which the said selection process is conducted (line \ref{opti}).
+
+
+\begin{algorithm}[t]
+\caption{User Clustering in \sys{}}
+\label{alg:uc}
+
+\begin{algorithmic}[1]
+\State Input: \textit{Feature Data} of users $\{F(u)\}$, the minimum/maximum number of clusters $N_i$ and $N_a$
+\State Output: Optimal user clustering result $R$
+\\
+\ForAll {$t \in [N_i, N_a]$} \label{enu}
+	\State group users $\{u\}$ into $t$ clusters by $\{F(u)\}$ \label{task}
+	\State clustering result $R'(t)\ =\ \{(u,\ l(u))\}$ with cluster info $l(u)$ for each user $u$ \label{l}
+	\ForAll {$u \in \{u\}$}
+		\State in-cluster distance $d_i(u)$ \label{v-b}
+		\State out-cluster distance $d_o(u)$
+		\State coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$ \label{v-e}
+	\EndFor
+	\State $v(t)\ =\ Avg\{v(u)\}$ \label{avg}
+\EndFor
+\If {$v(a)\ ==\ \ Max\{v(t)\}$} \label{opti}
+	\State $R$ = $R'(a)$
+\EndIf
+\State \bfseries{return} $R$
+\end{algorithmic}
+\end{algorithm}
+
+Next, we shall now first detail how \sys{} performs the clustering task and subsequently illustrate the computation regarding the metric of coefficient value.
+
+\subsection{Clustering in \sys{}}
+\label{sec:cluster}
+
+In \sys{}, the clustering rests on an optimized K-Prototype \refe{} algorithm, named K-Gru in this work. 
+Similar as K-Prototype, K-Gru randomly selects the cluster kernels among samples and employs the minimum distance between them to determine an initial result, upon which the clustering tasks are iterated until the results are stable.
+
+Unlike K-Prototype that supports vector samples in which each dimension is of numerical/categorical, K-Gru could also handle the case where a dimension is one normalized vector.
+%
+Recall the sample data for User Clusterer, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu-flat}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}. 
+
+\begin{table}[!htb]
+\centering
+\caption{Types of Dimensional Data in \textit{Feature Data} Vector}
+\vspace{0.3cm}
+\label{tbl:data-type}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{c}{\textbf{type}} & \multicolumn{1}{c}{\textbf{data dimensions}}	\\	\midrule \midrule
+numerical data				& $\#R_s$, $\#E_s$, $R_{ee}$, $\#B_s$, $R_{oc}$, $\#W_r$				\\	\midrule
+categorical data			& $U_t$				\\	\midrule
+normalized vectors			& $P_t$, $P_g$, $P_f$			\\ \bottomrule              
+\end{tabular}
+\end{table}
+
+As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers, categories and normalized vectors. 
+For simplicity, we shall first illustrate the distance calculation of the simple vectors with mono data type on each dimension and then demonstrate that of complex vectors in K-Gru.
+
+Given two numerical vectors $Y'\ = (y'_0, y'_1, ...)$ and $Z'\ = (z'_0, z'_1, ...)$, the \od{} \refe{} between $Y'$ and $Z'$ is given by :
+%
+\begin{equation}
+\label{eq:od}
+D_n(Y', Z') = \sum_{\substack{e}} (y_e - z_e)^2
+\end{equation}
+
+As to the categorical vectors $Y''\ = (y''_0, y''_1, ...)$ and  $Z''\ = (z''_0, z''_1, ...)$, the \hd{} \refe{} of $Y''$ and $Z''$ is:
+%
+\begin{equation}
+\label{eq:hd}
+D_h(Y'', Z'') = \sum_{\substack{e}} H_e
+\end{equation} 
+where $H_e$ refers to the \hd{} over each dimension, with $H_e\ =\ 1$ if $y''_e$ and $z''_e$ share the identical value, and $H_e\ =\ 0$ otherwise.
+
+Regarding two vectors where each dimension is a normalized vector per se, Cosine Similarity \refe{} is leveraged to compute the distance.
+Then, the distance between such two vectors $Y^{\ast}\ = (Y^{\ast}_0, Y^{\ast}_1, ...)$ and $Z^{\ast}\ = (Z^{\ast}_0, Z^{\ast}_1, ...)$ is:
+%
+\begin{equation}
+\label{eq:vd}
+D_v(Y^{\ast}, Z^{\ast}) = \sum_{\substack{e}} Y^{\ast}_e \cdot Z^{\ast}_e
+\end{equation} 
+where $\cdot$ refers to the dot product operation between two normalized vectors $Y^{\ast}_e$ and $Z^{\ast}_e$.
+
+Hence, the said distance regarding the complex vectors ($Y\ =\ (Y_0, Y_1, ...)$ and $Z\ =\ (Z_0, Z_1, ...)$ ) in K-Gru, named \gd{}, could be deduced as:
+%
+\begin{equation}
+\label{eq:gd}
+D_g(Y, Z) = \sum_{\substack{e}} G_e
+\end{equation}
+where the distance on each dimension $G_e$ is given by:
+%
+\begin{equation}
+\label{eq:ge}
+G_e =
+  \begin{cases}
+    (Y_e - Z_e)^2       & \quad \text{if } Y_e/Z_e \text{ is numerical}\\
+    H_e\ (1\ or\ 0)       	& \quad \text{if } Y_e/Z_e \text{ is categorical}\\
+    Y_e \cdot Z_e  		& \quad \text{if } Y_e/Z_e \text{ is of normalized vector}
+  \end{cases}
+\end{equation}
+
+
+\subsection{Coefficient Metric Computation}
+\label{sec:compu}
+
+In \sys{}, coefficient value serves as the fundamental criteria for the optimal clustering selection.
+Providing a clustering result, each user is associated with a cluster.
+For a given user $u$ of cluster $l$, we employ the vector $Y$ to denote the \textit{Feature Data} as in formula \ref{eq:fu-flat}.
+
+\begin{definition}
+\label{def:di}
+The in-cluster distance $d_i(u)$ is the average distance to all the other users in the same cluster, i.e., $\forall u'' \in l$ \& $u \neq u''$:
+\begin{equation}
+	d_i(u) = Avg\{D_g(Y_u, Y_u'')\}
+\end{equation} 
+\end{definition} 
+
+\begin{definition}
+\label{def:do}
+The out-cluster distance $d_o(u)$ is measured as the minimum of the distances $\{d^{\ast}\}$ between $u$ and other clusters ($\forall l' \neq l$), i.e.:
+\begin{equation}
+	d_o(u) = Min\{d^{\ast}(u, l')\}
+\end{equation}
+where $d^{\ast}$ is given by:
+\begin{equation}
+	d^{\ast}(u, l') = Avg\{D_g(Y_u, Y_u')\}\ \forall u' \in l'
+\end{equation}  
+\end{definition}
+
+\begin{definition}
+\label{def:coef}
+The coefficient value $v(u)$ is thus concluded:
+\begin{equation}
+\label{eq:coef}
+v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}	
+\end{equation}
+\end{definition}
+
+Intuitively, a good clustering solution should result bigger $d_o$ and smaller $d_i$, such that samples with obvious differences go to various clusters and vice versa.
+When $d_o$ is far more than $d_i$, coefficient value approaches to 1.
+Hence, the larger coefficient value is, the better clustering performs, by which the optimal solution is selected.
+
+
+
+
+

@@ -1,2 +1,33 @@
-\section{Introduction}
+\section{\textcolor{red}{Introduction}}
 \label{sec:intro}
+
+\begin{comment}
+\textbf{Motivation}
+
+\textbf{Example}
+
+\textbf{Challenge}
+
+\textbf{Contribution}
+
+\textcolor{blue}{organization of the sections}
+
+%This section shall look into the principle of each component in Processing Runtime subsystem, putting forth a full-fledged system.
+
+\end{comment}
+
+%zhu begin
+
+The rapid development of social network is accompanied by the generation of tremendous user-generated contents. People not only consume information but also publish or share messages. An interesting function in many existing Social Network Applications is reposting (e.g, reposting someone else's microblog on weibo.com). Modeling reposting behavior is of vital significance for Social Network Applications, which can help them to mine potential benefits, predict bursting events and so on. \par
+
+Modeling reposting behavior has attracted attention from both academia and industry. However, many existing works have certain limitations. First, most of them mainly studied how to model reposting behavior for a single user or for the whole users. Considering the huge amount of users in Social Network , modeling for a single user is not easy. What's more, it can also make our model too particular. Modeling for the whole users is also not a good idea, which may get a inaccuracy model. Secondly, how to extract users's features, especially the extraction of users's interest, is a challenging problem.\par
+To this end, we extract each user's features firstly, including user's basic information, behavior information and interests, then perform users clustering to divide users into groups and model reposting behavior of each user group respectively. The main contributions of this work can be summarized as follows:\par
+\begin{itemize}
+\item   We construct a large collection of microblogs from a real microblog service. It contains users's information, microblog content and part of the social network information of related users.
+\item   Instead of modeling for a single user or the whole users, we divide all users into several groups by users clustering and model for each group.
+\item	We propose a noval method to extract user interests from user generated texts.
+\item	We develop a demo system for visualization of single user's profiling and each group's information.
+\end{itemize}
+
+This article is organized as follows: In Section 2, we introduce the framework of our work. We then describe our methodology in section 3, including features extraction, how we cluster users into groups, and how to model reposting behavior. Section 4 presents and discusses the experimental results. Section 5 discusses related work followed by conclusions in Section 6.\par
+

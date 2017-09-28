@@ -1,0 +1,230 @@
+% jing @ 0927
+% back to algorithm for interest features
+% add motivation, intuition, etc
+
+%clear points
+%road map
+%detail of each step, with motivation
+
+\section{Feature Extractor}
+\label{sec:fe}
+
+With the underlying data in Data Storage subsystem, Feature Extractor is responsible for ``mining'' the user characteristics, resulting three features for each user.
+These features are \textit{Info Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, which constitute the \textit{Feature Data} in \sys{}, i.e., \textit{Feature Data} = \{\textit{Info Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
+
+\subsection{Info Feature}
+
+\textit{Info Feature} employs a vector $I$ to cover the basic info of user.
+\begin{equation}
+\label{eq:info}
+	I = (\#R_s,\ \#E_s,\ R_{ee},\ \#B_s,\ R_{oc},\ U_t)
+\end{equation}
+where each variable is illustrated in Table \ref{tbl:fe-info}.
+Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} blogs and blogs that are originally created by the user.
+
+\begin{table}[!htb]
+\centering
+\caption{Illustration of Variables in Info Feature}
+\vspace{0.3cm}
+\label{tbl:fe-info}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{c}{\textbf{variable}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
+\#$R_s$				& number of followers				\\	\midrule
+\#$E_s$				& number of followees				\\	\midrule
+\multirow{2}{*}{$R_{ee}$}      & \multirow{2}{*}{a ratio defined as $\frac{\#R_s}{\#E_s}$}	\\
+ 						&                       									\\	\midrule
+\#$B_s$				& number of blogs owned by the user				\\	\midrule
+\multirow{2}{*}{$R_{oc}$}      & \multirow{2}{*}{a ratio defined as $\frac{\#(B_s | R(B)==1)}{\#(B_s | R(B)==0)}$}	\\
+ 						&                       									\\	\midrule
+$U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule              
+\end{tabular}
+\end{table}
+
+
+%mutex category
+%type 0 is assumed to be representative
+
+%replace 50 and 5 by variables of threshold
+
+\begin{table}[!htb]
+\centering
+\caption{Category of Info}
+\vspace{0.3cm}
+\label{tbl:ucate}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{c}{\textbf{value}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
+0                       & $\#E_s \le 50 \ \& \ \#R_s \le 50$				\\	\midrule
+\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_s}{\#R_s} \ \ge 5$}	\\
+ 						&                       									\\	\midrule
+\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_s}{\#E_s} \ \ge 5$}  \\
+						&															\\	\midrule
+3                   	& other cases 												\\ \bottomrule              
+\end{tabular}
+\end{table}
+
+
+\subsection{Behavior Feature}
+
+Unlike \textit{Info Feature}, \textit{Behavior Feature} shows several statistics regarding the user's \retg{} behavior.
+Such statistics include:
+\begin{itemize}
+	\item a value showing the average number of \retd{} blogs per week: $\#W_r$
+	\item a normalized vector regarding the time distribution of a user's \retg{} behavior: $P_t\ = (p'_0,\ p'_1,\ ...,\ p'_{11})$, where $p'_0$ is the probability that the \retg{} activity happens from 0am to 2am, $p'_1$ is the probability that the \retg{} activity happens from 2am to 4am, and so on.
+	\item a normalized vector with respect to the gap distribution of a user's \retg{} behavior: $P_g\ = (p''_0,\ p''_1,\ ...,\ p''_{5})$, in which $p''_0$ is the probability that the gap between two \retd{} blogs is within 1 min. Ditto for $p''_1$ (1 min to 1 hour), $p''_2$ (1 to 12 hours), $p''_3$ (12 to 24 hours), $p''_4$ (24 to 48 hours) and  $p''_5$ (more than 48 hours).
+\end{itemize}
+
+Hence, \textit{Behavior Feature} $H$ per user comes with:
+\begin{equation}
+\label{eq:beha}
+	H = (\#W_r,\ P_t,\ P_g)
+\end{equation}
+where $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
+
+\subsection{Interest Feature}
+
+Different from the straightforward notions of \textit{Info Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics. 
+In short, with a given lexicon consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the probability that the said user matches a \textit{topic}.
+
+\begin{definition}
+\label{def:lexi}
+A lexicon $L = \{t\}$ consists of a set of topics while each topic $t = \{c\}$ is associated with a list of cell words $\{c\}$. Each cell word $c$ refers to one unique word in $L$.
+\end{definition}
+
+\begin{definition}
+\label{def:bw}
+%used \label{def:blog} previously
+With a given user $u$, each blog $b \in B_s(u)$ could be decomposed into a set of words $\{w\}$, i.e., $b = \{w\}$.
+\end{definition}
+
+\begin{definition}
+\label{def:inte}
+The interest feature of a given user is a normalized vector 
+\begin{equation}
+\label{eq:inte}
+P_f\ = (p_0,\ p_1,\ ...,\ p_{x-1})
+\end{equation}
+in which the said user matches $x$ \textit{topics} in lexicon and $p_i$ refers to the similarity of the user and each matched topic (interest). The definition of such similarity shall be detailed in each scenario (explicit/implicit interest analysis, towards words/topics, etc).
+\end{definition}
+
+In \sys{}, a word, either in the form of $c$ or $w$, acts as the minimum unit for analysis.
+Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be generalized to the similarity of a blog against one topic $sim(b, t)$, and finally to a user versus each topic in lexicon $sim(u, \{t\})$; topics with similarity satisfying certain thresholds are allocated to the user $u$ and constitute the interests of $u$.
+
+For instance, the following steps depict the ``mining'' process of the interest feature $P_f$ for a user $u$.
+
+\textit{Step 1:} Each blog of $u$ is decomposed into a word set, i.e., $b = \{w\}$ where $b \in B_s(u)$.
+
+\textit{Step 2:} Explicit interests are explored. Specifically, every word $w$ is sent to match each cell word $c$ of lexicon topics. 
+If $w$ and $c$ are identical, $sim(w, c) = 1$. 
+Otherwise, $sim(w, c) = 0$. 
+As to the similarity of $b$ against a lexicon topic $t$, it is:
+\begin{equation}
+\label{eq:bt}
+sim(b, t) = \sum_{\substack{i, j}} sim(w_i, c_j)
+\end{equation}
+where $sim(w_i, c_j)$ refers to the similarity of a word pair. 
+
+If $sim(b, t)$ satisfies a certain threshold, topic $t$ is labeled to blog $b$; 
+the user $u$ is then discovered having an explicit interest (topic) $t$.
+Thus, by looking into the similarity of $b$ against all topics in lexicon, the explicit interests of $u$ is returned, in the form of interest feature (see Definition \ref{def:inte}).
+
+If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textit{Step 3} and \textit{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$. 
+
+\textit{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF \refe{} to calculate the weight distribution of words in blog $b$: 
+\begin{equation}
+\label{eq:tf}
+W_f = \{(w_i, p_i)\}
+\end{equation}
+where $w_i$ refers to a single word, of which the weight is $p_i$, with $\sum_{\substack{i}} p_i = 1$.
+
+To compute such weight $p_i$ for word $w_i$, a metric $p''_i$ is first calculated as:
+\begin{equation}
+\label{eq:tf-w}
+p''_i = \frac{|b_i|}{|b|} * log(\frac{|D_i|}{|D|})
+\end{equation}
+in which we use the operator $|\ |$ to measure the cardinality, such that $|b_i|$ is the occurrences of word $w_i$ in blog $b$ and $|b|$ the total occurrences of all words in $b$.
+Ditto for $|D_i|$ and $|D|$, except that the scope is the overall dataset, rather than a single blog $b$.
+
+Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight} (see Definition \ref{eq:tf}).
+Go to \textit{Step 5}. 
+
+\textit{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA \refe{} to result the word weight distribution of blog $b$. 
+Unlike TF-IDF \refe{}, Twitter-LDA \refe{} first trains the overall blogs, allocating each blog with a \textit{tag}. 
+%
+The structure of \textit{tag} is as follows:
+\begin{equation}
+\label{eq:tw-tag}
+W_t = \{(w'_i, p'_i)\}
+\end{equation}
+where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in blogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$.
+%
+Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
+Go to \textit{Step 6}.
+
+\textit{Step 5:} TF-IDF \refe{} based similarity is calculated.
+For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
+\begin{equation}
+\label{eq:sim-tf1}
+sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t)
+\end{equation}
+where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and:
+\begin{equation}
+\label{eq:sim-tf2}
+sim(w_i, t) = \sum_{\substack{j}} sim(w_i, c_j)
+\end{equation}
+Go to \textit{Step 7}.
+
+
+\textit{Step 6:} Accordingly, Twitter-LDA \refe{} based similarity is available.
+Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined as:
+\begin{equation}
+\label{eq:sim-tw1}
+sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
+\end{equation}
+where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, and:
+\begin{equation}
+\label{eq:sim-tw2}
+sim(w'_i, t) = \sum_{\substack{j}} sim(w'_i, c_j)
+\end{equation}
+Go to \textit{Step 7}.
+
+
+\textit{Step 7:} Hence, the similarity of a blog $b$ against a lexicon topic $t$ is given by:
+\begin{equation}
+\label{eq:simbt}
+sim(b, t) = \alpha * sim(W_f, t) + (1 - \alpha) * sim(W_t, t)
+\end{equation}
+where the $\alpha$ is a parameter by which \sys{} could set flexible priorities between TF-IDF \refe{} and Twitter-LDA \refe{}.
+Go to \textit{Step 8}.
+
+\textit{Step 8:} Repeat the above steps (Step 1 to Step 7) for the blog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$. 
+Such computation further extends to all the blogs owned by user $u$, such that: 
+$\forall b_m \in B_s(u)$, $\forall t_k \in L$, there exists a similarity of $sim(b_m, t_k)$.
+Hence, the overall similarity of user $u$ over lexicon topics $\{t\}$ (i.e., $L$), written as $S(u,\ L)$, could be denoted by a vector:
+\begin{equation}
+\label{eq:simul}
+S(u, L) = (s_0,\ s_1,\ ...,\ s_{n-1})
+\end{equation}
+where $n$ refers to the cardinality of $L$ (i.e., number of topics in $L$) and $s_k$ is the overall similarity of user $u$ over topic $t_k$, which is given by:
+\begin{equation}
+\label{eq:simul-2}
+s_k = \sum_{\substack{m}} sim(b_m, t_k)
+\end{equation}
+
+Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_f$ as described in Definition \ref{def:inte}.
+Similarly, interest features of all users are returned.
+
+As a result, the \textit{Feature Data} for every user $u$, written as $F(u)$, is given by:
+\begin{equation}
+\label{eq:fu}
+	F(u) = (I,\ H,\ P_f)
+\end{equation}
+where $I$, $H$ and $P_f$ refer to \textit{Info Feature}, \textit{Behavior Feature} and \textit{Interest Feature} separately (see formulas \ref{eq:info}, \ref{eq:beha} and \ref{def:inte}).
+And it could be written as a vector:
+\begin{equation}
+\label{eq:fu-flat}
+	F(u) = (\#R_s, \#E_s, R_{ee}, \#B_s, R_{oc}, U_t, \#W_r, P_t, P_g, P_f)
+\end{equation}
+where each dimension refers to a data item of \sys{}.
+
