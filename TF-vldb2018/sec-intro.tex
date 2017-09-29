@@ -143,14 +143,16 @@ To cope with the highly dynamic environment of team formation, we also formulate
 
 
 
-\revise{
-\stab (2) We develop a batch algorithm with two optimization techniques for computing top-$k$ teams via team simulation.}
-We also study the satisfiability problem for pattern graphs, a new problem raised in the presence of capacity bounds for graph pattern matching (Section~\ref{sec-tsimAlg}).
-We develop a unified approach to handling the need for both pattern and data updates.
-We first prove that the dynamic top-$k$ team formation problem is unbounded even for single pattern or data updates, by extending the notion of incremental boundedness~\cite{Reps96}.
-In light of this, we then propose an incremental strategy based on {\em pattern fragmentation} and {\em affected balls} to localize the effects of pattern and data updates (Sections~\ref{sec-dynamictopk}).
-We finally develop a unified incremental algorithm for dealing with separate and simultaneous pattern and data updates,
-with an optimization technique with the {\em early return} property for incremental top-$k$ algorithms, an analogy of the traditional early termination property (Sections~\ref{sec-IncAlg}).
+
+\stab (2) We develop a batch algorithm for computing top-$k$ teams via team simulation (Section~\ref{sec-tsimAlg}).
+We study the satisfiability problem for pattern graphs, a new problem raised in the presence of capacity bounds for graph pattern matching .
+We also propose two optimization techniques: incrementally computing radius varied balls and density based filtering for speeding up computations.  
+
+
+
+\stab (3) We develop a unified approach to handling the need for both pattern and data updates (Sections~\ref{sec-dynamictopk} and~\ref{sec-IncAlg}).
+Due to the inherent difficulty of the problem, we propose an incremental strategy based on {\em pattern fragmentation} and {\em affected balls} by localizing the effects of pattern and data updates, and we develop a unified incremental algorithm for dealing with separate and simultaneous pattern and data updates,
+with an optimization technique with the {\em early return} property for incremental top-$k$ algorithms, an analogy of the traditional early termination property.
 
 
 \eat{%%%%%%%%%%%%%%%%move to section 3
@@ -220,7 +222,7 @@ with an optimization technique with the {\em early return} property for incremen
 {\bf Add details}
 }%%%EAT
 
-\stab (3) Using real-life data (\citationd) and synthetic data (\synthetic), we demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) team formation (Section~\ref{sec-expt}).
+\stab (4) Using real-life data (\citationd) and synthetic data (\synthetic), we demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) team formation (Section~\ref{sec-expt}).
 We find that (a) our method is able to identify more sensible teams than existing team formation methods \wrt \eat{three} practical measurements,
 and (b) our incremental algorithm outperforms our batch algorithm, even when changes reach 36\% for pattern updates, 34\% for data updates and (25\%, 22\%) for simultaneous pattern and data updates, and when 29\% for continuous pattern updates, 26\% for continuous data updates and (20\%, 18\%) for continuous simultaneous pattern and data updates, respectively.
 
