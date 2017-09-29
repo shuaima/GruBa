@@ -353,7 +353,7 @@ but also the relationships among members and the capacity constraint on patterns
 \begin{example}
 \label{exa-teamF}
 Consider $P_1, G_1$ in Fig.~\ref{exm-motivation} and $r=2$.
-We simply set $k=1$, as most existing solutions for \teamF{} only compute the best team \cite{Lappas09,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12}, instead of top-$k$ teams.
+We simply set $k=1$, as most existing solutions for \teamF{} only compute the best team \cite{Lappas09,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12}.
 
 One may want to look for candidate teams with existing methods, satisfying the search requirement in Example \ref{exm-motivation}:
 \ni(1) by minimizing the {\em team diameter} \cite{Lappas09},
@@ -364,12 +364,12 @@ which returns exactly the same team as (a) in this case, or
 
 \ni(3) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team with all the nodes in the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3}, except \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}.
 
-One may already notice that these teams only satisfy the skill requirement, \ie condition (a) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members.
+One may already notice that these teams only satisfy the skill requirement, \ie condition (i) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members.
 Indeed, the team found in (1) and (2) is connected by \kw{BA_3} only, and the team found in (3) has loose collaborations among its members.
 That is, existing methods are not appropriate for identifying the the desired teams.
 
 When team simulation is adopted, it returns the perfect subgraph in Example \ref{exm-rsimulation} with its density = 1.4,
-satisfying both conditions (a) and (b), much better than those teams found by the above existing methods.
+satisfying both conditions (i) and (ii), much better than those teams found by the above existing methods.
 \end{example}
 
 \eat{%%%EAT
