@@ -13,7 +13,7 @@
 	\label{fig-consistency-example}
 \end{figure}
 
-In this section, we first study the pattern satisfiability problem for team formation, then introduce two  two optimization techniques, and finally we present our  batch algorithm for top-$k$ team formation.
+In this section, we first study the pattern satisfiability problem for team formation, then introduce two optimization techniques, and finally we present our  batch algorithm for top-$k$ team formation.
 
 % with one novel feature and two optimizations, \ie pattern satisfiability check, and incremental computing for radius varied balls and density based filtering optimization, compared with traditional algorithms for \warn{strong simulation}~\cite{MaCFHW14}.
 
@@ -54,6 +54,7 @@ Pattern graphs are typically small, and we only consider  satisfiable patterns i
 
 \subsection{Batch Algorithm}
 
+We then introduce two techniques for optimizing the computation of team simulation.
 
 \stitle{Handling radius varied balls}. \teamF{} is to find top-$k$ teams within balls $\ball{[v, t]}$, where $v \in V$ and $t \in [1,r]$.
 %centered at each node in $G$ with radius $t$ varying from 1 to $r$.
