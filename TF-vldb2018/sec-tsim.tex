@@ -478,14 +478,14 @@ defined along the same lines as the first four types of pattern updates.
 Further, different from pattern updates, there is no need to keep $G$ connected for data updates.
 
 
-\stitle{Dynamic top-$k$ team formation}. Given $P$, $G$, two positive integers $r$, $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
+\stitle{Dynamic top-$k$ team formation}. Given pattern $P$, data graph $G$, two positive integers $r$, $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
 a set of pattern updates $\Delta P$ and a set of data updates $\Delta G$,
 the {\em dynamic top-k team formation} problem, denoted by \dynteamF{(P, G, k, L_{k}, \Delta P, \Delta G)},
 is to find a list of $k$ perfect subgraphs with the top-$k$ largest density for $P\oplus\Delta P$ in $G\oplus\Delta G$, via team simulation.
 
-It is worth mentioned that the \dynteamF{} problem covers a broad range of dynamic conditions,
+It is worth mentioning that \dynteamF{} covers a broad range of dynamic situations,
 \ie handling continuous separate and simultaneous pattern and data updates.
-Here $\oplus$ denotes applying changes $\Delta P$ to $P$ and $\Delta G$ to $G$.
+Here $\oplus$ denotes applying changes $\Delta P$ to $P$ and $\Delta G$ to $G$, and
  $P\oplus\Delta P$ and $G\oplus\Delta G$ denote the updated pattern and data graphs.
 
 \eat{
