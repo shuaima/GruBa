@@ -16,7 +16,7 @@
 
 
 \revise{
-We devise an algorithm \grouprec for \teamF, with one novel feature and two optimizations, \ie pattern satisfiability check, and incremental computing for radius varied balls and density based filtering optimization, compared with traditional algorithms for strong simulation~\cite{MaCFHW14}.}
+We devise an algorithm \grouprec for \teamF, with one novel feature and two optimizations, \ie pattern satisfiability check, and incremental computing for radius varied balls and density based filtering optimization, compared with traditional algorithms for \warn{strong simulation}~\cite{MaCFHW14}.}
 
 \stitle{Pattern satisfiability}.
 Given a pattern $P$, \grouprec firstly checks whether $P$ is satisfiable. We say that a pattern $P$ is {\em satisfiable} iff there exists a data graph $G$ such that $P$ matches $G$ via team simulation, \ie $P \eeps G$.
@@ -28,7 +28,7 @@ pattern graphs may be unsatisfiable for team simulation, due to the presence of 
 \begin{example}
 \label{exm-consistency}
 \ni(1)  Consider pattern $P_2$ in Fig.~\ref{fig-consistency-example}.
-One can verify that there exist no data graphs $G$ such that $P_2 \eeps G$ because (a) for any nodes $u$ in $G$, if $u$ matches with the node labeled with $B_2$, then it must match with the node labeled with $B_1$, and, hence, (b) the capacity upper bound on $B_1$ should not be less than the lower bound on $B_2$.
+One can verify that there exist no data graphs $G$ such that $P_2 \eeps G$ because (a) for any nodes $v$ in $G$, if $v$ matches with the node labeled with $B_2$, then it must match with the node labeled with $B_1$, and, hence, (b) the capacity upper bound on $B_1$ should not be less than the lower bound on $B_2$.
 
 \sstab(2) Pattern $P_1$ in Fig.~\ref{exm-motivation} is satisfiable as $P_1 \eeps G_1$.
 \end{example}
