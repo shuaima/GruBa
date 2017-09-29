@@ -8,7 +8,7 @@
 		\includegraphics[scale=1.28]{./fig/consistency_motivation.eps}
 	\end{center}
 	\vspace{-3ex}
-	\caption{Pattern graphs}
+	\caption{Pattern satisfiability}
 	\vspace{-4ex}
 	\label{fig-consistency-example}
 \end{figure}
@@ -30,9 +30,10 @@ pattern graphs may be unsatisfiable for team simulation, due to the presence of 
 \ni(1)  Consider pattern $P_2$ in Fig.~\ref{fig-consistency-example}.
 One can verify that there exist no data graphs $G$ such that $P_2 \eeps G$ because (a) for any nodes $v$ in $G$, if $v$ matches with the node labeled with $B_2$, then it must match with the node labeled with $B_1$, and, hence, (b) the capacity upper bound on $B_1$ should not be less than the lower bound on $B_2$.
 
-\sstab(2) Pattern $P_1$ in Fig.~\ref{exm-motivation} is satisfiable as $P_1 \eeps G_1$.
-\end{example}
+\sstab(2) Pattern $P'_2$ in Fig.~\ref{exm-motivation} is satisfiable as $P'_2 \eeps G_2$.
 
+\sstab(3) Pattern $P_1$ in Fig.~\ref{exm-motivation} is satisfiable as $P_1 \eeps G_1$.
+\end{example}
 
 The good news is that checking the satisfiability of pattern graphs can be done in low polynomial time.
 
