@@ -2,8 +2,8 @@
 \label{sec-intro}
 
 %Given a task and a social network $G(V, E)$, where $V$ is a set of experts labeled with skills and $E$ reflects the collaboration relations among the experts,
-The {\em top-$k$ team formation} problem (\teamF) is to find a list of $k$ highly collaborative teams of experts such that every team satisfies the skill requirements of a certain task.
-Various approaches~\cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12} have been proposed for \teamF,
+The {\em top-$k$ team formation} problem is to find a list of $k$ highly collaborative teams of experts such that every team satisfies the skill requirements of a certain task.
+Various approaches~\cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12} have been proposed,
 and fall into two categories in terms of the way to improve the collaborative compatibility of team members:
  (a) minimizing team communication costs,
 defined with \eg the diameter, minimum spanning tree and the sum of pairwise member distances of the induced subgraph~\cite{Lappas09,Kargar11,ArisLuca12,SamikKVM12}, and
@@ -37,7 +37,7 @@ Further, the capacity constraint in \cite{GajewarS12,realTeamForm13} needs to be
 That is, existing methods are not appropriate for identifying the above desired teams.
 }%%%EAT
 
-One may verify that existing methods \cite{Lappas09,Kargar11,GajewarS12,GajewarS12,realTeamForm13}, can hardly find a desired team.
+One may verify that existing methods \cite{Lappas09,Kargar11,GajewarS12,realTeamForm13}, can hardly find a desired team.
 They only find teams satisfying the skill requirement~\cite{Lappas09,Kargar11,GajewarS12} and the lower bound capacity requirement~\cite{GajewarS12,realTeamForm13}  (condition (a)), and cannot guarantee  the specific collaboration relationships among team members, \ie structural constraints (condition (b)).
  \end{example}
 
@@ -73,12 +73,12 @@ We essentially introduce a revision of graph pattern matching, an extension of g
 A natural question is how to further capture the {\em structural and capacity constraints} in a unified model for team formation?
 We  introduce a revision of {\em graph pattern matching} for team formation to fill in this gap.
 % 
-Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to find all subgraphs in $G$ that match $P$, and has been extensively studied~\cite{Ullmann76,infsimu95,FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}.  Essentially, we utilize patterns to captures the structural constraint, and revise the semantics of graph pattern matching for team formation. For instance, a desired team requirement can be specified by the pattern $P_1$ (ignore dashed edges) in Fig.~\ref{fig-motivation-example}, in which nodes represent the skill requirements,  edges specify the topology constraint, and the bounds on nodes are the capacity constraint.
+Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to find all subgraphs in $G$ that match $P$, and has been extensively studied~\cite{Ullmann76,infsimu95,FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}.  Essentially, we utilize patterns to capture the structural constraint, and revise the semantics of graph pattern matching for team formation. For instance, a desired team requirement can be specified by the pattern $P_1$ (ignore dashed edges) in Fig.~\ref{fig-motivation-example}, in which nodes represent the skill requirements,  edges specify the topology constraint, and the bounds on nodes are the capacity constraint.
 
 %Especially, {\em strong simulation} introduces duality and locality into simulation, and shows a good balance between its computational complexity and its ability to preserve graph topology~\cite{MaCFHW14}.
 
 
-Another issue is that team formation is accompanied with a highly dynamic environment. It typically needs many labor efforts to find the ideal teams, and is common for professionals to refine patterns  (requirements) multiple rounds~\cite{SajjadPG12,HabibiP15}. Further, real-life graphs are often big and constantly evolve over time~\cite{FanWW13-tods}. We illustrate this with an example.
+Another issue is that team formation is accompanied with a highly dynamic environment. It typically needs many labor efforts to find the ideal teams, and is common for professionals to refine patterns  (requirements) multiple rounds~\cite{SajjadPG12,HabibiP15}. Further, real-life graphs are often big and constantly evolve over time~\cite{FanWW13-tods}. We show this with an example.
 
 \begin{example}
 \label{exm-motivation-inc}
@@ -138,7 +138,7 @@ Despite of this, we devise an effective unified incremental approach for the \dy
 
 
 \stab (1) We propose {\em team simulation}, a revision of traditional graph pattern matching, for top-$k$ team formation (Section~\ref{sec-tsim}).
-It extends existing methods by incorporating the structural and capacity constraints using pattern graphs .
+It extends existing methods by incorporating the structural and capacity constraints using pattern graphs.
 To cope with the highly dynamic environment of team formation, we also formulate the dynamic top-$k$ team formation problem  (Section~\ref{sec-tsim}), for handling separate and simultaneous pattern and data updates.
 
 
