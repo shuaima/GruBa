@@ -52,18 +52,18 @@
 \newcommand{\incd}{\kw{dynamicG}}
 
 
-\section{A Unified Incremental Method}
+\section{A Unified Incremental Solution}
 \label{sec-dynamictopk}
 
-\revise{
-%In last section, we have studied the top-$k$ team formation problem.
-Based on the dynamic top-$k$ team formation problem defined in Section~\ref{subsec-dynteamF}, 
-in this section, we first theoretically analyze the challenges and design principles, 
+In this section, we first analyze the challenges and design principles of dynamic top-$k$ team formation,
 and then develop a unified incremental framework for \dynteamF.
-For convenience, the notations used are summarized in Table~\ref{tab-notation}.}
+For convenience, the notations used are summarized in Table~\ref{tab-notation}.
+
+
+\subsection{Analyses of Dynamic Team Formation}
 
 \revise{
-By Theorem~\ref{thm-tsim-radius}, we know that $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only when $P$ matches ball $\ball{[v, r]}$ via graph simulation, 
+By Theorem~\ref{thm-tsim-radius}, we know that $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only when $P$ matches ball $\ball{[v, r]}$ via graph simulation,
 and the match results for $\ball{[v, t]}$ can be derived from the matches for $\ball{[v, r]}$.
 Therefore, we only concern about balls $\ball{[v, r]}$ in the incremental process, and finally compute the matches for balls $\ball{[v, t]}$ after we get the matches for ball $\ball{[v, r]}$.
 Note that in the following when we refer to a ball, we indicate the ball with radius $r$ by default.}
@@ -172,7 +172,7 @@ The question is how to directly find new and maintain previous answers without r
 				$\fb$                       &  fragment-ball-match index, containing $\fs, \bs$ \\    \hline
 				$\bfc$, $\upl$              &  ball filter, update planner (auxiliary structure) \\    \hline
 			\end{tabular}
-			\vspace{-2ex}
+			\vspace{-1ex}
 		\end{small}
 		\caption{Notations}
 		\label{tab-notation}
@@ -214,8 +214,10 @@ Thus, storing $M(P,G)$ could be useless, not to mention $L_{k}(P,G)$, the list o
 %and if exist, the dynamic algorithms either support pattern or data updates, not both of them~\cite{MottinGReform15,FanWW13-tods}.
 A practical solution should support continuous pattern and data updates, separately and simultaneously, which further raises difficulties on the design of auxiliary data structures and on incremental algorithms.
 
-%\subsection{A Unified Incremental Approach}
+\subsection{A Unified Incremental Approach}
 %\label{subsec-framework}
+
+
 
 \vspace{1.0ex}
 We next develop an incremental approach to handling pattern and data updates in a unified framework, based on {\em pattern fragmentation} and {\em affected balls}
@@ -275,7 +277,7 @@ Even better, the updates $\Delta P$ on $C$ of $P$ only involve with the combinat
 \vspace{0.8ex}
 \revise{During the incremental process, we typically want} (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
 Thus we define the {\em pattern fragmentation} problem. Given $P$ and a positive integer $h$, it is to find
-an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized. 
+an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
 \revise{Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size
 	while minimizing the cut size between pattern fragments.}
 
@@ -296,7 +298,7 @@ The problem is intractable, as shown below.
 
 \vspace{-0.5ex}
 However, $P$ and $h$ are typically small in practice~\cite{FanLMTWW10}, \eg $|P|=15$ and $h=3$.
-In light of this, we give a heuristic algorithm, denoted by \kw{PFrag}, for the problem, and is shown in the 
+In light of this, we give a heuristic algorithm, denoted by \kw{PFrag}, for the problem, and is shown in the
 full version~\cite{fullvldb18}.
 \kw{PFrag} works by connecting pattern fragmentation to the widely studied {\sc $(k, \nu)$-Balanced Partition} problem \cite{AndreevR06},
 which is not approximable in general, but has efficient and sophisticated heuristic algorithms~\cite{metis-KarypisK98a}.
