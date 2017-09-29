@@ -78,10 +78,10 @@ When we have the match graph $G_s$ in $\ball{[v, r]}$ for $P$ via graph simulati
 \stitle{Density based ball filtering}. We further reduce the number of balls to speedup the process by adopting the density based filtering technique.
 The key idea is to tell whether a ball is possible to produce one of the final top-$k$ matches.
 
-Given a ball $\ball{[v,r]}$, we calculate the upper bound of $\density{\hat{G}_s}$,
+Given a ball $\ball{[v,r]}$, we compute the density upper bound  $\density{\hat{G}_s}$,
 where $\hat{G}_s$ is a subgraph of $\ball{[v,r]}$.
-If the bound is larger than the current $k$-th result, \ie there is a possibility the for the ball;
-Otherwise, we the ball is simply ignored to avoid redundant computations for  team simulation.
+If the bound is larger than the density of the current $k$-th result, \ie there is a possibility the for the ball;
+Otherwise, the ball is simply ignored to avoid redundant computations.
 
 The trick part is how to efficiently compute the upper bound of $\density{\hat{G}_s}$ for each ball in $G$.
 As the best densest subgraph algorithms are in $O(|\ball{[v,r]}|^3)$ time \cite{maximumDenseSubgraph}, which is costly,
