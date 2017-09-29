@@ -20,17 +20,17 @@
 \myhrule
 \vspace{-2ex}
 \mat{0ex}{
-\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$ and ball $\ball([v, r])$.\\
-{\sl Output:\/} The perfect subgraph $G_s$ of $\ball{[v,r]}$ \wrt $P$.\\
+\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$ and ball $\ball{[v, r]}$.\\
+{\sl Output:\/} The match graph $G_s$ for $P$ in $\ball{[v, r]}$ .\\
 \sstab \bcc \hspace{1ex} \= \For each $u \in V_{P}$ \Do\\
 \icc \>\hspace{2ex}\= $\matchs(u)$ := \{$w | w$ is in $\ball{[v, r]}$ and $l_P(u)\in l(w)$\};\\
 \icc \> \While there are changes \Do\\
 \icc \>\> \For each edge ($u, u'$) in $E_P$ and each node $w \in \matchs(u)$ \Do\\
 \icc \>\>\hspace{2ex}\= \If there is no edge ($w, w'$) in $\ball{[v, r]}$ with $w' \in \matchs(u')$ \Then\\
 \icc \>\>\>\hspace{2ex}\= $\matchs(u)$ := $\matchs(u) \setminus \{w\}$;\\
-\icc \> \If there exists $|\matchs(u)|\not\in f_{P}(u)$ \Then \Return $\emptyset$;\\
+\icc \>\> \If $\matchs(u)$ = $\emptyset$ \Then \Return $\emptyset$;\\
 \icc \> $\Reps$ := \{$(u,w) | u \in V_{P}, w \in \matchs(u)$\};\\
-\icc \> Construct the perfect subgraph $G_s$ \wrt $\Reps$;\\
+\icc \> Construct the match graph $G_s$ \wrt $\Reps$;\\
 \icc \> \Return $G_s$;\\
 }
 
@@ -43,13 +43,12 @@
 \end{figure}
 
 As shown in Fig~\ref{alg-rsim}, given $P$ and ball $\ball{[v, r]}$,
-\rgraphsim finds the perfect subgraph of $P$ and $\ball{[v, r]}$.
+\rgraphsim finds the match graph for $P$ in $\ball{[v, r]}$.
 For each node $u$ in $V_{P}$, it first computes the set $\matchs(u)$ of candidate matches $w$ containing the label of $u$ (lines 1-2),
-and then removes nodes from $\matchs(u)$ iteratively (lines 3-6).
+and then removes nodes from $\matchs(u)$ iteratively (lines 3-7).
 A node $w$ is removed from $\matchs(u)$ if there is a adjacent node $u'$ of $u$,
 but there exists no adjacent node $w'$ of $w$ such that $w'\in \matchs(u')$.
-Finally, it checks whether the capacity bound on each node $u$ is satisfied (line 7).
-If so, \rgraphsim constructs the perfect subgraph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 9-10).
+If so, \rgraphsim constructs the match graph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 8-10).
 
 \eat{%%EAT
 \noindent
