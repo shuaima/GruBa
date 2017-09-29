@@ -339,36 +339,38 @@ Pattern graphs are typically small, and we only consider  satisfiable patterns i
 \subsection{Top-k Team Formation}
 \label{subsec-teamF}
 
- Given $P$, $G$ and two positive integers $r$, $k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
+ Given pattern $P$, data graph $G$, and two positive integers $r, k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
 is to find a list $L_{k}$ of $k$ perfect subgraphs (\ie teams) with the top-$k$ largest density in $G$ for $P$, via team simulation.
 \looseness=-1
 
-Here the {\em density}\, $\density{G}$ of graph $G(V, E)$ is $|E|/|V|$, where $|E|$ and $|V|$ are the number of edges and the number of nodes respectively, \revise{as commonly used in data mining applications~\cite{maximumDenseSubgraph,EVMK12}}.
+Here the {\em density}\, $\density{G}$ of graph $G(V, E)$ is $|E|/|V|$, where $|E|$ and $|V|$ are the number of edges and the number of nodes respectively, as commonly used in data mining applications~\cite{maximumDenseSubgraph,EVMK12}.
 Intuitively, the larger $\density{G}$ is, the more collaborative a team is.
 In this way, not only the two objective functions of existing team formation methods are preserved,
 \ie the locality retained by balls and the density function in selecting top-$k$ results,
 but also the relationships among members and the capacity constraint on patterns.
 
-\revise{
+
 \begin{example}
 \label{exa-teamF}
 Consider $P_1, G_1$ in Fig.~\ref{exm-motivation} and $r=2$.
-We simply set $k=1$, as most existing algorithms for \teamF{} only compute the best team, instead of top-$k$ teams.
+We simply set $k=1$, as most existing solutions for \teamF{} only compute the best team \cite{Lappas09,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12}, instead of top-$k$ teams.
 
-One may want to look for candidate teams with existing methods, satisfying the search conditions in Example \ref{exm-motivation}:
-(a) by minimizing the {\em team diameter} \cite{Lappas09},
-which returns the team with $\{\kw{BA_3}$, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}, \kw{SD_4}, $\kw{ST_4}\}$;
-(b) by minimizing the {\em sum of all-pair distances} of teams \cite{Kargar11},
-which returns exactly the same team as (a) in this case;
-or (c) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team consisting of the nodes of the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3} (excluding \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}).
+One may want to look for candidate teams with existing methods, satisfying the search requirement in Example \ref{exm-motivation}:
+\ni(1) by minimizing the {\em team diameter} \cite{Lappas09},
+which returns the team with $\{\kw{BA_3}$, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}, \kw{SD_4}, $\kw{ST_4}\}$,
 
-However, one may notice that these teams only satisfy the skill requirement, \ie the search condition (1) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members, \ie structural constraints.
-Indeed, the team found in (a) and (b) is connected by \kw{BA_3} only, and the team found in (c) has loose collaborations among its members.
+\ni(2) by minimizing the {\em sum of all-pair distances} of teams \cite{Kargar11},
+which returns exactly the same team as (a) in this case, or 
+
+\ni(3) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team with all the nodes in the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3}, except \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}.
+
+One may already notice that these teams only satisfy the skill requirement, \ie condition (a) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members.
+Indeed, the team found in (1) and (2) is connected by \kw{BA_3} only, and the team found in (3) has loose collaborations among its members.
 That is, existing methods are not appropriate for identifying the the desired teams.
 
 When team simulation is adopted, it returns the perfect subgraph in Example \ref{exm-rsimulation} with its density = 1.4,
-satisfying both search condition (1) and (2), better than the teams found by the existing methods as shown above.
-\end{example}}
+satisfying both conditions (a) and (b), much better than those teams found by the above existing methods.
+\end{example}
 
 \eat{%%%EAT
 \sstab
