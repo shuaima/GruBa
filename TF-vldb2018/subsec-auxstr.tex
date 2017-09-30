@@ -73,7 +73,20 @@ the $i$-th bit of all the $2^{h}$ filtering codes in \bfc is set to $0$; Otherwi
 Stack $T(P_{fi})$ $(i\in [1,h])$ (resp. $T(C)$) records all unit updates in all arrived pattern updates $\Delta P_1$, $\ldots$, $\Delta P_{N}$ that are applied to fragment $P_{fi}$ (resp. $C$) of $P$.
 Initially, all of them are empty.
 They are dynamically updated for each unit update in each set of coming pattern updates.
-\looseness=-1
+
+
+
+Better still, it holds a nice property as follows.
+\begin{theorem}
+\label{thm-framework-inc}
+With $\tilde{M}(P,G)$ and \fb \wrt an $h$-fragmentation of $P$, given $\Delta P$ and $\Delta G$,
+the incremental algorithm \inc processes $\Delta P$ and $\Delta G$ in time
+determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
+\end{theorem}
+
+We shall prove Theorem~\ref{thm-framework-inc} by providing specific techniques for \inc and analyzing its time complexity in Section~\ref{sec-IncAlg}.
+
+
 
 %Algorithm \inc updates \upl in step (1) to organize and accumulate unit pattern updates to pattern fragments, and uses \upl in step (2) to update $\tilde{M}(P,G)$ in \affballsx.
 

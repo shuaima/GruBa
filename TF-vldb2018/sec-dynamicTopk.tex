@@ -348,18 +348,9 @@ Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling 
 
 \etitle{(iii) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
 
-\vspace{0.5ex}
-Observe that \inc handles pattern/data updates in a unified way. Better still, it holds a nice property as follows.
 
+Observe that \inc handles pattern and data updates, separately and simultaneously, in a unified way. 
 
-\begin{theorem}
-\label{thm-framework-inc}
-With $\tilde{M}(P,G)$ and \fb \wrt an $h$-fragmentation of $P$, given $\Delta P$ and $\Delta G$,
-the incremental algorithm \inc processes $\Delta P$ and $\Delta G$ in time
-determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
-\end{theorem}
-
-We shall prove Theorem~\ref{thm-framework-inc} by providing specific techniques for \inc and analyzing its time complexity in Section~\ref{sec-IncAlg}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
