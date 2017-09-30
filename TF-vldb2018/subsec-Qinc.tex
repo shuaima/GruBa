@@ -136,19 +136,19 @@ It simply computes the maximum match relations for $P_{fi}\oplus \Delta P_{fi}$ 
 by procedure \rgraphsim in $O(|P_{fi}\oplus \Delta P_{fi}||\ball{[v,r]}|)$ time.
 
 \eetitle{(2) No edge/node deletions in $\Delta P_{fi}$}.
-\incmatch processes updates of the same type together in this case.
+\incmatch processes updates of the same type together in this case as follows.
 
-\eetitle{(2).i Capacity changes in $\Delta P_{fi}$ or updates on $C$}.
-In this case, no computation is needed for maintaining \revise{partial relations for} \affballsx at all,
+\sstab{(i) Capacity changes in $\Delta P_{fi}$ or updates on $C$}.
+In this case, no computation is needed for maintaining partial relations for \affballsx at all,
 \ie $M(P_{fi}\oplus\Delta P_{fi}, \ball{}) = M(P_{fi}, \ball{})$.
-\warn{Only a capacity check and an inner ball results check in the combination procedure are needed} (to see in Section~\ref{subsubsec-combine}).
+Only a capacity check and an inner ball check in the combination procedure are needed (to see in Section~\ref{subsubsec-combine}).
 
 
 %It is same for the updates on cut edges $C$ of ${\cal P}_{h}$ of $P$, which are also processed by the combination procedure.
 
 
 %\eetitle{(3) Edge insertions in $\Delta P_{fi}$ only}.
-\eetitle{(2).i Edge insertions in $\Delta P_{fi}$}.
+\sstab{(ii) Edge insertions in $\Delta P_{fi}$}.
 In this case, \incmatch calls procedure \patedgeinsert to process edge insertions.
 % $|\Delta P_{fi}|$ times.
 
@@ -193,7 +193,7 @@ In this case, \incmatch calls procedure \patedgeinsert to process edge insertion
 \stitle{Procedure \patedgeinsert}.
 Given $M(P_{fi}, \ball{[v,r]})$ (also represented by $\matchs(\cdot)$), $\ball{[v,r]}$ and an edge insertion $\delta=(u,u')$, \patedgeinsert computes $M(P_{fi}\oplus\delta, \ball{[v,r]})$ {\em incrementally}, as shown in Fig.~\ref{alg-patedgeinsert},
 along the same lines as for data incremental graph simulation~\cite{FanWW13-tods}.
-\patedgeinsert first finds the directly affected data nodes which need to be removed from $\matchs(\cdot)$ due to the edge insertion to $P_{fi}$,
+\patedgeinsert first finds the directly affected data nodes that need to be removed from $\matchs(\cdot)$ due to the edge insertion to $P_{fi}$,
 and pushes them along with the matched pattern nodes into $\kw{RMv}$ (lines 3-8).
 It then recursively identifies and removes the nodes in $\matchs(\cdot)$ affected by the previous removed nodes (lines 9-14).
 The recursive process is executed by utilizing a stack $\kw{RMv}$.
@@ -207,7 +207,7 @@ Finally, \patedgeinsert returns the updated $\matchs(\cdot)$ for $P_{fi}\oplus \
 Consider case (1)-(b) in Example~\ref{exa-lazyupdate}.
 Given $\delta_2 = (\kw{BA},\kw{UD})^+$, and $M(P_{f1}, \ball{}_{\kw{PM_1}})$, which is composed of nodes \kw{PM_1}, \kw{BA_1} and \{\kw{UD_1},\kw{UD_2}\} mapped to nodes \kw{PM}, \kw{BA} and \kw{UD} in $P_{f1}$.
 To compute the updated $M(P_{f1}\oplus \delta_2, \ball{}_{\kw{PM_1}})$,
-\patedgeinsert removes \kw{UD_2} which is directly affected by $\delta_2$, and finds no other nodes need to be removed.
+\patedgeinsert removes \kw{UD_2} that is directly affected by $\delta_2$, and finds no other nodes need to be removed.
 \end{example}
 
 %When update the partial match relations for fragment $P_{f2}$ \wrt\ $\delta_2 = (\kw{BA},\kw{UD})^+$ in ball $\ball{[\kw{PM_1},2]}$,
@@ -218,12 +218,12 @@ To compute the updated $M(P_{f1}\oplus \delta_2, \ball{}_{\kw{PM_1}})$,
 
 
 %\eetitle{(4) Node insertions in $\Delta P_{fi}$ only}.
-\eetitle{(2).ii Node insertions in $\Delta P_{fi}$}.
+\sstab{(iii) Node insertions in $\Delta P_{fi}$}.
 Node insertions are handled in the same way as edge insertions, by extending \patedgeinsert.
 
 Given a node insertion $\delta$ = $(u,(u,u'))^+$, where $u$ is a newly inserted node,
 to compute the updated $M(P_{fi}\oplus \delta, \ball{[v,r]})$,
-\incmatch firstly computes the set of nodes $\matchs(u)$ in $\ball{[v,r]}$ which have the same label with $u$, and then calls \patedgeinsert($M(P_{fi}, \ball{[v,r]})$, $\ball{[v,r]}$, $(u,u')$) to get the updated result.
+\incmatch firstly computes the set of nodes $\matchs(u)$ in $\ball{[v,r]}$ that have the same label with $u$, and then calls \patedgeinsert($M(P_{fi}, \ball{[v,r]})$, $\ball{[v,r]}$, $(u,u')$) to get the updated result.
 
 \vspace{0.5ex}
 \stitle{Updating \fb.} After updating $\tilde{M}(P,G)$,
@@ -233,7 +233,7 @@ to compute the updated $M(P_{fi}\oplus \delta, \ball{[v,r]})$,
 \subsubsection{Combining Fragment-Ball Matches}
 \label{subsubsec-combine}
 
-Algorithm \incp finally combines the updated partial match relations in \affballsx to get the updated top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$ by procedure \comb. Observe that only the balls from \affballsx which match with all pattern fragments of $P\oplus \Delta P$ can enter the combination process.
+Algorithm \incp finally combines the updated partial match relations in \affballsx to get the updated top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$ by procedure \comb. Observe that only the balls from \affballsx that match with all pattern fragments of $P\oplus \Delta P$ can enter the combination process.
 
 
 
@@ -242,7 +242,7 @@ to compute the maximum match relations of $P\oplus \Delta P$ for $\ball{[v,r]}$ 
 where $\Delta C$ consists of the edge insertions/deletions in $\Delta P$ applied to the cut edges $C$.
 It then checks whether the capacity bounds, together with the updates on them, are satisfied.
 If so, it constructs the perfect subgraph \wrt the match relations above.
-\warn{It then checks the inner balls results together with the capacity bounds} and finally returns the list of top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$.
+It then checks the inner balls together with the capacity bounds, and finally returns the list of top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$.
 
 
 
@@ -255,12 +255,12 @@ balls $\ball{[\kw{PM_1},2]}$, $\ball{[\kw{PM_2},2]}$ and $\ball{[\kw{BA_3},2]}$ 
 (1) For $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$, as $C\oplus \Delta C=\{(\kw{PM},\kw{SA})\}$,
 \comb finds that there is an \kw{SA_i} (resp.\,\kw{PM_j}) connecting to \kw{PM_j} (resp.\,\kw{SA_i}),
 and the capacity bounds are satisfied.
-\warn{For inner balls, based on above results, \comb finds that no perfect subgraphs reside in $\ball{[\kw{PM_1},1]}$ and $\ball{[\kw{PM_2},1]}$.}
-Hence it returns above two perfect subgraphs in two balls.
+For inner balls, based on above results, \comb finds that no perfect subgraphs reside in $\ball{[\kw{PM_1},1]}$ and $\ball{[\kw{PM_2},1]}$.
+Hence it returns the above two perfect subgraphs in two balls.
 
 \sstab
 (2) For $\ball{[\kw{BA_3},2]}$, \comb finds no \kw{SA_i} connecting to \kw{PM_j}, and vice versa.
-\warn{So no results are in it and its inner balls.}
+Hence, there are no matches found in it and its inner balls.
 \end{example}
 
 
@@ -311,7 +311,7 @@ Note that the early return optimization is  effective for pattern updates, but n
 				\icc \> Sort \affballsx by $\ball{}[\kw{den}]$ in non-ascending order;\\
 				\icc \> \For \Each $\ball{[v,r]}$ in \affballsx \Do\quad/* non-ascending order */\\
 				\icc \> \hspace{3ex} \= \If $|L_{k}| \geq k$ \And $\ball{[v,r]}[\kw{den}] \leq \density{L_{k}[k]}$ \Then \\
-				\icc \>\>\hspace{2ex} \= \bf{Output} $L_{k}[0:k-1]$.\quad/* early-return optimization*/\\
+				\icc \>\>\hspace{2ex} \= \bf{Output} $L_{k}[0:k-1]$. /* early-return optimization*/\\
 				%/* Running in background after returning top-$k$ results for $\Delta P$ */\\
 				\icc \>\>$\incmatch(M(P_{fi},\ball{[v,r]}),\ball{[v,r]}, \Delta P_{fi})$ $(i\in[1,h])$;\\
 				\>\> /* runs in the background */\\
