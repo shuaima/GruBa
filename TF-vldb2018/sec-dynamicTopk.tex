@@ -124,7 +124,7 @@ The \dynteamF{} problem is unbounded, even for $k$ = 1 and unit pattern or data 
 \end{prop}
 
 
-We then illustrate the impact of pattern and data updates on the matching results.
+We then illustrate the impact of pattern and data updates on the matching results with an example.
 
 
 \begin{example}
@@ -183,17 +183,15 @@ thus re-computation is also needed.
 \end{table}
 
 
-We next analyze the difficulties and principles of designing incremental algorithms for \dynteamF{} from three aspects.
+We finally discuss the challenges and principles of designing incremental algorithms for \dynteamF{} from three aspects.
 
 %impacts of pattern and data updates, maintenance of proper auxiliary information, and support of simultaneous pattern and data updates.
 
 
-\stitle{(1) Impacts of pattern and data updates}. It is necessary to identify and localize the impacts of pattern/data updates.
-As indicated by Proposition~\ref{thm-inc-grouprec-pat} and Example~\ref{exm-pattern-challenge},
-one can verify that (a) a unit pattern update is likely to result in the entire change in previous results,
-such that all balls need to be accessed and all matches need to be re-computed;
-%
-and (b) data updates directly change the structure of data graphs, and its impact may be global, such that the entire data graph may need to be accessed to re-compute matches.
+\stitle{(1) Impacts of pattern and data updates}.
+Beyond Proposition~\ref{thm-inc-grouprec-pat} and Example~\ref{exm-pattern-challenge}, one can also verify that (a) unit pattern updates are likely to result in the entire change in previous results, such that all balls need to be accessed and all matches need to be re-computed,
+and (b) the impact of data updates can also be global, such that the entire data graph may need to be accessed to re-compute matches.
+Hence, the key is to identify and localize the impacts of pattern and data updates.
 
 %It is rather better to identify the changes in match results in response to data updates, to minimize unnecessary recomputation.
 %However, the identification can be difficult and time-consuming.
@@ -204,7 +202,7 @@ and (b) data updates directly change the structure of data graphs, and its impac
 
 \stitle{(2) Maintenance of auxiliary information}.
 Auxiliary data on intermediate or final results for $P$ in $G$ are typically maintained for incremental computation \cite{Reps96,FanWW13-tods}.
-How to design light-weight and effective auxiliary structures is the key.
+How to design light-weight and effective auxiliary structures is critical.
 One may want to store $M(P,G)$, the match relations of $P$ for all balls in $G$,
 as adopted by existing incremental pattern matching algorithms for data updates \cite{FanWW13-tods}.
 However, the impact of $\Delta P$ is global, as shown in Example~\ref{exm-pattern-challenge}.
@@ -214,7 +212,7 @@ Thus, storing $M(P,G)$ could be useless, not to mention $L_{k}(P,G)$, the list o
 \stitle{(3) Support of continuous pattern and data updates}.
 %Previous research on incremental problems typically focus on increments to the data parts instead of the queries,
 %and if exist, the dynamic algorithms either support pattern or data updates, not both of them~\cite{MottinGReform15,FanWW13-tods}.
-A practical solution should support continuous pattern and data updates, separately and simultaneously, which further raises difficulties on the design of auxiliary data structures and on incremental algorithms.
+A practical solution should support continuous pattern and data updates, separately and simultaneously, which further increases difficulties on the design of auxiliary data structures and incremental algorithms.
 
 \subsection{Unified Incremental Framework}
 %\label{subsec-framework}
