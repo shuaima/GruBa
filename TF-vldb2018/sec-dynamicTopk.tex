@@ -334,19 +334,19 @@ and auxiliary structures (to be introduced in Section \ref{sec-IncAlg}) such as 
 algorithm \inc  consists of three steps for $\Delta P$ and $\Delta G$, as follows.
 
 
-\etitle{(1) Identifying \affballsx}.
+\etitle{(i) Identifying \affballsx}.
 Algorithm \inc invokes two different procedures to identify \affballsx for separate $\Delta P$ or $\Delta G$, respectively.
 For  simultaneous $\Delta P$ and $\Delta G$, \inc takes the union of the \affballsx produced by  the two procedures.
 
 
-\etitle{(2) Update partial match relations in \affballsx}.
+\etitle{(ii) Update partial match relations in \affballsx}.
 For a ball affected by $\Delta P$, \inc updates the partial match relations for the updated pattern fragments with incremental computation;
 For a ball affected by $\Delta G$, \inc updates the partial match relations for all pattern fragments;
 And, for a ball affected by both $\Delta P$ and $\Delta G$, \inc follows the same way as $\Delta G$ only.
 Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling continuous separate and simultaneous pattern and data updates.
 
 
-\etitle{(3) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
+\etitle{(iii) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
 
 \vspace{0.5ex}
 Observe that \inc handles pattern/data updates in a unified way. Better still, it holds a nice property as follows.
