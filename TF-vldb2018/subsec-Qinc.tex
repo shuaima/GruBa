@@ -18,18 +18,17 @@ an early return optimization technique for \incp.
 %\subsubsection{Identifying Affected Balls}
 %\label{subsubsec-affball}
 
-\stab{\bf (I) Identifying affected balls}. 
-We first develop procedure \identifyaffball,
-which utilizes auxiliary structures \fb and \bfc, to identify \affballsx.
+\stab{\bf (I) Identifying affected balls}.
+We first develop procedure \identifyaffball to identify \affballsx with structures \fb and \bfc, .
 
 \stitle{Procedure \identifyaffball}.
 Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
 (1) it updates \bfc by processing all unit updates in $\Delta P$.
 (2) For each $j\in [1, 2^h]$, it then executes a bitwise \kw{AND} operation (\&) between type code $tc_j$ of \fs in \fb and updated filtering code $fc_{j\Delta}$ in \bfc, \ie $tc_j\& fc_{j\Delta}$.
 (3) Finally, if $tc_j\& fc_{j\Delta} = fc_{j\Delta}$, \identifyaffball refers to \bs in \fb to mark the balls with type code $tc_j$ as \affballsx, and resets $fc_{j\Delta}$ to $(1, \ldots, 1)$.
-\revise{This is because the condition holds as long as
-(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$; or
-(b) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ and $tc_j$ are both 1, \ie  balls with $tc_j$ already match with ${P}_{fi}$, although there are no edge/node deletions on ${P}_{fi}$.}
+The condition $tc_j\& fc_{j\Delta} = fc_{j\Delta}$ holds as long as
+(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$, or
+(b) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ and $tc_j$ are both 1, \ie  balls with $tc_j$ already match with ${P}_{fi}$, though there are no edge/node deletions on ${P}_{fi}$.
 
 
 %If there exists a single-edge delete on pattern fragments or single-node insert/delete in $\Delta P$, then \identifyaffball returns all such \affballsx as \affballaccs. Intuitively, \affballsx are those balls that may contain new matches due to the pattern updates, while \affballaccs are those ones that cannot be computed from $P$ and $\tilde{M}(P,G)$ due to node inserts/deletes or edge deletes on pattern fragments in $\Delta P$.
@@ -39,10 +38,10 @@ Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
 \label{exa-identifyaffball}
 Consider the input and auxiliary structures in Example~\ref{exa-matchindex}, and \bfc in Fig.~\ref{fig-auxiliary-structures}.
 
-\sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, \revise{and all four $fc$ in \bfc are updated from $fc$ (1, 1) to $fc_{\Delta}$ (1, 0), as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).}
+\sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, and all four $fc$ in \bfc are updated from $fc$ (1, 1) to $fc_{\Delta}$ (1, 0), as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
 
-\revise{Procedure \identifyaffball firstly identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx, 
-	since $tc (1, 1) \& fc_{\Delta}(1, 1) = fc_{\Delta}(1, 1)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.}
+Procedure \identifyaffball firstly identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx,
+	since $tc (1, 1) \& fc_{\Delta}(1, 1) = fc_{\Delta}(1, 1)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.
 Then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
 
 
@@ -266,7 +265,7 @@ So there no matches are found.
 %\subsubsection{Early Return Optimization Technique}
 %\label{subsubsec-Inc-opt}
 
-\stab{\bf (IV) Early return optimization technique}. 
+\stab{\bf (IV) Early return optimization technique}.
 %As introduced in last section, the {\em lazy update manner} accelerates the process to return updated top-$k$ perfect subgraphs by postponing the processing of each unit pattern update.
 We propose an optimization technique for \incp to further speed-up the incremental computations, by making use of the top-$k$ semantics.
 %
