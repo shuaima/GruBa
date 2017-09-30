@@ -26,8 +26,9 @@ Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
 (1) it updates \bfc by processing all unit updates in $\Delta P$.
 (2) For each $j\in [1, 2^h]$, it then executes a bitwise \kw{AND} operation (\&) between type code $tc_j$ of \fs in \fb and updated filtering code $fc_{j\Delta}$ in \bfc, \ie $tc_j\& fc_{j\Delta}$.
 (3) Finally, if $tc_j\& fc_{j\Delta} = fc_{j\Delta}$, \identifyaffball refers to \bs in \fb to mark the balls with type code $tc_j$ as \affballsx, and resets $fc_{j\Delta}$ to $(1, \ldots, 1)$.
+\revise{This is because \affballsx are balls that have the possibility to match all updated pattern fragments.}
 The condition $tc_j\& fc_{j\Delta} = fc_{j\Delta}$ holds as long as
-(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$, or
+(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$, \revise{which may produce more matched nodes}, or
 (b) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ and $tc_j$ are both 1, \ie  balls with $tc_j$ already match with ${P}_{fi}$, though there are no edge/node deletions on ${P}_{fi}$.
 
 
