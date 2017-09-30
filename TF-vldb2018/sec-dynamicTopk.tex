@@ -225,7 +225,7 @@ Nevertheless, we develop an incremental approach to handling pattern and data up
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{(1) Localization with pattern fragmentation}.
+\stitle{(I) Localization with pattern fragmentation}.
 We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
@@ -303,7 +303,7 @@ which is not approximable in general, but has efficient and sophisticated heuris
 
 
 
-\stitle{(2) Localization with affected balls (\affballsx)}.
+\stitle{(II) Localization with affected balls (\affballsx)}.
 We further localize the impact of pattern and data updates  with {\em affected balls} to avoid unnecessary computations.
 
 
@@ -325,7 +325,7 @@ and (2) for $\Delta G$, the locality property of team simulation supports to loc
 
 
 %\vspace{-0.5ex}
-\stitle{(3) Algorithm framework}. We now provide a unified incremental algorithm to handle both pattern and data updates,
+\stitle{(III) Algorithm framework}. We now provide a unified incremental algorithm to handle both pattern and data updates,
 based on pattern fragmentation and affected balls.
 
 
@@ -334,19 +334,19 @@ and auxiliary structures (to be introduced in Section \ref{sec-IncAlg}) such as 
 algorithm \inc  consists of three steps for $\Delta P$ and $\Delta G$, as follows.
 
 
-\etitle{(i) Identifying \affballsx}.
+\etitle{(1) Identifying \affballsx}.
 Algorithm \inc invokes two different procedures to identify \affballsx for separate $\Delta P$ or $\Delta G$, respectively.
 For  simultaneous $\Delta P$ and $\Delta G$, \inc takes the union of the \affballsx produced by  the two procedures.
 
 
-\etitle{(ii) Update partial match relations in \affballsx}.
+\etitle{(2) Update partial match relations in \affballsx}.
 For a ball affected by $\Delta P$, \inc updates the partial match relations for the updated pattern fragments with incremental computation;
 For a ball affected by $\Delta G$, \inc updates the partial match relations for all pattern fragments;
 And, for a ball affected by both $\Delta P$ and $\Delta G$, \inc follows the same way as $\Delta G$ only.
 Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling continuous separate and simultaneous pattern and data updates.
 
 
-\etitle{(iii) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
+\etitle{(3) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
 
 
 Observe that \inc handles pattern and data updates, separately and simultaneously, in a unified way.
