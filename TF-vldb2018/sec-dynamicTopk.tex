@@ -215,7 +215,7 @@ Thus, storing $M(P,G)$ could be useless, not to mention $L_{k}(P,G)$, the list o
 A practical solution should support continuous pattern and data updates, separately and simultaneously, which further increases difficulties on the design of auxiliary data structures and incremental algorithms.
 
 \subsection{Unified Incremental Framework}
-%\label{subsec-framework}
+\label{subsec-framework}
 
 Nevertheless, we develop an incremental approach to handling pattern and data updates in a unified framework, by utilizing {\em pattern fragmentation} and {\em affected balls} to localize the impacts of pattern and data updates, and to reduce the cost of maintaining auxiliary structures and computations.
 
@@ -225,7 +225,7 @@ Nevertheless, we develop an incremental approach to handling pattern and data up
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{(1) Localization with pattern fragmentation}. 
+\stitle{(1) Localization with pattern fragmentation}.
 We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
@@ -250,7 +250,7 @@ By the nature of graph simulation~\cite{infsimu95}, $\bigcup_{i=1}^{h}M_{i}$ is 
 %such that the method above does not incur additional computation cost.
 Once we have the maximum match relation $M$ for $P$ in $\ball{}_i$, via graph simulation, we can further produce the result for $P$ in  $\ball{}$ via team simulation, by a capacity check.
 
-That is, based on pattern fragmentation, we maintain 
+That is, based on pattern fragmentation, we maintain
 an auxiliary structure for storing fragment-ball matches for incremental computations,
 \ie $\tilde{M}(P,G)$ \wrt ${\cal P}_{h}$ that is the maximum match relations for all pattern fragments of $P$ in all balls of $G$, via graph simulation.
 Moreover, its space cost is light-weight, as will be shown in the experimental study.
@@ -271,7 +271,7 @@ Even better, the updates $\Delta P$ on $C$ of $P$ only involve with a simple com
 
 
 For a better incremental process, we typically want (1) to avoid skewed updates by balancing the sizes of all fragments, and (2) to minimize the efforts to assemble the partial matches of all fragments.
-Thus we define and investigate the {\em pattern fragmentation} problem. 
+Thus we define and investigate the {\em pattern fragmentation} problem.
 
 Given pattern $P$ and a positive integer $h$, it is to find
 an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
@@ -349,7 +349,7 @@ Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling 
 \etitle{(iii) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
 
 
-Observe that \inc handles pattern and data updates, separately and simultaneously, in a unified way. 
+Observe that \inc handles pattern and data updates, separately and simultaneously, in a unified way.
 
 
 

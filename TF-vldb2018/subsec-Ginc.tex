@@ -1,11 +1,11 @@
 \subsection{Dealing with Data Updates}
 \label{subsec-Ginc}
 
-We next propose \incd to handle $\Delta G$, followed the steps in Section~\ref{sec-dynamictopk}.
+We next propose \incd to handle $\Delta G$, following the framework in Section~\ref{subsec-framework}.
 Given auxiliary structures $\tilde{M}(P,G)$ and \fb,
-we show how to combine procedures \identifyaffball, \incmatch and \comb for computing match results for $P$ in $G \oplus \Delta G$.
+we put together procedures \identifyaffball, \incmatch and \comb for computing match results for $P$ in $G \oplus \Delta G$.
 %
-\incmatch and \comb handle $\Delta G$ basically the same as $\Delta P$, so we mainly show how \identifyaffball identifies \affballsx \wrt $\Delta G$.
+As procedures \incmatch and \comb handle $\Delta G$ basically the same as $\Delta P$, so we mainly show how \identifyaffball identifies \affballsx \wrt $\Delta G$.
 
 
 \stitle{Procedure \identifyaffball}.
@@ -72,13 +72,11 @@ $O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_
 \looseness=-1
 
 
-\stitle{Remarks}. Note that the running time of \incd is determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$,
-and hence the part for data updates in Theorem~\ref{thm-framework-inc} is proved. This also completes the proof of Theorem~\ref{thm-framework-inc}.
 
 \subsection{Unifying Pattern and Data Updates}
 \label{subsec-completePG}
 
-We are now ready to provide algorithm \inc, integrating \incp and \incd, \revise{which are presented in Section~\ref{subsec-Qinc} and Section~\ref{subsec-Ginc}, respectively,} to process continuous pattern and data updates, separately and simultaneously.
+We are now ready to provide algorithm \inc, integrating \incp and \incd, presented in Sections~\ref{subsec-Qinc} and~\ref{subsec-Ginc}, respectively, to process continuous pattern and data updates, separately and simultaneously.
 
 Algorithm \inc is able to handle {\em simultaneous} $\Delta P$ and $\Delta G$, because of the consistency in:
 (1) the processes for handling $\Delta P$ and $\Delta G$, which follow the same steps in Section~\ref{sec-dynamictopk};
@@ -87,3 +85,11 @@ Algorithm \inc is able to handle {\em simultaneous} $\Delta P$ and $\Delta G$, b
 
 Observe that \inc can handle {\em continuous} simultaneous $\Delta P$ and $\Delta G$,
 as \inc incrementally maintains the auxiliary structures for continuous coming $\Delta P$ and $\Delta G$.
+
+
+
+
+%\vspace{0.5ex}
+\stitle{Remarks}. Note that (a) the running time of \incp is determined by $P$, $\Delta P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$, and
+(b) the running time of \incd is determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
+From these, we complete the proof of Theorem~\ref{thm-framework-inc}.

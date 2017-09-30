@@ -1,7 +1,7 @@
 \subsection{Dealing with Pattern Updates}
 \label{subsec-Qinc}
 
-We present algorithm \incp to handle pattern updates $\Delta P$, followed the steps in Section~\ref{sec-dynamictopk}, and
+We present algorithm \incp to handle pattern updates $\Delta P$, followed the steps in Section~\ref{subsec-framework}, and
 an early return optimization technique for \incp.
 %Note that for any $h$-fragmentation ${\cal P}_h$ of $P$, $|{\cal P}_h|$ = $|P|$.
 
@@ -260,7 +260,7 @@ Hence it returns the above two perfect subgraphs in two balls.
 
 \sstab
 (2) For $\ball{[\kw{BA_3},2]}$, \comb finds no \kw{SA_i} connecting to \kw{PM_j}, and vice versa.
-Hence, there are no matches found in it and its inner balls.
+So there no matches are found.
 \end{example}
 
 
@@ -353,10 +353,5 @@ It then inserts the set of perfect subgraphs in $S_{G_s}$ into $L_{k}$ (line 9).
 \stitle{Correctness \& complexity analysis}.
 The correctness of \incp is assured by the correctness of \identifyaffball (Proposition~\ref{prop-canaffballs}), \incmatch, \comb, and early return property (Lemma~\ref{lemma-approximation-bound}).
 \incp is in $O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|$ + $r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|$) + $r|P \oplus \Delta P||\affballsx|$+$|\Delta P|)$ time \wrt $\Delta P$, while $r$ is small, \ie 2 or 3 (See full version~\cite{fullvldb18}).
-
-
-%\vspace{0.5ex}
-\stitle{Remarks}. The running time of \incp is determined by $P$, $\Delta P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
-Hence the part for pattern updates in Theorem~\ref{thm-framework-inc} is proved.
 
 
