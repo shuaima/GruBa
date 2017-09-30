@@ -62,11 +62,11 @@ For convenience, the notations used are summarized in Table~\ref{tab-notation}.
 
 \subsection{Analyses of Dynamic Team Formation}
 
-\revise{
-By Theorem~\ref{thm-tsim-radius}, we know that $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only when $P$ matches ball $\ball{[v, r]}$ via graph simulation,
+
+By Theorem~\ref{thm-tsim-radius}, pattern $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only if $P$ matches ball $\ball{[v, r]}$ via graph simulation,
 and the match results for $\ball{[v, t]}$ can be derived from the matches for $\ball{[v, r]}$.
-Therefore, we only concern about balls $\ball{[v, r]}$ in the incremental process, and finally compute the matches for balls $\ball{[v, t]}$ after we get the matches for ball $\ball{[v, r]}$.
-Note that in the following when we refer to a ball, we indicate the ball with radius $r$ by default.}
+Therefore, the key of the incremental computation is to deal with the balls $\ball{[v, r]}$ with radius $r$.
+In the sequel, a ball has a radius $r$ by default.
 
 %Moreover, incremental algorithms typically maintain some auxiliary data structures, which are specifically designed for the update types and need to be maintained by the incremental algorithms. An incremental algorithm for \dyngr should be able to design auxiliary structures to store information needed for both pattern and data increments and maintain it for future ({\em both}) pattern and data increments. This raises even more challenges in designing incremental algorithms for \dyngr, compared to those for \incgrpat and \incgrdata alone.
 
@@ -111,37 +111,39 @@ The following results show that even we consider pattern or data increments alon
 
 }%%%EAT
 
+We first analyze the inherent computational complexity of the dynamic top-$k$ team formation. 
 
-\stitle{Incremental complexity analysis}. As observed in~\cite{Reps96}, the complexity of an incremental algorithm should be measured by the size $|\aff|$ of {\em the changes} in the input and output, rather than the entire input, to measure the amount of work absolutely necessary to be performed for the problem.
+\stitle{Incremental complexity analysis}. As observed in~\cite{Reps96,inc-survey}, the complexity of incremental algorithms should be measured by the size $|\aff|$ of {\em the changes} in the input and output, rather than the entire input, to measure the amount of work essentially to be performed for the problem.
 
-An incremental problem is said to be {\em bounded} if it can be solved by an algorithm whose complexity is a function of $|\aff|$ alone, and {\em unbounded}, otherwise.
-Unfortunately, \dynteamF\, is unbounded, similar to the observations in \cite{FanLMTWW10,FanWW13-tods}.
+An incremental problem is said to be {\em bounded} if it can be solved by an algorithm whose complexity is a function of $|\aff|$ alone, and is {\em unbounded}, otherwise. Unsurprisingly, the dynamic top-$k$ team formation problem is unbounded, similar to the other extensions of graph simulation \cite{FanLMTWW10,FanWW13-tods}.
 
 
 \begin{prop}
 \label{thm-inc-grouprec-pat}
-The \dynteamF\, problem is unbounded, even for $k$ = 1 and unit pattern or data updates.
+The \dynteamF{} problem is unbounded, even for $k$ = 1 and unit pattern or data updates.
 \end{prop}
 
+
+We then illustrate the impact of pattern and data updates on the matching results.
 
 
 \begin{example}
 \label{exm-pattern-challenge}
-Continue Example~\ref{exm-motivation-inc}, and consider updates $\Delta P_1$ or $\Delta G_1$ that obviously may introduce new matches.
+Continue Example~\ref{exm-motivation-inc} with $\Delta P_1$ and $\Delta G_1$.
+
+% that obviously may introduce new matches.
 %For convenience of presentation, we treat $\Delta P_1$ and $\Delta G_1$ separately.
 
 \sstab
 (1) For $\Delta P_1$, $\ball{[\kw{PM_1}, 2]}$ already matches $P$, and may produce more matched nodes for $P_1\oplus \Delta P_1$,
-thus a re-computation for perfect subgraphs in the ball is needed.
+thus a re-computation for perfect subgraphs is needed.
 For all other balls, $\Delta P_1$ may turn unmatched nodes to matched and may produce perfect subgraphs,
 thus re-computation is also needed.
-\looseness=-1
 
 \sstab
 (2) For $\Delta G_1$, it produces a new perfect subgraph for $P$ in $G_1\oplus\Delta G_1$,
-\ie the connected component containing \kw{PM_2}.
-The question is how to directly find new and maintain previous answers without redundant computation.
-\looseness=-1
+\ie the connected component having \kw{PM_2}.
+%The question is how to directly find new and maintain previous answers without redundant computation.
 \end{example}
 
 %\subsection{Analyses of Challenges}

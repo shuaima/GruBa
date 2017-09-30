@@ -114,8 +114,10 @@ It then computes perfect subgraphs $G'_{s}$ of $P$ in inner balls $\ball{[v,t]}$
 
 \stitle{Correctness \& complexity analyses}. The correctness of \grouprec is assured by the following.
 %(1) There is a unique perfect subgraph in each ball of $G$.
-(1) The correctness of \rgraphsim (resp. \incsim) can be verified along the same lines as graph simulation~\cite{infsimu95} (resp. incremental simulation \cite{FanWW13-tods}).
-(2) Theorem~\ref{thm-tsim-radius} and Lemma~\ref{lemma-approximation-bound}.
+
+\sstab(1) The correctness of \rgraphsim (resp. \incsim) can be verified along the same lines as graph simulation~\cite{infsimu95} (resp. incremental simulation \cite{FanWW13-tods}).
+
+\sstab(2) Theorem~\ref{thm-tsim-radius} and Lemma~\ref{lemma-approximation-bound}.
 It takes $O(|P|^2)$ to check pattern satisfiability, $O(|V||P||G|)$ to compute team simulation, $O(r|V||V_{P}||E|)$ to incrementally compute matches in inner balls, and $O(|V||E|)$  to compute the density of the maximum core for $|V|$ balls.
 Thus \grouprec is in $O(|P|^2+|V||P||G|+r|V||V_{P}||E|)$. However, actual time is much less due to density based ball filtering and that  $O(r|V||V_{P}||E|)$ is the worst case complexity for incremental process, while $r$ is small, \ie 2 or 3.
 
