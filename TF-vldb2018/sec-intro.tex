@@ -12,6 +12,8 @@ defined with \eg the diameter, minimum spanning tree and the sum of pairwise mem
 Further, \cite{GajewarS12} and \cite{realTeamForm13} consider a practical setting by introducing a lower bound on the number of individuals with a specific skill in a team, and an upper bound of the total team members, respectively.
 
 
+
+
 \begin{example}
 \label{exm-motivation}
 Consider a recommendation network $G_1$ taken from \cite{TerveenM05} as depicted in Fig.~\ref{fig-motivation-example},
@@ -19,10 +21,10 @@ in which (a) a node denotes a person labeled with her expertise, \eg project man
 user interface designer (\kw{UD}) and business analyst (\kw{BA}),
 and (b) an edge indicates the collaboration relationship between two persons, \eg ($\kw{PM_{1}}$, $\kw{UD_{1}}$) indicates $\kw{PM_{1}}$ worked well with $\kw{UD_{1}}$ within previous projects.
 
-A headhunt helps to set up a team for developing a software product by searching proper candidates from $G_1$ (ignore dashed edges).
+A headhunt helps to set up a team for a software product by searching proper candidates from $G_1$ (ignore dashed edges).
 A desired team has
 (i) one \kw{PM}, and one to two \kw{BAs}, \kw{UDs}, \kw{SAs}, \kw{SDs} and \kw{STs}, such that
-(ii) the \kw{PM} should collaborate with \kw{SAs}, \kw{BAs} and \kw{UDs} well, and the \kw{SDs} and \kw{STs} should collaborate with each other well and both with \kw{SAs} well.
+(ii) \kw{PM} should collaborate with \kw{SAs}, \kw{BAs} and \kw{UDs} well, and \kw{SDs} and \kw{STs} should collaborate with each other well and both with \kw{SAs} well.
 
 \eat{
 One may want to look for candidate teams with existing methods,
@@ -54,17 +56,6 @@ However, in practice, it is rather important to take the functionality of differ
 and few of them consider the capacity constraint (in condition (1)), and even consider, they always focus on the lower bounds~\cite{GajewarS12}, which results in a large quantity.}%%%EAT
 
 
-\begin{figure}[tb!]
-\vspace{-1ex}
-\begin{center}
-\includegraphics[scale=1.15]{./fig/motivation-example.eps}
-\end{center}
-\vspace{-3ex}
-\caption{Motivation example}
-\label{fig-motivation-example}
-\vspace{-4ex}
-\end{figure}
-
 \eat{
 A natural question is how to further capture the {\em structural and capacity constraints} in a unified model for team formation?
 We essentially introduce a revision of graph pattern matching, an extension of graph simulation~\cite{infsimu95} and strong simulation~\cite{MaCFHW14}, for team formation to fill in this gap.
@@ -79,6 +70,20 @@ Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to fin
 
 
 Another issue lies in that team formation is accompanied with a highly dynamic environment. It typically needs many efforts to find the ideal teams, and is common for professionals to refine patterns  (requirements) multiple rounds~\cite{SajjadPG12,HabibiP15}. Further, real-life graphs are often big and constantly evolve over time~\cite{FanWW13-tods}. We show this with an example.
+
+
+\begin{figure}[tb!]
+\vspace{-2ex}
+\begin{center}
+\includegraphics[scale=1.15]{./fig/motivation-example.eps}
+\end{center}
+\vspace{-3ex}
+\caption{Motivation example}
+\label{fig-motivation-example}
+\vspace{-4ex}
+\end{figure}
+
+
 
 \begin{example}
 \label{exm-motivation-inc}
