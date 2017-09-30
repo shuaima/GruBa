@@ -72,7 +72,7 @@ We essentially introduce a revision of graph pattern matching, an extension of g
 
 A natural question is how to further capture the {\em structural and capacity constraints} in a unified model for team formation?
 We  introduce a revision of {\em graph pattern matching} for team formation to fill in this gap.
-% 
+%
 Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to find all subgraphs in $G$ that match $P$, and has been extensively studied~\cite{Ullmann76,infsimu95,FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}.  Essentially, we utilize patterns to capture the structural constraint, and revise the semantics of graph pattern matching for team formation. For instance, a desired team requirement can be specified by the pattern $P_1$ (ignore dashed edges) in Fig.~\ref{fig-motivation-example}, in which nodes represent the skill requirements,  edges specify the topology constraint, and the bounds on nodes are the capacity constraint.
 
 %Especially, {\em strong simulation} introduces duality and locality into simulation, and shows a good balance between its computational complexity and its ability to preserve graph topology~\cite{MaCFHW14}.
@@ -146,7 +146,7 @@ To cope with the highly dynamic environment of team formation, we also formulate
 
 \stab (2) We develop a batch algorithm for computing top-$k$ teams via team simulation (Section~\ref{sec-tsimAlg}).
 We study the satisfiability problem for pattern graphs, a new problem raised in the presence of capacity bounds for graph pattern matching.
-We also propose two optimization techniques, incrementally computing radius varied balls and density based filtering, for speeding up computations.  
+We also propose two optimization techniques, handling radius varied balls and density based filtering, for speeding up the computations.
 
 
 

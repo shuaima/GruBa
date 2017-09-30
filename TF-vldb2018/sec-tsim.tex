@@ -242,7 +242,7 @@ Intuitively, (1) pattern graphs $P$ capture the structural and capacity constrai
 \label{exm-rsimulation}
 Consider pattern $P_1$ and data graph $G_1$ in Fig.~\ref{exm-motivation}, and  team simulation with $r=2$ is adopted.
 
-One can easily verify that $P_1$ matches $G_1$  via team simulation, \ie $P_1 \eeps G_1$, 
+One can easily verify that $P_1$ matches $G_1$  via team simulation, \ie $P_1 \eeps G_1$,
 as (a) there is a perfect subgraph in in ball
 $\ball{[\kw{PM_1}, 2]}$, \ie the connected component of $G_1$ containing $\kw{PM_{1}}$, which maps \kw{PM}, \kw{BA}, \kw{UD}, \kw{SA}, \kw{SD} and \kw{ST} in $P_1$ to \kw{PM_1}, \kw{BA_1}, \{\kw{UD_1}, \kw{UD_2}\}, \{\kw{SA_1}, \kw{SA_2}\}, \{\kw{SD_1}, \kw{SD_2}\} and \{\kw{ST_1}, \kw{ST_2}\}, respectively, and, moreover, (b) the capacity bounds on all pattern nodes are satisfied.
 \end{example}
@@ -339,7 +339,7 @@ Pattern graphs are typically small, and we only consider  satisfiable patterns i
 \subsection{Top-k Team Formation}
 \label{subsec-teamF}
 
- Given pattern $P$, data graph $G$, and two positive integers $r, k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
+ Given pattern $P$, data graph $G$, and two positive integers $r$ and $k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
 is to find a list $L_{k}$ of $k$ perfect subgraphs (\ie teams) with the top-$k$ largest density in $G$ for $P$, via team simulation.
 \looseness=-1
 
@@ -360,7 +360,7 @@ One may want to look for candidate teams with existing methods, satisfying the s
 which returns the team with $\{\kw{BA_3}$, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}, \kw{SD_4}, $\kw{ST_4}\}$,
 
 \ni(2) by minimizing the {\em sum of all-pair distances} of teams \cite{Kargar11},
-which returns exactly the same team as (a) in this case, or 
+which returns exactly the same team as (1) in this case, or
 
 \ni(3) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team with all the nodes in the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3}, except \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}.
 
@@ -478,7 +478,7 @@ defined along the same lines as the first four types of pattern updates.
 Further, different from pattern updates, there is no need to keep $G$ connected for data updates.
 
 
-\stitle{Dynamic top-$k$ team formation}. Given pattern $P$, data graph $G$, two positive integers $r$, $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
+\stitle{Dynamic top-$k$ team formation}. Given pattern $P$, data graph $G$, positive integers $r$ and $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
 a set of pattern updates $\Delta P$ and a set of data updates $\Delta G$,
 the {\em dynamic top-k team formation} problem, denoted by \dynteamF{(P, G, k, L_{k}, \Delta P, \Delta G)},
 is to find a list of $k$ perfect subgraphs with the top-$k$ largest density for $P\oplus\Delta P$ in $G\oplus\Delta G$, via team simulation.

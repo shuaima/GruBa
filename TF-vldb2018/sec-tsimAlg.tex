@@ -20,7 +20,7 @@ In this section, we first study the pattern satisfiability problem for team form
 
 \subsection{Pattern Satisfiability}
 Different from graph simulation \cite{infsimu95} and its extensions \cite{FanLMTWW10,MaCFHW14},
-there exist pattern graphs match no data graphs via team simulation, due to the presence of capacity constraints on patterns. We illustrate this with an example.
+there exist patterns that cannot match any data graph via team simulation, due to the presence of capacity constraints on patterns. We illustrate this with an example.
 %\looseness=-1
 
 \begin{example}
@@ -59,7 +59,7 @@ We then introduce two techniques for optimizing the computation of team simulati
 \stitle{Handling radius varied balls}. \teamF{} is to find top-$k$ teams within balls $\ball{[v, t]}$, where $v \in V$ and $t \in [1,r]$.
 %centered at each node in $G$ with radius $t$ varying from 1 to $r$.
 However, it is very costly to construct all $r|V|$ balls, and to compute perfect subgraphs in all of them.
-Indeed it is also not necessary, and it only needs to constructs and computes the matches for a number of $|V|$ balls, \ie the set of balls $\ball{[v, r]}$
+Indeed it is also not necessary, and it only needs to construct and compute the matches for a number of $|V|$ balls, \ie the set of balls $\ball{[v, r]}$
 where $v \in V$ and radius is $r$, and then incrementally computes the perfect subgraphs for balls $\ball{[v, t]}$ ($t \in [1,r-1]$) from the match graphs for ball $\ball{[v, r]}$, as shown below.
 
 \vspace{-1ex}
@@ -81,7 +81,7 @@ The key idea is to tell whether a ball is possible to produce one of the final t
 
 Given a ball $\ball{[v,r]}$, we compute the density upper bound  $\density{\hat{G}_s}$,
 where $\hat{G}_s$ is a subgraph of $\ball{[v,r]}$.
-If the bound is larger than the density of the current $k$-th result, \ie there is a possibility the for the ball;
+If the bound is larger than the density of the current $k$-th result, \ie there is a possibility for the ball;
 Otherwise, the ball is simply ignored to avoid redundant computations.
 
 The trick part is how to efficiently compute the upper bound of $\density{\hat{G}_s}$ for each ball in $G$.
@@ -103,8 +103,9 @@ We are now ready to present our batch algorithm for \teamF{}.
 
 \stitle{Algorithm \grouprec.} As shown in Fig.~\ref{alg-grouprec}, it takes input as $P$, $G$, and two integers $r$ and $k$, and outputs the top-$k$ densest perfect subgraphs in $G$ for $P$.
 It firstly checks whether $P$ is satisfiable (line 1).
-If so, for each ball $\ball{[v,r]}$ in $G$, it computes the maximum core $\ball{}_{C}$ of $\ball{[v,r]}$, and checks whether the early termination condition holds (lines 3-6).
-If so, it returns the current top-$k$ densest perfect subgraphs as top-$k$ teams;
+If so, for each ball $\ball{[v,r]}$ in $G$, it computes the maximum core $\ball{}_{C}$ of $\ball{[v,r]}$, and checks whether the
+density based ball filtering condition holds (lines 3-6).
+If so, it skips the current ball, and moves to the next one;
 otherwise, it computes the perfect subgraph $G_{s}$ of $P$ in $\ball{[v,r]}$ via team simulation by invoking \rgraphsim (line 7, see full version~\cite{fullvldb18}),
 an adaption from graph simulation~\cite{infsimu95,FanLMTWW10} and checking capacity bounds (line 8).
 It then computes perfect subgraphs $G'_{s}$ of $P$ in inner balls $\ball{[v,t]}$ by invoking \incsim, an extension of the data incremental algorithms in \cite{FanWW13-tods} and checking capacity bounds (lines 9-11).
@@ -113,10 +114,10 @@ It then computes perfect subgraphs $G'_{s}$ of $P$ in inner balls $\ball{[v,t]}$
 
 \stitle{Correctness \& complexity analyses}. The correctness of \grouprec is assured by the following.
 %(1) There is a unique perfect subgraph in each ball of $G$.
-(1) The correctness of \rgraphsim (resp. \incsim) can be verified along the same lines as for simulation~\cite{infsimu95} (resp. incremental simulation \cite{FanWW13-tods}).
+(1) The correctness of \rgraphsim (resp. \incsim) can be verified along the same lines as graph simulation~\cite{infsimu95} (resp. incremental simulation \cite{FanWW13-tods}).
 (2) Theorem~\ref{thm-tsim-radius} and Lemma~\ref{lemma-approximation-bound}.
 It takes $O(|P|^2)$ to check pattern satisfiability, $O(|V||P||G|)$ to compute team simulation, $O(r|V||V_{P}||E|)$ to incrementally compute matches in inner balls, and $O(|V||E|)$  to compute the density of the maximum core for $|V|$ balls.
-Thus \grouprec is in $O(|P|^2+|V||P||G|+r|V||V_{P}||E|)$. However, actual time is much less due to early termination and that  $O(r|V||V_{P}||E|)$ is the worst case complexity for incremental process, while $r$ is small, \ie 2 or 3.
+Thus \grouprec is in $O(|P|^2+|V||P||G|+r|V||V_{P}||E|)$. However, actual time is much less due to density based ball filtering and that  $O(r|V||V_{P}||E|)$ is the worst case complexity for incremental process, while $r$ is small, \ie 2 or 3.
 
 
 
@@ -127,14 +128,14 @@ Thus \grouprec is in $O(|P|^2+|V||P||G|+r|V||V_{P}||E|)$. However, actual time i
 			\myhrule
 			\vspace{-3ex}
 			\mat{0ex}{
-				\sstab {\sl Input:\/} $G(V$, $E)$, $P(V_P$, $E_P)$, and positive integers $k, r$.\\
+				\sstab {\sl Input:\/} $G(V$, $E)$, $P(V_P$, $E_P)$, and positive integers $r$ and $r$.\\
 				{\sl Output:\/} Top-$k$ densest teams.\\
 				\sstab \bcc \hspace{1ex}\= \If $P$ is unsatisfiable \Then \Return $nil$;\\
 				\icc \> $L_{k} := \emptyset$;\\
 				\icc \> \For each ball $\ball{[v,r]}$ in $G$ \Do\\
 				\icc \>\hspace{2ex}\= compute the maximum core $\ball{}_{C}$ of the ball $\ball{[v,r]}$;\\
 				\icc \>\> \If 2*$\density{\ball{}_C} <$  the density of the $k$-th result in $L_{k}$ \Then\\
-				\icc  \>\>\hspace{2ex}\= \Return $L_{k}[0:k-1]$;\\
+				\icc  \>\>\hspace{2ex}\= \Continue;\\
 				\icc \>\> $G_s$ := \rgraphsim$(P, \ball{[v,r]})$; \\
 				\icc \>\> If $G_s$ satisfy capacity bounds on $P$ \Then Insert $G_s$ into $L_{k}$;\\
 				\icc \>\> \For each ball $\ball{[v,t]}$ with $t\in[1,r-1]$ \Do\\
