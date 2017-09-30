@@ -225,7 +225,7 @@ Nevertheless, we develop an incremental approach to handling pattern and data up
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{(i) Localization with pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
+\stitle{(1) Localization with pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
 
@@ -291,7 +291,8 @@ The problem is intractable, as shown below.
 	The pattern fragmentation problem is \NP-complete, even for $h$ = 2.
 \end{prop}
 
-\vspace{-0.5ex}
+
+
 However, $P$ and $h$ are typically small in practice~\cite{FanLMTWW10}, \eg $|P|=15$ and $h=3$.
 In light of this, we give a heuristic algorithm, denoted by \kw{PFrag}, for the problem, and is shown in the
 full version~\cite{fullvldb18}.
@@ -301,11 +302,11 @@ which is not approximable in general, but has efficient and sophisticated heuris
 
 
 
-\stitle{(ii) Localization with affected balls (\affballsx)}.
+\stitle{(2) Localization with affected balls (\affballsx)}.
 We further localize the impact of pattern and data updates  with {\em affected balls} to avoid unnecessary computing and updating match relations for all balls.
 
 
-We say a ball in $G$ is {\em affected} \wrt an incremental algorithm \algorithm{A}, and pattern and data updates,
+We say that a ball in $G$ is {\em affected} \wrt an incremental algorithm \algorithm{A}, and pattern and data updates,
 if \algorithm{A} accesses the ball again.
 We use $||\affballsx||$ and $|\affballsx|$ to denote the cardinality and total size of \affballsx, respectively.
 
@@ -319,16 +320,15 @@ and (2) for $\Delta G$, the locality property of team simulation supports to loc
 %we just do the computation for the balls whose structure is changed due to $\Delta G$.
 \looseness=-1
 
-\stitle{Remark}. By pattern fragmentation and affected balls, we essentially localize the impact of pattern and data updates from the entire to a fraction of $P$ and from all to a subset of balls in $G$ for team simulation.
+%\stitle{Remark}. By pattern fragmentation and affected balls, we essentially localize the impact of pattern and data updates from the entire to a fraction of $P$ and from all to a subset of balls in $G$ for team simulation.
 
 
 %\vspace{-0.5ex}
-\stitle{Algorithm \inc}. We now provide a unified incremental algorithm \inc  to handle both pattern and data updates.
+\stitle{(3) Algorithm \inc}. We now provide a unified incremental solution to handle both pattern and data updates.
 
 
-Given $P$ with its $h$-fragmentation ${\cal P}_{h}$, $G$, two integers $k, r$,
-and auxiliary structures such as the partial match relations for all pattern fragments and all balls (radius $r$),
-while auxiliary structures are to be presented in next section,
+Given pattern $P$ with its $h$-fragmentation ${\cal P}_{h}$, data graph $G$, two integers $r$ and $k$,
+and auxiliary structures (to be introduced in Section \ref{sec-IncAlg}) such as the partial match relations for all pattern fragments and all balls (radius $r$),
 the algorithm consists of three steps for $\Delta P$ and $\Delta G$, as follows.
 
 
