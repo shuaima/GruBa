@@ -24,8 +24,11 @@ which utilizes auxiliary structures \fb and \bfc.
 \stitle{Procedure \identifyaffball}.
 Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
 (1) it updates \bfc by processing all unit updates in $\Delta P$.
-(2) For each $i\in [1, 2^h]$, it then executes a bitwise \kw{AND} operation (\&) between type code $tc_i$ of \fs in \fb and updated $fc_{i\Delta}$ in \bfc, \ie $tc_i\& fc_{i\Delta}$.
-(3) Finally, if $tc_i\& fc_{i\Delta} = fc_{i\Delta}$, \identifyaffball refers to \bs in \fb to mark the balls with type code $tc_i$ as \affballsx, and resets $fc_{i\Delta}$ to $(1, \ldots, 1)$.
+(2) For each $j\in [1, 2^h]$, it then executes a bitwise \kw{AND} operation (\&) between type code $tc_j$ of \fs in \fb and updated filtering code $fc_{j\Delta}$ in \bfc, \ie $tc_j\& fc_{j\Delta}$.
+(3) Finally, if $tc_j\& fc_{j\Delta} = fc_{j\Delta}$, \identifyaffball refers to \bs in \fb to mark the balls with type code $tc_j$ as \affballsx, and resets $fc_{j\Delta}$ to $(1, \ldots, 1)$.
+\revise{This is because the condition holds as long as
+(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$; or
+(b) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ and $tc_j$ are both 1, \ie  balls with $tc_j$ already match with ${P}_{fi}$, although there are no edge/node deletions on ${P}_{fi}$.}
 
 
 %If there exists a single-edge delete on pattern fragments or single-node insert/delete in $\Delta P$, then \identifyaffball returns all such \affballsx as \affballaccs. Intuitively, \affballsx are those balls that may contain new matches due to the pattern updates, while \affballaccs are those ones that cannot be computed from $P$ and $\tilde{M}(P,G)$ due to node inserts/deletes or edge deletes on pattern fragments in $\Delta P$.
