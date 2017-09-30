@@ -79,11 +79,10 @@ and the capacity bound $f_{P}$ for each node.
 \etitle{Algorithms}. We implemented the following algorithms, all in C++:
 (1) algorithm \optgrouprec for \teamF; (2) incremental algorithm \inc for \dynteamF;
 (3) three compared top-$k$ team formation algorithms \mindia, \minsumdis and \denalk, where
-(a) \mindia is to minimize the team diameter~\cite{Lappas09},
-\revise{which is firstly proposed for the team formation problem;}
+(a) \mindia is to minimize the team diameter~\cite{Lappas09}, which is firstly proposed for the team formation problem;
 (b) \minsumdis is to minimize the sum of all-pair shortest distances of teams~\cite{Kargar11}; and
 (c) \denalk is to maximize the team density~\cite{GajewarS12}, which has the same goal with our algorithms.
-\revise{Most of the algorithms for \teamF, including  \mindia and \denalk, only compute the best team,}
+Most of the algorithms for \teamF, including  \mindia and \denalk, only compute the best team,
 while \minsumdis is able to find top-$k$ teams in polynomial time, which is an adaption of Lawler's procedure.
 Based on this, we extend \mindia and \denalk to find top-$k$ teams in polynomial time.
 
@@ -170,8 +169,7 @@ Observe the following.
 \ref{fig-exp-semantic-citation-diameter-varyk}-\ref{fig-exp-semantic-citation-link-varyk}.
 Observe that the quality of teams found by the four algorithms shows the same rule as varying $|V_{P}|$, and the quality is not sensitive to $k$, a desirable property when top-$k$ semantics is concerned.
 
-
-\revise{These verify that \optgrouprec can effectively preserve structural and capacity constraints for top-$k$ team formation \wrt edge and node satisfiability, and pertains a good team collaboration compatibility \wrt diameter and density.}
+These verify that \optgrouprec can effectively preserve structural and capacity constraints for top-$k$ team formation \wrt edge and node satisfiability, and pertains a good team collaboration compatibility \wrt diameter and density.
 
 \begin{figure*}[tb!]
 %\begin{widepage}
@@ -273,21 +271,21 @@ at a high efficiency.
 \stitle{Exp-4: Efficiency of \inc for continuous sets of updates}. We evaluated \inc for a serial sets of pattern updates, data updates and simultaneous pattern and data updates vs. \optgrouprec on \citationd and \synthetic.
 
 
-\etitle{(i) Pattern updates}. We generated $5$ sets of hybrid pattern updates, varying the number of updates of each set from $1$ to $7$.
+\etitle{(i) Pattern updates}. We generated $5$ sets of hybrid pattern updates, varying the number of updates in each set from $1$ to $7$.
 We tested the average time took by \inc to finish all these sets one by one.
 The results are reported in Fig.~\ref{fig-exp-patinc-multi}.
 
 Recall that \inc adopts a lazy update policy, which definitely affects the processing time of next updates.
-However, we find \inc outperforms \optgrouprec \wrt average time, when the number of hybrid  pattern updates in each set is no more than (27\%, 31.5\%)  on (\citationd, \synthetic). This verifies the effectiveness of our lazy update policy.
+However, we find \inc outperforms \optgrouprec \wrt average time, when the amount of hybrid  pattern updates in each set is no more than (27\%, 31.5\%)  on (\citationd, \synthetic). This verifies the effectiveness of our lazy update policy.
 
 
-\etitle{(ii) Data updates}. The setting is same as above. Varying the the amount of hybrid data updates in each set from 4\% to 24\%,
+\etitle{(ii) Data updates}. The setting is same as above. Varying the amount of hybrid data updates in each set from 4\% to 28\%,
 the results are reported in Fig.~\ref{fig-exp-datainc-multi}.
 We find that \inc outperforms \optgrouprec when hybrid data updates are no more than (24\%, 28\%) on (\citationd, \synthetic).
 
 
 
-\etitle{(iii) Simultaneous pattern and data updates}. Using the same setting and varying the simultaneous pattern and data updates $(\Delta P, \Delta G)$ from (4.5\%, 4\%) to (27\%, 24\%) in Fig.~\ref{fig-exp-hyb-datapat-multi},
+\etitle{(iii) Simultaneous pattern and data updates}. Using the same setting and varying the simultaneous pattern and data updates $(\Delta P, \Delta G)$ from (4.5\%, 4\%) to (31.5\%, 28\%) in Fig.~\ref{fig-exp-hyb-datapat-multi},
 We find that \inc outperforms \optgrouprec when updates in each set are no more than (18\%, 16\%) and (22.5\%, 20\%)
 on \citationd and \synthetic, respectively.
 %\looseness=-1
