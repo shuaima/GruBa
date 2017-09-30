@@ -225,7 +225,8 @@ Nevertheless, we develop an incremental approach to handling pattern and data up
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{(1) Localization with pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
+\stitle{(1) Localization with pattern fragmentation}. 
+We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
 
@@ -324,12 +325,13 @@ and (2) for $\Delta G$, the locality property of team simulation supports to loc
 
 
 %\vspace{-0.5ex}
-\stitle{(3) Algorithm \inc}. We now provide a unified incremental solution to handle both pattern and data updates.
+\stitle{(3) Algorithm framework}. We now provide a unified incremental algorithm to handle both pattern and data updates,
+based on pattern fragmentation and affected balls.
 
 
 Given pattern $P$ with its $h$-fragmentation ${\cal P}_{h}$, data graph $G$, two integers $r$ and $k$,
 and auxiliary structures (to be introduced in Section \ref{sec-IncAlg}) such as the partial match relations for all pattern fragments and all balls (radius $r$),
-the algorithm consists of three steps for $\Delta P$ and $\Delta G$, as follows.
+algorithm \inc  consists of three steps for $\Delta P$ and $\Delta G$, as follows.
 
 
 \etitle{(1) Identifying \affballsx}.
