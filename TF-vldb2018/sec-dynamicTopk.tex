@@ -111,7 +111,7 @@ The following results show that even we consider pattern or data increments alon
 
 }%%%EAT
 
-We first analyze the inherent computational complexity of the dynamic top-$k$ team formation. 
+We first analyze the inherent computational complexity of the dynamic top-$k$ team formation.
 
 \stitle{Incremental complexity analysis}. As observed in~\cite{Reps96,inc-survey}, the complexity of incremental algorithms should be measured by the size $|\aff|$ of {\em the changes} in the input and output, rather than the entire input, to measure the amount of work essentially to be performed for the problem.
 
@@ -217,11 +217,7 @@ A practical solution should support continuous pattern and data updates, separat
 \subsection{Unified Incremental Framework}
 %\label{subsec-framework}
 
-
-
-\vspace{1.0ex}
-We next develop an incremental approach to handling pattern and data updates in a unified framework, based on {\em pattern fragmentation} and {\em affected balls}
-to localize the impacts of pattern and data updates and to reduce the cost of maintaining auxiliary structures and computations.
+Nevertheless, we develop an incremental approach to handling pattern and data updates in a unified framework, by utilizing {\em pattern fragmentation} and {\em affected balls} to localize the impacts of pattern and data updates, and to reduce the cost of maintaining auxiliary structures and computations.
 
 %In light of the challenges, it is desirable to devise a unified efficient incremental approach to handle both $\Delta P$ and $\Delta G$,
 %which can reduce the cost for maintaining auxiliary structures and computing final results,
@@ -229,36 +225,34 @@ to localize the impacts of pattern and data updates and to reduce the cost of ma
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{Pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
+\stitle{(i) Localization with pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
 
-We also refer to $P_{fi}$ ($i\in[1,h]$) as a {\em fragment} of $P$, and $C$ as a {\em cut} of $P$, respectively.
+We also say $P_{fi}$ ($i\in[1,h]$) as a {\em fragment} of $P$, and $C$ as a {\em cut} of $P$, respectively.
 
-Observe that by pattern fragmentation, a pattern update on $P$ is either on a fragment $P_{fi}$ or on the cut $C$ of $P$, and, in this way, the impact of pattern updates is localized. %to some extent.
-
-\vspace{0.5ex}
-Graph simulation has a nice property as follows.
+Observe that by pattern fragmentation, a pattern update on $P$ is either on a fragment $P_{fi}$ or on the cut $C$ of $P$, and, in this way, the impact of pattern updates is localized. Moreover, graph simulation holds a nice property on pattern fragmentation, as shown below.
 
 \vspace{-0.5ex}
 \begin{theorem}
 \label{thm-compose}
 Let $\{P_{f1},\ldots,P_{fh}\}$ be an $h$-fragmentation of pattern $P$.
-For any ball $\ball{}$ in $G$, let $M_i$ ($i\in[1,h]$) be the maximum match relation in $\ball{}$ for $P_{fi}$ via graph simulation,
-and $M$ be the maximum match relation in $\ball{}$ for $P$ via graph simulation, respectively,
+For any ball $\ball{}_i$ in $G$, let $M_i$ ($i\in[1,h]$) be the maximum match relation in $\ball{}_i$ for $P_{fi}$ via graph simulation,
+and $M$ be the maximum match relation in $\ball{}_i$ for $P$ via graph simulation, respectively,
 then $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 \end{theorem}
 
-We also say that $M_i$ is a {\em partial match relations} in ball $\ball{}$ for $P$ via graph simulation.
+We also say that $M_i$ is a {\em partial match relation} in ball $\ball{}_i$ for $P$ via graph simulation.
 %By Theorem~\ref{thm-compose}, instead of computing $M$ in $\ball{}$ \wrt\ $P$ directly, we can compute $M$ by first computing each $M_i$ in $\ball{}$ \wrt\ $P_{fi}$,
 %and then combining them together.
-By the nature of graph simulation~\cite{infsimu95}, $\bigcup_{i=1}^{h}M_{i}$ is actually intermediate results for computing $M$.
+By the nature of graph simulation~\cite{infsimu95}, $\bigcup_{i=1}^{h}M_{i}$ is actually an intermediate result of $M$.
 %such that the method above does not incur additional computation cost.
-After we have the maximum match relation $M$ for $P$ in $\ball{}$, via graph simulation, we can further produce the result for $P$ in  $\ball{}$ via team simulation, by a capacity check.
+Once we have the maximum match relation $M$ for $P$ in $\ball{}_i$, via graph simulation, we can further produce the result for $P$ in  $\ball{}$ via team simulation, by a capacity check.
 
-That is, based on pattern fragmentation, we store and maintain $\tilde{M}(P,G)$ \wrt ${\cal P}_{h}$ for the incremental process,
-\ie the maximum match relations for all pattern fragments of $P$ in all balls of $G$, via graph simulation.
-Moreover, its space cost is light-weight, as shown in the experiments section.
+That is, based on pattern fragmentation, we maintain 
+an auxiliary structure for storing fragment-ball matches for incremental computations,
+\ie $\tilde{M}(P,G)$ \wrt ${\cal P}_{h}$ that is the maximum match relations for all pattern fragments of $P$ in all balls of $G$, via graph simulation.
+Moreover, its space cost is light-weight, as will be shown in the experimental study.
 %\revise{
 %Moreover, by Theorem~\ref{thm-tsim-radius}, the match results in balls $\ball{[v, t]}$ ($1 \leq t < r$) can be easily derived from the %matches in ball $\ball{[v, r]}$.
 %Thus, we only store the maximum match relations for all pattern fragments of $P$ in the balls with radius $r$ of $G$.}
@@ -268,18 +262,19 @@ Moreover, its space cost is light-weight, as shown in the experiments section.
 
 %Indeed, it only takes 25MB and 65MB to store $\tilde{M}(P,G)$ along with all other indexes for Citation and YouTube,  which need 36MB and 114MB, respectively, for storing the entire data graphs.
 
-We already know that pattern updates $\Delta P$ on $P$ can be treated as the updates $\Delta P$ on $P_{fi}$ or $C$ of $P$.
+%We already know that pattern updates $\Delta P$ on $P$ can be treated as the updates $\Delta P$ on $P_{fi}$ or $C$ of $P$.
 %If we have cached the maximum match relations of all pattern fragments,
-By storing $\tilde{M}(P,G)$, we can get $\bigcup_{i=1}^{h}M_{i}$ for a ball $\ball{}$.
-Then we can do an update computation on $M_i$ while leaving other parts unchanged. That is, to compute $P_{fi}\oplus\Delta P(\ball{})$ instead of $P\oplus\Delta P(\ball{})$, and to combine $P_{fi}\oplus\Delta P(\ball{})$ with the other parts to derive $P\oplus\Delta P(\ball{})$.
-Even better, the updates $\Delta P$ on $C$ of $P$ only involve with the combination process, avoiding the computation for any pattern fragments.
+By storing $\tilde{M}(P,G)$, we have $\bigcup_{i=1}^{h}M_{i}$ for each ball $\ball{}$,
+and we can simply update $M_i$ while leaving other parts untouched. That is, we indeed compute for $P_{fi}\oplus\Delta P(\ball{})$, instead of $P\oplus\Delta P(\ball{})$, and combine all $P_{fi}\oplus\Delta P(\ball{})$ derive $P\oplus\Delta P(\ball{})$.
+Even better, the updates $\Delta P$ on $C$ of $P$ only involve with a simple combination process, avoiding the computation for any pattern fragments.
 
-\vspace{0.8ex}
-\revise{During the incremental process, we typically want} (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
-Thus we define the {\em pattern fragmentation} problem. Given $P$ and a positive integer $h$, it is to find
+
+For a better incremental process, we typically want (1) to avoid skewed updates by balancing the sizes of all fragments, and (2) to minimize the efforts to assemble the partial matches of all fragments.
+Thus we define and investigate the {\em pattern fragmentation} problem. 
+
+Given pattern $P$ and a positive integer $h$, it is to find
 an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
-\revise{Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size
-	while minimizing the cut size between pattern fragments.}
+Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size while minimizing the cut size.
 
 \eat{%%%EAT2017-8-2}
 Given $P$ and a positive integer $h$, the {\em pattern fragmentation}  problem is to find
@@ -303,11 +298,13 @@ full version~\cite{fullvldb18}.
 \kw{PFrag} works by connecting pattern fragmentation to the widely studied {\sc $(k, \nu)$-Balanced Partition} problem \cite{AndreevR06},
 which is not approximable in general, but has efficient and sophisticated heuristic algorithms~\cite{metis-KarypisK98a}.
 
-\vspace{1.0ex}
-So far, we have restricted the impact of pattern updates from the entire $P$ to a fraction of $P$.
-We further localize the impact of pattern and data updates  with {\em affected balls} to avoid computing and updating match relations for all balls.
 
-\stitle{Affected balls (\affballsx)}.
+
+
+\stitle{(ii) Localization with affected balls (\affballsx)}.
+We further localize the impact of pattern and data updates  with {\em affected balls} to avoid unnecessary computing and updating match relations for all balls.
+
+
 We say a ball in $G$ is {\em affected} \wrt an incremental algorithm \algorithm{A}, and pattern and data updates,
 if \algorithm{A} accesses the ball again.
 We use $||\affballsx||$ and $|\affballsx|$ to denote the cardinality and total size of \affballsx, respectively.
