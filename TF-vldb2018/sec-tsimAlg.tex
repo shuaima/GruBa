@@ -130,19 +130,19 @@ Thus \grouprec is in $O(|P|^2+|V||P||G|+r|V||V_{P}||E|)$. However, actual time i
 			\myhrule
 			\vspace{-3ex}
 			\mat{0ex}{
-				\sstab {\sl Input:\/} $G(V$, $E)$, $P(V_P$, $E_P)$, and positive integers $r$ and $r$.\\
+				\sstab {\sl Input:\/} $G(V$, $E)$, $P(V_P$, $E_P)$, and positive integers $r$ and $k$.\\
 				{\sl Output:\/} Top-$k$ densest teams.\\
 				\sstab \bcc \hspace{1ex}\= \If $P$ is unsatisfiable \Then \Return $nil$;\\
 				\icc \> $L_{k} := \emptyset$;\\
 				\icc \> \For each ball $\ball{[v,r]}$ in $G$ \Do\\
 				\icc \>\hspace{2ex}\= compute the maximum core $\ball{}_{C}$ of the ball $\ball{[v,r]}$;\\
-				\icc \>\> \If 2*$\density{\ball{}_C} <$  the density of the $k$-th result in $L_{k}$ \Then\\
+				\icc \>\> \If 2*$\density{\ball{}_C} \le$  the density of the $k$-th result in $L_{k}$ \Then\\
 				\icc  \>\>\hspace{2ex}\= \Continue;\\
 				\icc \>\> $G_s$ := \rgraphsim$(P, \ball{[v,r]})$; \\
-				\icc \>\> If $G_s$ satisfy capacity bounds on $P$ \Then Insert $G_s$ into $L_{k}$;\\
+				\icc \>\> If $G_s$ satisfies capacity bounds on $P$ \Then Insert $G_s$ into $L_{k}$;\\
 				\icc \>\> \For each ball $\ball{[v,t]}$ with $t\in[1,r-1]$ \Do\\
 				\icc \>\>\hspace{2ex}\= $G'_s$ := \kw{incSim}$(G_s, P, \ball{[v,t]})$;\\
-				\icc \>\>\> If $G'_s$ satisfy capacity bounds on $P$ \Then Insert $G'_s$ into $L_{k}$;\\
+				\icc \>\>\> If $G'_s$ satisfies capacity bounds on $P$ \Then Insert $G'_s$ into $L_{k}$;\\
 				%\icc \>\> \If $\density{G_s}>$ the density of the $k$-th result in $L_{k}$ \Then\\
 				%\icc \>\> \If $\density{G_s}>$ the density of $kth$ result in $L_{k}$ and there exists\\
 				%     \>\>\hspace{0.5ex}   no $G'_s$ in $L_{k}$ that is same with $G_{s}$ \Then\\
