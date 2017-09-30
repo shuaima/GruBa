@@ -63,8 +63,8 @@ The proof is deferred to the full version~\cite{fullvldb18}.
 %However, the filtered balls are still in need for handling future pattern updates $\Delta P'$,
 %and their partial match relations are outdated \wrt $P\oplus \Delta P$.
 However, those partial relations in the filtered balls also needs an update for handling future updates $\Delta P'$, but
-definitely become outdated \wrt $P\oplus \Delta P$. 
-Hence, \incp needs a smart policy to maintain those match relations in the filtered balls. 
+definitely become outdated \wrt $P\oplus \Delta P$.
+Hence, \incp needs a smart policy to maintain those match relations in the filtered balls.
 %$L_k(P\oplus \Delta P \oplus \Delta P', G)$ even though $\tilde{M}(P,G)$ are not updated entirely for all balls.
 
 
@@ -183,7 +183,7 @@ In this case, \incmatch calls procedure \patedgeinsert to process edge insertion
 \end{center}
 \vspace{-3ex}
 \caption{Procedure \patedgeinsert} \label{alg-patedgeinsert}
-\vspace{-5ex}
+\vspace{-4ex}
 \end{figure}
 
 
@@ -214,8 +214,8 @@ To compute the updated $M(P_{f1}\oplus \delta_2, \ball{}_{\kw{PM_1}})$,
 %and finds no other nodes need to be removed.
 
 
-%\eetitle{(4) Node insertions in $\Delta P_{fi}$ only}. 
-\eetitle{(2).ii Node insertions in $\Delta P_{fi}$}. 
+%\eetitle{(4) Node insertions in $\Delta P_{fi}$ only}.
+\eetitle{(2).ii Node insertions in $\Delta P_{fi}$}.
 Node insertions are handled in the same way as edge insertions, by extending \patedgeinsert.
 
 Given a node insertion $\delta$ = $(u,(u,u'))^+$, where $u$ is a newly inserted node,
@@ -251,7 +251,7 @@ balls $\ball{[\kw{PM_1},2]}$, $\ball{[\kw{PM_2},2]}$ and $\ball{[\kw{BA_3},2]}$ 
 \sstab
 (1) For $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$, as $C\oplus \Delta C=\{(\kw{PM},\kw{SA})\}$,
 \comb finds that there is an \kw{SA_i} (resp.\,\kw{PM_j}) connecting to \kw{PM_j} (resp.\,\kw{SA_i}),
-and the capacity bounds are satisfied. 
+and the capacity bounds are satisfied.
 \warn{For inner balls, based on above results, \comb finds that no perfect subgraphs reside in $\ball{[\kw{PM_1},1]}$ and $\ball{[\kw{PM_2},1]}$.}
 Hence it returns above two perfect subgraphs in two balls.
 
