@@ -35,11 +35,11 @@ Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
 \label{exa-identifyaffball}
 Consider the input and auxiliary structures in Example~\ref{exa-matchindex}, and \bfc in Fig.~\ref{fig-auxiliary-structures}.
 
-\sstab(1) When $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$,
-\bfc is updated as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
-\identifyaffball identifies balls with type code $(1, 1)$ and $(1, 0)$ as \affballsx,
-\ie $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$.
-Then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
+\sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, and
+\bfc is updated accordingly as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
+
+\identifyaffball first identifies balls with type code $(1, 1)$ and $(1, 0)$ as \affballsx,
+\ie $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$, and then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
 
 
 \sstab(2) Consider another case when $\Delta P'_1$ comes with $\delta_1$ and $\delta_2$, where $\delta_1$ is same as above and $\delta_2 = (\kw{BA},\kw{UD})^+$. \bfc is updated as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(c), and \identifyaffball identifies the same \affballsx as above.
