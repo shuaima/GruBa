@@ -15,11 +15,12 @@ an early return optimization technique for \incp.
 
 
 
-\subsubsection{Identifying Affected Balls}
-\label{subsubsec-affball}
+%\subsubsection{Identifying Affected Balls}
+%\label{subsubsec-affball}
 
-We first develop procedure \identifyaffball to identify \affballsx,
-which utilizes auxiliary structures \fb and \bfc.
+\stab{\bf (1) Identifying affected balls}. 
+We first develop procedure \identifyaffball,
+which utilizes auxiliary structures \fb and \bfc, to identify \affballsx.
 
 \stitle{Procedure \identifyaffball}.
 Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
@@ -110,13 +111,11 @@ and for $P_{f2}$ \wrt\ $\{\delta_1\}$.
 (2) In the case when $\Delta P'_i$ contains multiple\eat{unit} updates, \bfc and \upl are updated accordingly as shown in Fig.~\ref{fig-auxiliary-structures}(c).
 \end{example}
 
-\vspace{-.5ex}
+%\vspace{-2ex}
+%\subsubsection{Updating Fragment-Ball Matches}
+%\label{subsubsec-updtm}
 
-
-\subsubsection{Updating Fragment-Ball Matches}
-\label{subsubsec-updtm}
-
-We then update the partial match relations for \affballsx in $\tilde{M}(P,G)$ \wrt $\Delta P$,
+\stab{\bf (2) Updating Fragment-Ball matches}. We then update the partial match relations for \affballsx in $\tilde{M}(P,G)$ \wrt $\Delta P$,
 by procedure \incmatch.
 
 
@@ -230,10 +229,10 @@ to compute the updated $M(P_{fi}\oplus \delta, \ball{[v,r]})$,
 \incp updates \fb for all \affballsx, by changing the links according to the updated partial relations in $\tilde{M}(P,G)$, and also updating the \kw{cflag} item in \bs, which is in $O(||\affballsx||)$ time.
 
 
-\subsubsection{Combining Fragment-Ball Matches}
-\label{subsubsec-combine}
+%\subsubsection{Combining Fragment-Ball Matches}
+%\label{subsubsec-combine}
 
-Algorithm \incp finally combines the updated partial match relations in \affballsx to get the updated top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$ by procedure \comb. Observe that only the balls from \affballsx that match with all pattern fragments of $P\oplus \Delta P$ can enter the combination process.
+\stab{\bf (3) Combining Fragment-Ball matches}. Algorithm \incp finally combines the updated partial match relations in \affballsx to get the updated top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$ by procedure \comb. Observe that only the balls from \affballsx that match with all pattern fragments of $P\oplus \Delta P$ can enter the combination process.
 
 
 
@@ -264,10 +263,10 @@ So there no matches are found.
 \end{example}
 
 
-\subsubsection{Early Return Optimization Technique}
-\label{subsubsec-Inc-opt}
+%\subsubsection{Early Return Optimization Technique}
+%\label{subsubsec-Inc-opt}
 
-
+\stab{\bf (4) Early return optimization technique}. 
 %As introduced in last section, the {\em lazy update manner} accelerates the process to return updated top-$k$ perfect subgraphs by postponing the processing of each unit pattern update.
 We propose an optimization technique for \incp to further speed-up the incremental computations, by making use of the top-$k$ semantics.
 %
@@ -331,9 +330,10 @@ Note that the early return optimization is  effective for pattern updates, but n
 \end{figure}
 
 
-\subsubsection{The Complete Algorithm for Pattern Updates}
-\label{subsubsec-completedynamicP}
+%\subsubsection{The Complete Algorithm for Pattern Updates}
+%\label{subsubsec-completedynamicP}
 
+\stab{\bf (5) The complete algorithm for pattern updates}.
 Given $\tilde{M}(P,G)$, \fb, \bfc and \upl, for pattern update $\Delta P$,
 algorithm \incp computes the maximum match relations of $P \oplus \Delta P$ in $G$ with early return property, and maintains auxiliary structures simultaneously by invoking procedure \identifyaffball, \incmatch and \comb one by one.
 
