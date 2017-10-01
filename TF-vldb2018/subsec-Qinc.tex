@@ -218,7 +218,7 @@ To compute the updated $M(P_{f1}\oplus \delta_2, \ball{}_{\kw{PM_1}})$,
 
 %\eetitle{(4) Node insertions in $\Delta P_{fi}$ only}.
 \sstab{(iii) Node insertions in $\Delta P_{fi}$}.
-Node insertions are handled in the same way as edge insertions, by extending \patedgeinsert.
+Node insertions are handled in a similar way as edge insertions, by extending \patedgeinsert.
 
 Given a node insertion $\delta$ = $(u,(u,u'))^+$, where $u$ is a newly inserted node,
 to compute the updated $M(P_{fi}\oplus \delta, \ball{[v,r]})$,
@@ -259,7 +259,7 @@ Hence it returns the above two perfect subgraphs in two balls.
 
 \sstab
 (2) For $\ball{[\kw{BA_3},2]}$, \comb finds no \kw{SA_i} connecting to \kw{PM_j}, and vice versa.
-So there no matches are found.
+Hence, no  sensible matches are found.
 \end{example}
 
 
@@ -335,7 +335,7 @@ Note that the early return optimization is  effective for pattern updates, but n
 
 \stab{\bf (V) The complete algorithm for pattern updates}.
 Given $\tilde{M}(P,G)$, \fb, \bfc and \upl, for pattern update $\Delta P$,
-algorithm \incp computes the maximum match relations of $P \oplus \Delta P$ in $G$ with early return property, and maintains auxiliary structures simultaneously by invoking procedure \identifyaffball, \incmatch and \comb one by one.
+algorithm \incp computes the top-k perfect subgraphs for $P \oplus \Delta P$ in $G$ with early return property, and maintains auxiliary structures simultaneously by invoking procedure \identifyaffball, \incmatch and \comb one by one.
 
 \stitle{Algorithm \incp}. It works as follows, as shown in Fig.~\ref{alg-optInc}.
 For each $\Delta P$, \incp firstly sets the result list $L_{k}$ to empty,
