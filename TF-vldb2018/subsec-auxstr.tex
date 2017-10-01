@@ -2,14 +2,14 @@
 \label{subsec-auxstr}
 
 Auxiliary structures fall into two classes:
-maintain partial matches and handle pattern incremental computing. Consider an $h$-fragmentation \{$P_{f1}, \ldots, P_{fh}, C$\} of pattern $P(V_P, E_P)$, data graph $G(V, E)$, and pattern updates $\Delta P$.
+maintain partial matches and handle pattern incremental computing. Consider an $h$-fragmentation ${\cal P}_h$ = \{$P_{f1}, \ldots, P_{fh}, C$\} of pattern $P(V_P, E_P)$, data graph $G(V, E)$, and pattern updates $\Delta P$.
 
 
 \stab(I) Data structures in the first class are as follows.
 
 \etitle{(1) Fragment status (\fs)} consists of $2^h$ boolean vectors $(b_1,\ldots,b_h)$, referred to as {\em type code (tc)}, where $b_i$ $(i\in [1,h])$ is either 0 or 1. Recall that $h$ is very small, \eg 3.
 
-We use \fs to classify the match status of balls in $G$ into $2^h$ types \wrt ${\cal P}_h$.
+We use \fs to classify the match status of balls in $G$ into $2^h$ types $\wrt$ ${\cal P}_h$.
 For a ball with type code $(b_1,\ldots,b_h)$, $b_i$ is 1 iff $P_{fi}$ matches the ball via graph simulation.
 
 \vspace{0.4ex}
@@ -51,7 +51,7 @@ so there are $2^2=4$ type codes in \fs.
 \ni (2) For balls linked with $tc$ $(1, 1)$, \eg ball $\ball{[\kw{PM_1},2]}$,
 there are matches to both $P_{f1}$ and $P_{f2}$ in the ball.
 Besides, there exist balls $\ball{[\kw{PM_2},2]}$, $\ball{[\kw{BA_3},2]}$ and $\ball{[\kw{PM_4},2]}$
-linked with $tc$ $(1, 0)$, $(0, 1)$ and $(0, 0)$ respectively. 
+linked with $tc$ $(1, 0)$, $(0, 1)$ and $(0, 0)$ respectively.
 %
 For simplicity, we use these 4 balls only in the following analysis.
 \end{example}

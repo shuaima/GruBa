@@ -19,7 +19,7 @@ an early return optimization technique for \incp.
 %\label{subsubsec-affball}
 
 \stab{\bf (I) Identifying affected balls}.
-We first develop procedure \identifyaffball to identify \affballsx with structures \fb and \bfc, .
+We first develop procedure \identifyaffball to identify \affballsx with structures \fb and \bfc.
 
 \stitle{Procedure \identifyaffball}.
 Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
@@ -41,8 +41,8 @@ Consider the input and auxiliary structures in Example~\ref{exa-matchindex}, and
 
 \sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, and all four $fc$ in \bfc are updated from $fc$ (1, 1) to $fc_{\Delta}$ (1, 0), as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
 %
-\identifyaffball firstly identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx,
-	since $tc (1, 1) \& fc_{\Delta}(1, 1) = fc_{\Delta}(1, 1)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.
+\identifyaffball identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx,
+	since $tc (1, 1) \& fc_{\Delta}(1, 0) = fc_{\Delta}(1, 0)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.
 Then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
 
 
@@ -66,7 +66,7 @@ then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffb
 \stitle{Lazy update policy}. To reduce computation, \incp only updates the partial relations for \affballsx in $\tilde{M}(P,G)$ for computing  $L_k(P\oplus \Delta P, G)$.
 %However, the filtered balls are still in need for handling future pattern updates $\Delta P'$,
 %and their partial match relations are outdated \wrt $P\oplus \Delta P$.
-However, those partial relations in the filtered balls also needs an update for handling future updates $\Delta P'$, but
+However, those partial relations in the filtered balls also need an update for handling future updates $\Delta P'$, but
 definitely become outdated \wrt $P\oplus \Delta P$.
 Hence, \incp needs a smart policy to maintain those match relations in the filtered balls.
 %$L_k(P\oplus \Delta P \oplus \Delta P', G)$ even though $\tilde{M}(P,G)$ are not updated entirely for all balls.
@@ -78,7 +78,7 @@ To do this, algorithm \incp maintains the status of all unit updates applied to 
 Algorithm \incp utilizes auxiliary structure \upl together with the $cflag$ item in \bs.
 When handling current $\Delta P$, for each ball $\ball{}$, $\ball{}[\kw{cflag}]$ records the id of the latest processed unit pattern update for $\ball{}$, and is initialized to $0$.
 When future $\Delta P'$ comes, for any \affballx $\ball{}$ \wrt $\Delta P'$ and any fragment $P_{fi}$,
-\incp computes $M(P_{fi}\oplus\Delta P'_{fi}, \ball{})$ based on $M(P_{fi}, \ball{})$ by procedure \incmatch (to see in Section~\ref{subsubsec-updtm}),
+\incp computes $M(P_{fi}\oplus\Delta P'_{fi}, \ball{})$ based on $M(P_{fi}, \ball{})$ by procedure \incmatch (to be seen shortly),
 where $\Delta P'_{fi}$ consists of the unit updates stored in $T(P_{fi})$ whose ids are larger than $\ball{}[\kw{cflag}]$ in \bs.
 
 
@@ -343,7 +343,7 @@ and identifies \affballsx \wrt $\Delta P$ by \identifyaffball (lines 1-2).
 It then sorts \affballsx by their density upper bounds $\ball{}[\kw{den}]$ in \bs in non-ascending order (line 3),
 and accesses \affballsx sequentially by this order (lines 4-10).
 Whenever it comes to next \affballx $\ball{[v,r]}$, it firstly checks whether there are already $k$ perfect subgraphs found in $L_{k}$, and moreover,
-the density of the $k$th (smallest) perfect subfgraph in $L_{k}$ is larger than $\ball{[v,r]}[\kw{den}]$ (line 5).
+the density of the $k$th (smallest) perfect subgraph in $L_{k}$ is larger than $\ball{[v,r]}[\kw{den}]$ (line 5).
 If so, \incp immediately outputs $L_{k}$ as final results (line 6),
 and then continues to update $\tilde{M}(P,G)$ for those \affballsx in background by \incmatch (line 7);
 Otherwise, \incp updates the partial relations and combines them by \comb to get the set of perfect subgraphs $S_{G_s}$ in $\ball{[v,r]}$ and its inner balls (lines 7-8).
