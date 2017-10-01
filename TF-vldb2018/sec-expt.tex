@@ -46,8 +46,8 @@
 We conducted four sets of experiments to evaluate the performance of
 (1) \optgrouprec for the top-$k$ team formation problem,
 (2) \inc for the dynamic top-$k$ team formation problem
-\wrt single set of (a) pattern updates, (b) data updates, and (c) simultaneous pattern and data updates;
-(3) \inc \wrt continuous sets of pattern and data updates; and
+\wrt single sets of (a) pattern updates, (b) data updates, and (c) simultaneous pattern and data updates,
+(3) \inc \wrt continuous sets of pattern and data updates, and
 (4) the extra space cost of auxiliary structures used by \inc.
 
 
@@ -68,7 +68,7 @@ We used its undirected version, where edges indicate the relevance relationship.
 \ni (2) We generated synthetic data graphs (\synthetic) with community structures as existed in real-life networks, by adopting the LFR-benchmark graph model~\cite{AndreaSF08}. It is controlled by three parameters: the number $n$ of nodes, the average degree $d$ of nodes, and the number $l$ of node labels.
 %Given $n, d$, and $l$, the generator produces a graph with $n$ nodes, $n*d/2$ edges, and the nodes are labeled from a set of $l$ labels.
 
-\ni (3) We also used real-life dataset \youtube~\cite{youtubeWeb}. The detailed information of the dataset is available in the full version~\cite{fullvldb18}. 
+\ni (3) We also used real-life dataset \youtube~\cite{youtubeWeb}. The detailed information of the dataset is available in the full version~\cite{fullvldb18}.
 
 \etitle{Pattern generator}.
 We implemented a generator to produce pattern graphs, controlled by 4 parameters:
@@ -101,14 +101,14 @@ All the findings on \youtube are reported in the full version~\cite{fullvldb18}.
 We generated pattern graphs for \optgrouprec, and the corresponding queries (labels requirements) for \mindia, \minsumdis and \denalk.
 
 Algorithms \mindia, \minsumdis and \denalk do not scale well on large graphs.
-Indeed,  (1) \mindia and \minsumdis took more than $8$ hours to finish their preprocessing, \ie computing all-pair-shortest-paths; 
+Indeed,  (1) \mindia and \minsumdis took more than $8$ hours to finish their preprocessing, \ie computing all-pair-shortest-paths;
 and (2) \denalk took more than 24 hours even when $k=1$ on \citationd.
 By contrast, \optgrouprec took around 100 seconds on \citationd by default settings.
 Hence, we report the effectiveness of these algorithms on a sampled data graph with $10,000$ nodes on \citationd only.
 %We further evaluate the efficiency of \optgrouprec in the incremental experiments.
 
 
-\stitle{Exp-2: Effectiveness of \optgrouprec}. We then evaluated the efficiency of \optgrouprec vs. \mindia, \minsumdis and \denalk by checking the quality of matches returned by them. 
+\stitle{Exp-2: Effectiveness of \optgrouprec}. We then evaluated the efficiency of \optgrouprec vs. \mindia, \minsumdis and \denalk by checking the quality of matches returned by them.
 
 \eat{%%%
 \etitle{(1) Case study.}
@@ -130,7 +130,7 @@ These tell us that \optgrouprec has more expressive power than the other team fo
 by identifying sensible matches satisfying the structural and capacity requirements.}%%%EAT
 
 
-To evaluate the quality of teams found by the above four algorithms for \teamF, we defined four quality measures. 
+To evaluate the quality of teams found by the above four algorithms for \teamF, we defined four quality measures.
 Consider a matched subgraph $G_S$ and pattern $P(V_P, E_P)$.
 
 \noindent {(a) [{\em Diameter}]}: the diameter of $G_S$.

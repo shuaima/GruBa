@@ -40,7 +40,7 @@ The condition $tc_j\& fc_{j\Delta} = fc_{j\Delta}$ holds as long as
 Consider the input and auxiliary structures in Example~\ref{exa-matchindex}, and \bfc in Fig.~\ref{fig-auxiliary-structures}.
 
 \sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, and all four $fc$ in \bfc are updated from $fc$ (1, 1) to $fc_{\Delta}$ (1, 0), as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
-% 
+%
 \identifyaffball firstly identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx,
 	since $tc (1, 1) \& fc_{\Delta}(1, 1) = fc_{\Delta}(1, 1)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.
 Then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
@@ -139,7 +139,7 @@ by procedure \rgraphsim in $O(|P_{fi}\oplus \Delta P_{fi}||\ball{[v,r]}|)$ time.
 \sstab{(i) Capacity changes in $\Delta P_{fi}$ or updates on $C$}.
 In this case, no computation is needed for maintaining partial relations for \affballsx at all,
 \ie $M(P_{fi}\oplus\Delta P_{fi}, \ball{}) = M(P_{fi}, \ball{})$.
-Only a capacity check and an inner ball check in the combination procedure are needed (to see in Section~\ref{subsubsec-combine}).
+Only a capacity check and an inner ball check in the combination procedure are needed (to be seen immediately).
 
 
 %It is same for the updates on cut edges $C$ of ${\cal P}_{h}$ of $P$, which are also processed by the combination procedure.
