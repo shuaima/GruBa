@@ -63,12 +63,12 @@ We conducted four sets of experiments to evaluate the performance of
 \ni (1) {\em \citationd}~\cite{citationWeb} is a real-life dataset containing 1.39M paper nodes and 3.02M paper-paper citation edges.
 We used its undirected version, where edges indicate the relevance relationship. We generated 200 node labels based on phrase clustering of paper titles.
 
-%\ni (2) {\em \youtube}~\cite{youtubeWeb} contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
+\ni (2) {\em \youtube}~\cite{youtubeWeb} contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
 
-\ni (2) We generated synthetic data graphs (\synthetic) with community structures as existed in real-life networks, by adopting the LFR-benchmark graph model~\cite{AndreaSF08}. It is controlled by three parameters: the number $n$ of nodes, the average degree $d$ of nodes, and the number $l$ of node labels.
+\ni (3) We generated synthetic data graphs (\synthetic) with community structures as existed in real-life networks, by adopting the LFR-benchmark graph model~\cite{AndreaSF08}. It is controlled by three parameters: the number $n$ of nodes, the average degree $d$ of nodes, and the number $l$ of node labels.
 %Given $n, d$, and $l$, the generator produces a graph with $n$ nodes, $n*d/2$ edges, and the nodes are labeled from a set of $l$ labels.
 
-\ni (3) We also used real-life dataset \youtube~\cite{youtubeWeb}. The detailed information of the dataset is available in the full version~\cite{fullvldb18}.
+%\ni (3) We also used real-life dataset \youtube~\cite{youtubeWeb}. The detailed information of the dataset is available in the full version~\cite{fullvldb18}.
 
 \etitle{Pattern generator}.
 We implemented a generator to produce pattern graphs, controlled by 4 parameters:
