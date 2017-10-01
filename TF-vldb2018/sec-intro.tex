@@ -229,7 +229,7 @@ with an optimization technique with the {\em early return} property for incremen
 
 \stab (4) Using real-life data (\citationd) and synthetic data (\synthetic), we demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) team formation (Section~\ref{sec-expt}).
 We find that (a) our method is able to identify more sensible teams than existing team formation methods \wrt \eat{three} practical measurements,
-and (b) our incremental algorithm outperforms our batch algorithm, even when changes reach 36\% for pattern updates, 34\% for data updates and (25\%, 22\%) for simultaneous pattern and data updates, and when 29\% for continuous pattern updates, 26\% for continuous data updates and (20\%, 18\%) for continuous simultaneous pattern and data updates, respectively.
+and (b) our incremental algorithm outperforms our batch algorithm, even when changes reach 36\% for pattern updates, 34\% for data updates and (25\%, 22\%) for simultaneous pattern and data updates, and when 29\% for continuous pattern updates, 26\% for continuous data updates and (20\%, 18\%) for continuously simultaneous pattern and data updates, respectively.
 
 
 To our knowledge, this work is among the first to study simultaneous pattern and data incremental computations, no previous work has studied pattern updates for incremental pattern matching~\cite{FanHT17,FanWW13-tods}, not to mention continuous and simultaneous pattern and data updates.  This is  the most general dynamic setting for incremental computations.
@@ -257,7 +257,7 @@ Different from these work, we introduce {\em structural constraints}, in terms o
 Incremental algorithms (see \cite{inc-survey,FanHT17} for a survey) have proven usefulness in a variety of applications,
 and have been studied for graph pattern matching~\cite{FanLMTWW10,FanWW13-tods} and team formation \cite{ArisLuca12} as well.
 However, \cite{inc-survey,FanHT17,FanLMTWW10,FanWW13-tods} only consider data updates,
-and \cite{ArisLuca12} only considers continuous coming new tasks. In this work, we  deal with both pattern and data updates for team formation, and support both insertions and deletions. To our knowledge, this is the first study on pattern updates, and is the most general and practical dynamic setting considered so far.
+and \cite{ArisLuca12} only considers continuously coming new tasks. In this work, we  deal with both pattern and data updates for team formation, and support both insertions and deletions. To our knowledge, this is the first study on pattern updates, and is the most general and practical dynamic setting considered so far.
 
 {Query reformulation (\aka query rewriting) is to generate alternative queries that may produce better answers,
 and has been studied for structured queries~\cite{MottinEmpty13}, keyword queries~\cite{YaoQReform12} and graph queries~\cite{MottinGReform15}.

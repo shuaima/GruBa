@@ -115,7 +115,7 @@ from $v$ to $v'$ in $G$.
 }
 
 %\vspace{-4ex}
-\subsection{Team Formation}
+\subsection{Team Simulation}
 \label{subsec-extsim}
 
 We first extend pattern graphs of traditional graph pattern matching to carry capacity requirements,
@@ -135,7 +135,6 @@ A {\em pattern graph} (or simply pattern) is an undirected graph $P(V_P$, $E_P$,
 Intuitively, $f_P(u)$ specifies a range bound for node $u$,
 indicating the required quantity for the matched nodes in data graphs.
 Note that for traditional patterns~\cite{Galla06, b-matching,FanLMTWW10,FanCount16}, bounds are typically carried on edges, not on nodes.
-
 We also also denote data and pattern graphs as $G(V$, $E)$ and $P(V_{P}$, $E_{P})$ respectively. The size of $G$ (resp. $P$), denoted by $|G|$ (resp. $|P|$), is defined to be the total number of nodes and edges in $G$ (resp. $P$).
 
 %We define $r$-simulation by extending graph simulation~\cite{infsimu95,FanLMTWW10,MaCFHW14} on undirected graphs  and introducing capacity constraints.
@@ -488,7 +487,7 @@ is to find a list of $k$ perfect subgraphs with the top-$k$ largest density for 
 Here $\oplus$ denotes applying changes $\Delta P$ to $P$ and $\Delta G$ to $G$, and
  $P\oplus\Delta P$ and $G\oplus\Delta G$ denote the updated pattern and data graphs.
  It is worth mentioning that \dynteamF{} covers a broad range of dynamic situations,
-\ie handling continuous separate and simultaneous pattern and data updates.
+\ie handling continuously separate and simultaneous pattern and data updates.
 
 \eat{
 \begin{example}
