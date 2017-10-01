@@ -61,7 +61,7 @@ We conducted four sets of experiments to evaluate the performance of
 \etitle{Real-life graphs.} We used two real-life graphs.
 
 \ni (1) {\em \citationd}~\cite{citationWeb} contains 1.39M paper nodes and 3.02M paper-paper citation edges.
-We used its undirected version, where edges indicate the relevance relationship. We generated 200 labels based on phrase clustering of paper titles.
+We used its undirected version, where edges indicate the relevance relationship, and generated 200 labels based on phrase clustering of paper titles.
 
 \ni (2) {\em \youtube}~\cite{youtubeWeb} contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
 
@@ -92,13 +92,13 @@ an alphabet of labels in the corresponding data graphs,
 and the capacity bound $f_{P}$ for each node.
 
 \etitle{Algorithms}. We implemented the following algorithms, all in C++:
-(1) algorithm \optgrouprec for \teamF; (2) incremental algorithm \inc for \dynteamF;
+(1) algorithm \optgrouprec for \teamF, (2) incremental algorithm \inc for \dynteamF,
 (3) three compared top-$k$ team formation algorithms \mindia, \minsumdis and \denalk, where
-(a) \mindia is to minimize the team diameter~\cite{Lappas09}, which is firstly proposed for the team formation problem;
-(b) \minsumdis is to minimize the sum of all-pair shortest distances of teams~\cite{Kargar11}; and
+(a) \mindia is to minimize the team diameter~\cite{Lappas09}, which is firstly proposed for the team formation problem,
+(b) \minsumdis is to minimize the sum of all-pair shortest distances of teams~\cite{Kargar11}, and
 (c) \denalk is to maximize the team density~\cite{GajewarS12}, which has the same goal with our algorithms.
 Most of the algorithms for \teamF, including  \mindia and \denalk, only compute the best team,
-while \minsumdis is able to find top-$k$ teams in polynomial time, which is an adaption of Lawler's procedure.
+while \minsumdis is able to find top-$k$ teams in polynomial time, which is an adaption of Lawler's procedure \cite{Lawler1972}.
 Based on this, we extend \mindia and \denalk to find top-$k$ teams in polynomial time.
 
 We used a PC with Intel Core i5-4570 CPU and 16GB of memory. We randomly generated 3 sets of input and repeated 5 times for each test. The average is reported here.
@@ -230,13 +230,12 @@ These verify that \optgrouprec can effectively preserve structural and capacity 
 \subfigure[{\scriptsize Varying Datasets}]{\label{fig-exp-extraspace}
 \includegraphics[scale=0.38]{./fig/union-space.eps}}
 \vspace{-2ex}
-
 \end{center}
-\vspace{-3ex}
+\vspace{-2.5ex}
 \caption{Performance evaluation of algorithm \inc for dynamic top-$k$ team formation (Cit: \citationd, Syn: \synthetic)}
 \label{exp-inc}
 %\end{widepage}
-\vspace{-3ex}
+\vspace{-2.5ex}
 \end{figure*}
 
 \stitle{Exp-3: Efficiency of \inc for single set of updates}. We evaluated the efficiency of algorithm \inc for processing one set of pattern updates, data updates and simultaneous pattern and data updates vs. algorithm \optgrouprec on \citationd and \synthetic, respectively.
@@ -275,7 +274,7 @@ We find the following.
 (3) We have conducted a survey: the user increment on Facebook~\cite{facebookStat} and Twitter~\cite{twitterStat} daily reaches 1.23\textperthousand\ and 2.47\textperthousand.
 Therefore, \inc is able to handle the increments accumulated in dozens of days on Facebook and Twitter
 at a high efficiency.
-(4) \inc outperforms \optgrouprec when hybrid data updates are no more than 32\% and 36\% on \citationd and \synthetic respectively.
+(4) \inc outperforms \optgrouprec when hybrid data updates are no more than 32\% and 36\% on \citationd and \synthetic, respectively.
 
 
 
@@ -328,7 +327,7 @@ on \citationd and \synthetic, respectively.
 \end{table}
 }%%%EAT
 
-\stitle{Exp-5: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-extraspace}, the incremental algorithm \inc takes (25MB, 130MB) extra space to store all its auxiliary structures on (\citationd, \synthetic), which need (36MB, 482MB) space to store themselves.
+\stitle{Exp-5: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-extraspace}, the incremental algorithm \inc takes (25MB, 130MB) extra space to store all its auxiliary structures on (\citationd, \synthetic), while they need (36MB, 482MB) space to store themselves.
 That is, the auxiliary structures are light-weight, and only take (69.4\%, 26.9\%) extra space compared with the original datasets.
 
 
@@ -362,7 +361,7 @@ That is, the auxiliary structures are light-weight, and only take (69.4\%, 26.9\
 \sstab(1) Our graph pattern matching approach is effective at capturing the practical requirements of top-$k$ team formation.
 
 \sstab(2) Our batch algorithm for  top-$k$ team formation is efficient,
-\eg it took 116s when $|V|=1.39M$ and $|V_P|=10$.
+\eg it only took 116s when $|V|=1.39M$ and $|V_P|=10$.
 
 \sstab (3) Our incremental algorithm for dynamic top-$k$ team formation is able to process continuous pattern and data updates, separately and simultaneously,
 and it is more promising than its batch counterpart,
