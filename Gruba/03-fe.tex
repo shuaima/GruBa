@@ -125,7 +125,7 @@ sim(b, t) = \sum_{\substack{i, j}} sim(w_i, c_j)
 \end{equation}
 where $sim(w_i, c_j)$ refers to the similarity of a word pair. 
 
-If $sim(b, t)$ satisfies a certain threshold, topic $t$ is labeled to blog $b$; 
+If $sim(b, t)$ satisfies a certain threshold (3 by default) , topic $t$ is labeled to blog $b$; 
 the user $u$ is then discovered having an explicit interest (topic) $t$.
 Thus, by looking into the similarity of $b$ against all topics in lexicon, the explicit interests of $u$ is returned, in the form of interest feature (see Definition \ref{def:inte}).
 
@@ -157,7 +157,7 @@ The structure of \textit{tag} is as follows:
 \label{eq:tw-tag}
 W_t = \{(w'_i, p'_i)\}
 \end{equation}
-where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in blogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$.
+where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in blogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$ ($|W_t|\ =\ 30$ by default).
 %
 Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
 Go to \textit{Step 6}.
@@ -212,7 +212,7 @@ where $n$ refers to the cardinality of $L$ (i.e., number of topics in $L$) and $
 s_k = \sum_{\substack{m}} sim(b_m, t_k)
 \end{equation}
 
-Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_f$ as described in Definition \ref{def:inte}.
+Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ (3 in \sys{}) similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_f$ as described in Definition \ref{def:inte}.
 Similarly, interest features of all users are returned.
 
 As a result, the \textit{Feature Data} for every user $u$, written as $F(u)$, is given by:
