@@ -20,17 +20,17 @@
 \myhrule
 \vspace{-2ex}
 \mat{0ex}{
-\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$ and ball $\ball([v, r])$.\\
-{\sl Output:\/} The perfect subgraph $G_s$ of $\ball{[v,r]}$ \wrt $P$.\\
+\sstab {\sl Input:\/} Pattern graph $P(V_{P}, E_{P})$ and ball $\ball{[v, r]}$.\\
+{\sl Output:\/} The match graph $G_s$ for $P$ in $\ball{[v, r]}$ .\\
 \sstab \bcc \hspace{1ex} \= \For each $u \in V_{P}$ \Do\\
 \icc \>\hspace{2ex}\= $\matchs(u)$ := \{$w | w$ is in $\ball{[v, r]}$ and $l_P(u)\in l(w)$\};\\
 \icc \> \While there are changes \Do\\
 \icc \>\> \For each edge ($u, u'$) in $E_P$ and each node $w \in \matchs(u)$ \Do\\
 \icc \>\>\hspace{2ex}\= \If there is no edge ($w, w'$) in $\ball{[v, r]}$ with $w' \in \matchs(u')$ \Then\\
 \icc \>\>\>\hspace{2ex}\= $\matchs(u)$ := $\matchs(u) \setminus \{w\}$;\\
-\icc \> \If there exists $|\matchs(u)|\not\in f_{P}(u)$ \Then \Return $\emptyset$;\\
+\icc \>\> \If $\matchs(u)$ = $\emptyset$ \Then \Return $\emptyset$;\\
 \icc \> $\Reps$ := \{$(u,w) | u \in V_{P}, w \in \matchs(u)$\};\\
-\icc \> Construct the perfect subgraph $G_s$ \wrt $\Reps$;\\
+\icc \> Construct the match graph $G_s$ \wrt $\Reps$;\\
 \icc \> \Return $G_s$;\\
 }
 
@@ -43,13 +43,12 @@
 \end{figure}
 
 As shown in Fig~\ref{alg-rsim}, given $P$ and ball $\ball{[v, r]}$,
-\rgraphsim finds the perfect subgraph of $P$ and $\ball{[v, r]}$.
+\rgraphsim finds the match graph for $P$ in $\ball{[v, r]}$.
 For each node $u$ in $V_{P}$, it first computes the set $\matchs(u)$ of candidate matches $w$ containing the label of $u$ (lines 1-2),
-and then removes nodes from $\matchs(u)$ iteratively (lines 3-6).
+and then removes nodes from $\matchs(u)$ iteratively (lines 3-7).
 A node $w$ is removed from $\matchs(u)$ if there is a adjacent node $u'$ of $u$,
 but there exists no adjacent node $w'$ of $w$ such that $w'\in \matchs(u')$.
-Finally, it checks whether the capacity bound on each node $u$ is satisfied (line 7).
-If so, \rgraphsim constructs the perfect subgraph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 9-10).
+If so, \rgraphsim constructs the match graph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 8-10).
 
 \eat{%%EAT
 \noindent
@@ -164,7 +163,14 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 \label{sec-apd-proofs}
 
 \noindent
-{\textbf{1. Proof of Theorem~\ref{thm-tsim-radius}}}
+{\textbf{1. Proof of Proposition~\ref{prop-pattern-consistency}}}
+
+The satisfiability of patterns $P$ can be checked by treating $P$ as both data and pattern graphs, and computing the maximum match relation $M$ in $P$ for $P$, via graph simulation.
+Indeed, pattern $P$ is satisfiable iff for each $(u, v)\in M$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, $x_v \leq y_u$ holds. 
+Observe that computing graph simulation and the size of $M$ is bounded by $|P|^2$.
+
+\noindent
+{\textbf{2. Proof of Theorem~\ref{thm-tsim-radius}}}
 
 We will prove Theorem~\ref{thm-tsim-radius} (1) firstly.
 We know that $P\eps \ball{[v, t]}$, and suppose that $M_t$ is a binary match relation for $P$ in $\ball{[v, t]}$.
@@ -209,7 +215,7 @@ By the definition of match graphs, since $M' \subset M$, then $G'_s$ is a subgra
 
 
 \noindent
-{\textbf{2. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
+{\textbf{3. Proof of Proposition~\ref{thm-inc-grouprec-pat}}}
 
 Incremental complexity is defined in terms of LP (locally persistent) graph algorithms \cite{Reps96}.
 We also adopt the notion to prove unboundedness of graph algorithms for \dynteamF.
@@ -310,7 +316,7 @@ That is, \dynteamF\, is unbounded even for $k=1$ and unit pattern update.
 (1) and (2) together prove that \dynteamF\, is unbounded even for $k=1$ and unit pattern or data update.
 
 \noindent
-{\textbf{3. Proof of Theorem~\ref{thm-compose}}}
+{\textbf{4. Proof of Theorem~\ref{thm-compose}}}
 
 We will prove the theorem by induction.
 Given pattern $P(V_P,E_P)$ and its fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}$, $C$\},
@@ -342,7 +348,7 @@ By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 
 
 \noindent
-{\textbf{4. Proof of Proposition~\ref{prop-fragmentation}}}
+{\textbf{5. Proof of Proposition~\ref{prop-fragmentation}}}
 
 The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
 is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
@@ -397,7 +403,7 @@ Indeed, the minimum cut problem is a special case of the of $h$-fragmentation pr
 }%%EAT
 
 \noindent
-{\textbf{5. Proof of Proposition~\ref{prop-canaffballs}}}
+{\textbf{6. Proof of Proposition~\ref{prop-canaffballs}}}
 
 The proposition is correct as when $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.
 \identifyaffball identifies \affballsx who already match with each fragment of $P$;
@@ -407,7 +413,7 @@ such that the ball may match with the updated fragment $P_{fi}\oplus \Delta P$.
 Therefore, \identifyaffball filters out the balls that do not match with a fragment of $P$, and there are no pattern updates on the fragment.
 
 \noindent
-{\textbf{6. Proof of Proposition~\ref{prop-affected-datainc}}}
+{\textbf{7. Proof of Proposition~\ref{prop-affected-datainc}}}
 	
 The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
 \identifyaffball filters out the balls that cannot match all $h$ pattern fragments,	and there are no data updates on the ball.

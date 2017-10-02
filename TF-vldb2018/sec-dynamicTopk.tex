@@ -52,21 +52,21 @@
 \newcommand{\incd}{\kw{dynamicG}}
 
 
-\section{A Unified Incremental Method}
+\section{A Unified Incremental Solution}
 \label{sec-dynamictopk}
 
-\revise{
-%In last section, we have studied the top-$k$ team formation problem.
-Based on the dynamic top-$k$ team formation problem defined in Section~\ref{subsec-dynteamF}, 
-in this section, we first theoretically analyze the challenges and design principles, 
+In this section, we first analyze the challenges and design principles of dynamic top-$k$ team formation,
 and then develop a unified incremental framework for \dynteamF.
-For convenience, the notations used are summarized in Table~\ref{tab-notation}.}
+For convenience, the notations used are summarized in Table~\ref{tab-notation}.
 
-\revise{
-By Theorem~\ref{thm-tsim-radius}, we know that $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only when $P$ matches ball $\ball{[v, r]}$ via graph simulation, 
+
+\subsection{Analyses of Dynamic Team Formation}
+
+
+By Theorem~\ref{thm-tsim-radius}, pattern $P$ matches a ball $\ball{[v, t]}$ ($t \in [1,r-1]$), only if $P$ matches ball $\ball{[v, r]}$ via graph simulation,
 and the match results for $\ball{[v, t]}$ can be derived from the matches for $\ball{[v, r]}$.
-Therefore, we only concern about balls $\ball{[v, r]}$ in the incremental process, and finally compute the matches for balls $\ball{[v, t]}$ after we get the matches for ball $\ball{[v, r]}$.
-Note that in the following when we refer to a ball, we indicate the ball with radius $r$ by default.}
+Therefore, the key of the incremental computation is to deal with the balls $\ball{[v, r]}$ with radius $r$.
+In the sequel, a ball has a radius $r$ by default.
 
 %Moreover, incremental algorithms typically maintain some auxiliary data structures, which are specifically designed for the update types and need to be maintained by the incremental algorithms. An incremental algorithm for \dyngr should be able to design auxiliary structures to store information needed for both pattern and data increments and maintain it for future ({\em both}) pattern and data increments. This raises even more challenges in designing incremental algorithms for \dyngr, compared to those for \incgrpat and \incgrdata alone.
 
@@ -111,37 +111,39 @@ The following results show that even we consider pattern or data increments alon
 
 }%%%EAT
 
+We first analyze the inherent computational complexity of the dynamic top-$k$ team formation.
 
-\stitle{Incremental complexity analysis}. As observed in~\cite{Reps96}, the complexity of an incremental algorithm should be measured by the size $|\aff|$ of {\em the changes} in the input and output, rather than the entire input, to measure the amount of work absolutely necessary to be performed for the problem.
+\stitle{Incremental complexity analysis}. As observed in~\cite{Reps96,inc-survey}, the complexity of incremental algorithms should be measured by the size $|\aff|$ of {\em the changes} in the input and output, rather than the entire input, to measure the amount of work essentially to be performed for the problem.
 
-An incremental problem is said to be {\em bounded} if it can be solved by an algorithm whose complexity is a function of $|\aff|$ alone, and {\em unbounded}, otherwise.
-Unfortunately, \dynteamF\, is unbounded, similar to the observations in \cite{FanLMTWW10,FanWW13-tods}.
+An incremental problem is said to be {\em bounded} if it can be solved by an algorithm whose complexity is a function of $|\aff|$ alone, and is {\em unbounded}, otherwise. Unsurprisingly, the dynamic top-$k$ team formation problem is unbounded, similar to the other extensions of graph simulation \cite{FanLMTWW10,FanWW13-tods}.
 
 
 \begin{prop}
 \label{thm-inc-grouprec-pat}
-The \dynteamF\, problem is unbounded, even for $k$ = 1 and unit pattern or data updates.
+The \dynteamF{} problem is unbounded, even for $k$ = 1 and unit pattern or data updates.
 \end{prop}
 
+
+We then illustrate the impact of pattern and data updates on the matching results with an example.
 
 
 \begin{example}
 \label{exm-pattern-challenge}
-Continue Example~\ref{exm-motivation-inc}, and consider updates $\Delta P_1$ or $\Delta G_1$ that obviously may introduce new matches.
+Continue Example~\ref{exm-motivation-inc} with $\Delta P_1$ and $\Delta G_1$.
+
+% that obviously may introduce new matches.
 %For convenience of presentation, we treat $\Delta P_1$ and $\Delta G_1$ separately.
 
 \sstab
 (1) For $\Delta P_1$, $\ball{[\kw{PM_1}, 2]}$ already matches $P$, and may produce more matched nodes for $P_1\oplus \Delta P_1$,
-thus a re-computation for perfect subgraphs in the ball is needed.
+thus a re-computation for perfect subgraphs is needed.
 For all other balls, $\Delta P_1$ may turn unmatched nodes to matched and may produce perfect subgraphs,
 thus re-computation is also needed.
-\looseness=-1
 
 \sstab
 (2) For $\Delta G_1$, it produces a new perfect subgraph for $P$ in $G_1\oplus\Delta G_1$,
-\ie the connected component containing \kw{PM_2}.
-The question is how to directly find new and maintain previous answers without redundant computation.
-\looseness=-1
+\ie the connected component having \kw{PM_2}.
+%The question is how to directly find new and maintain previous answers without redundant computation.
 \end{example}
 
 %\subsection{Analyses of Challenges}
@@ -172,7 +174,7 @@ The question is how to directly find new and maintain previous answers without r
 				$\fb$                       &  fragment-ball-match index, containing $\fs, \bs$ \\    \hline
 				$\bfc$, $\upl$              &  ball filter, update planner (auxiliary structure) \\    \hline
 			\end{tabular}
-			\vspace{-2ex}
+			\vspace{-1ex}
 		\end{small}
 		\caption{Notations}
 		\label{tab-notation}
@@ -181,17 +183,15 @@ The question is how to directly find new and maintain previous answers without r
 \end{table}
 
 
-We next analyze the difficulties and principles of designing incremental algorithms for \dynteamF{} from three aspects.
+We finally discuss the challenges and principles of designing incremental algorithms for \dynteamF{} from three aspects.
 
 %impacts of pattern and data updates, maintenance of proper auxiliary information, and support of simultaneous pattern and data updates.
 
 
-\stitle{(1) Impacts of pattern and data updates}. It is necessary to identify and localize the impacts of pattern/data updates.
-As indicated by Proposition~\ref{thm-inc-grouprec-pat} and Example~\ref{exm-pattern-challenge},
-one can verify that (a) a unit pattern update is likely to result in the entire change in previous results,
-such that all balls need to be accessed and all matches need to be re-computed;
-%
-and (b) data updates directly change the structure of data graphs, and its impact may be global, such that the entire data graph may need to be accessed to re-compute matches.
+\stitle{(1) Impacts of pattern and data updates}.
+Beyond Proposition~\ref{thm-inc-grouprec-pat} and Example~\ref{exm-pattern-challenge}, one can also verify that (a) unit pattern updates are likely to result in the entire change in previous results, such that all balls need to be accessed and all matches need to be re-computed,
+and (b) the impact of data updates can also be global, such that the entire data graph may need to be accessed to re-compute matches.
+Hence, the key is to identify and localize the impacts of pattern and data updates.
 
 %It is rather better to identify the changes in match results in response to data updates, to minimize unnecessary recomputation.
 %However, the identification can be difficult and time-consuming.
@@ -202,7 +202,7 @@ and (b) data updates directly change the structure of data graphs, and its impac
 
 \stitle{(2) Maintenance of auxiliary information}.
 Auxiliary data on intermediate or final results for $P$ in $G$ are typically maintained for incremental computation \cite{Reps96,FanWW13-tods}.
-How to design light-weight and effective auxiliary structures is the key.
+How to design light-weight and effective auxiliary structures is critical.
 One may want to store $M(P,G)$, the match relations of $P$ for all balls in $G$,
 as adopted by existing incremental pattern matching algorithms for data updates \cite{FanWW13-tods}.
 However, the impact of $\Delta P$ is global, as shown in Example~\ref{exm-pattern-challenge}.
@@ -212,14 +212,12 @@ Thus, storing $M(P,G)$ could be useless, not to mention $L_{k}(P,G)$, the list o
 \stitle{(3) Support of continuous pattern and data updates}.
 %Previous research on incremental problems typically focus on increments to the data parts instead of the queries,
 %and if exist, the dynamic algorithms either support pattern or data updates, not both of them~\cite{MottinGReform15,FanWW13-tods}.
-A practical solution should support continuous pattern and data updates, separately and simultaneously, which further raises difficulties on the design of auxiliary data structures and on incremental algorithms.
+A practical solution should support continuous pattern and data updates, separately and simultaneously, which further increases difficulties on the design of auxiliary data structures and incremental algorithms.
 
-%\subsection{A Unified Incremental Approach}
-%\label{subsec-framework}
+\subsection{A Unified Incremental Framework}
+\label{subsec-framework}
 
-\vspace{1.0ex}
-We next develop an incremental approach to handling pattern and data updates in a unified framework, based on {\em pattern fragmentation} and {\em affected balls}
-to localize the impacts of pattern and data updates and to reduce the cost of maintaining auxiliary structures and computations.
+Nevertheless, we develop an incremental approach to handling pattern and data updates in a unified framework, by utilizing {\em pattern fragmentation} and {\em affected balls} to localize the impacts of pattern and data updates, and to reduce the cost of maintaining auxiliary structures and computations.
 
 %In light of the challenges, it is desirable to devise a unified efficient incremental approach to handle both $\Delta P$ and $\Delta G$,
 %which can reduce the cost for maintaining auxiliary structures and computing final results,
@@ -227,16 +225,14 @@ to localize the impacts of pattern and data updates and to reduce the cost of ma
 %Therefore, we propose the {\em dynamic top-$k$ graph pattern matching} model to solve \dynteamF\.
 %\looseness=-1
 
-\stitle{Pattern fragmentation}. We say that \{$P_{f1}(V_{f1},V_{f1})$, $\ldots$, $P_{fh}(V_{fh},V_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
+\stitle{(I) Localization with pattern fragmentation}.
+We say that \{$P_{f1}(V_{f1}, E_{f1})$, $\ldots$, $P_{fh}(V_{fh}, E_{fh})$, $C$\} is an {\em $h$-fragmentation} of pattern $P(V_{P}$, $E_{P})$, denoted as ${\cal P}_{h}$,
 if (1) $\bigcup_{i=1}^{h}V_{fi}=V_{P}$, (2) $V_{fi}\cap V_{fj} = \emptyset$ for any $i\ne j\in[1, h]$,
 (3) $E_{fi}$ is exactly the edges in $P$ on $V_{fi}$, and (4) $C=E_P \setminus (E_{f1}\cup\ldots\cup E_{fh})$.
 
-We also refer to $P_{fi}$ ($i\in[1,h]$) as a {\em fragment} of $P$, and $C$ as a {\em cut} of $P$, respectively.
+We also say $P_{fi}$ ($i\in[1,h]$) as a {\em fragment} of $P$, and $C$ as a {\em cut} of $P$, respectively.
 
-Observe that by pattern fragmentation, a pattern update on $P$ is either on a fragment $P_{fi}$ or on the cut $C$ of $P$, and, in this way, the impact of pattern updates is localized. %to some extent.
-
-\vspace{0.5ex}
-Graph simulation has a nice property as follows.
+Observe that by pattern fragmentation, a pattern update on $P$ is either on a fragment $P_{fi}$ or on the cut $C$ of $P$, and, in this way, the impact of pattern updates is localized. Moreover, graph simulation holds a nice property on pattern fragmentation, as shown below.
 
 \vspace{-0.5ex}
 \begin{theorem}
@@ -247,16 +243,17 @@ and $M$ be the maximum match relation in $\ball{}$ for $P$ via graph simulation,
 then $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 \end{theorem}
 
-We also say that $M_i$ is a {\em partial match relations} in ball $\ball{}$ for $P$ via graph simulation.
+We also say that $M_i$ is a {\em partial match relation} in ball $\ball{}$ for $P$ via graph simulation.
 %By Theorem~\ref{thm-compose}, instead of computing $M$ in $\ball{}$ \wrt\ $P$ directly, we can compute $M$ by first computing each $M_i$ in $\ball{}$ \wrt\ $P_{fi}$,
 %and then combining them together.
-By the nature of graph simulation~\cite{infsimu95}, $\bigcup_{i=1}^{h}M_{i}$ is actually intermediate results for computing $M$.
+By the nature of graph simulation~\cite{infsimu95}, $\bigcup_{i=1}^{h}M_{i}$ is actually an intermediate result of $M$.
 %such that the method above does not incur additional computation cost.
-After we have the maximum match relation $M$ for $P$ in $\ball{}$, via graph simulation, we can further produce the result for $P$ in  $\ball{}$ via team simulation, by a capacity check.
+Once we have the maximum match relation $M$ for $P$ in $\ball{}$, via graph simulation, we can further produce the result for $P$ in  $\ball{}$ via team simulation, by a capacity check.
 
-That is, based on pattern fragmentation, we store and maintain $\tilde{M}(P,G)$ \wrt ${\cal P}_{h}$ for the incremental process,
-\ie the maximum match relations for all pattern fragments of $P$ in all balls of $G$, via graph simulation.
-Moreover, its space cost is light-weight, as shown in the experiments section.
+That is, based on pattern fragmentation, we maintain
+an auxiliary structure for storing fragment-ball matches for incremental computations,
+\ie $\tilde{M}(P,G)$ \wrt ${\cal P}_{h}$ that is the maximum match relations for all pattern fragments of $P$ in all balls of $G$, via graph simulation.
+Moreover, its space cost is light-weight, as will be shown in the experimental study.
 %\revise{
 %Moreover, by Theorem~\ref{thm-tsim-radius}, the match results in balls $\ball{[v, t]}$ ($1 \leq t < r$) can be easily derived from the %matches in ball $\ball{[v, r]}$.
 %Thus, we only store the maximum match relations for all pattern fragments of $P$ in the balls with radius $r$ of $G$.}
@@ -266,18 +263,19 @@ Moreover, its space cost is light-weight, as shown in the experiments section.
 
 %Indeed, it only takes 25MB and 65MB to store $\tilde{M}(P,G)$ along with all other indexes for Citation and YouTube,  which need 36MB and 114MB, respectively, for storing the entire data graphs.
 
-We already know that pattern updates $\Delta P$ on $P$ can be treated as the updates $\Delta P$ on $P_{fi}$ or $C$ of $P$.
+%We already know that pattern updates $\Delta P$ on $P$ can be treated as the updates $\Delta P$ on $P_{fi}$ or $C$ of $P$.
 %If we have cached the maximum match relations of all pattern fragments,
-By storing $\tilde{M}(P,G)$, we can get $\bigcup_{i=1}^{h}M_{i}$ for a ball $\ball{}$.
-Then we can do an update computation on $M_i$ while leaving other parts unchanged. That is, to compute $P_{fi}\oplus\Delta P(\ball{})$ instead of $P\oplus\Delta P(\ball{})$, and to combine $P_{fi}\oplus\Delta P(\ball{})$ with the other parts to derive $P\oplus\Delta P(\ball{})$.
-Even better, the updates $\Delta P$ on $C$ of $P$ only involve with the combination process, avoiding the computation for any pattern fragments.
+By storing $\tilde{M}(P,G)$, we have $\bigcup_{i=1}^{h}M_{i}$ for each ball $\ball{}$,
+and we can simply update $M_i$ while leaving other parts untouched. That is, we indeed compute for $P_{fi}\oplus\Delta P(\ball{})$, instead of $P\oplus\Delta P(\ball{})$, and combine all $P_{fi}\oplus\Delta P(\ball{})$ to derive $P\oplus\Delta P(\ball{})$.
+Even better, the updates $\Delta P$ on the cut $C$ of $P$ only involve with a simple combination process, avoiding the computation for any pattern fragments.
 
-\vspace{0.8ex}
-\revise{During the incremental process, we typically want} (1) to avoid skewed updates by balancing the sizes of all fragments and (2) to minimize the efforts to assemble the partial matches of all fragments.
-Thus we define the {\em pattern fragmentation} problem. Given $P$ and a positive integer $h$, it is to find
-an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized. 
-\revise{Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size
-	while minimizing the cut size between pattern fragments.}
+
+For a better incremental process, we typically want (1) to avoid skewed updates by balancing the sizes of all fragments, and (2) to minimize the efforts to assemble the partial matches of all fragments.
+Thus we define and investigate the {\em pattern fragmentation} problem.
+
+Given pattern $P$ and a positive integer $h$, it is to find
+an $h$-fragmentation of $P$ such that both $\max(|P_{fi}|)$ ($i\in[1,h]$) and $|C|$ are minimized.
+Intuitively, the bi-criteria optimization problem partitions a pattern into $h$ components of roughly equal size while minimizing the cut size.
 
 \eat{%%%EAT2017-8-2}
 Given $P$ and a positive integer $h$, the {\em pattern fragmentation}  problem is to find
@@ -294,19 +292,22 @@ The problem is intractable, as shown below.
 	The pattern fragmentation problem is \NP-complete, even for $h$ = 2.
 \end{prop}
 
-\vspace{-0.5ex}
+
+
 However, $P$ and $h$ are typically small in practice~\cite{FanLMTWW10}, \eg $|P|=15$ and $h=3$.
-In light of this, we give a heuristic algorithm, denoted by \kw{PFrag}, for the problem, and is shown in the 
+In light of this, we give a heuristic algorithm, denoted by \kw{PFrag}, for the problem, and is shown in the
 full version~\cite{fullvldb18}.
 \kw{PFrag} works by connecting pattern fragmentation to the widely studied {\sc $(k, \nu)$-Balanced Partition} problem \cite{AndreevR06},
 which is not approximable in general, but has efficient and sophisticated heuristic algorithms~\cite{metis-KarypisK98a}.
 
-\vspace{1.0ex}
-So far, we have restricted the impact of pattern updates from the entire $P$ to a fraction of $P$.
-We further localize the impact of pattern and data updates  with {\em affected balls} to avoid computing and updating match relations for all balls.
 
-\stitle{Affected balls (\affballsx)}.
-We say a ball in $G$ is {\em affected} \wrt an incremental algorithm \algorithm{A}, and pattern and data updates,
+
+
+\stitle{(II) Localization with affected balls (\affballsx)}.
+We further localize the impact of pattern and data updates  with {\em affected balls} to avoid unnecessary computations.
+
+
+We say that a ball in $G$ is {\em affected} \wrt an incremental algorithm \algorithm{A}, and pattern and data updates,
 if \algorithm{A} accesses the ball again.
 We use $||\affballsx||$ and $|\affballsx|$ to denote the cardinality and total size of \affballsx, respectively.
 
@@ -320,17 +321,17 @@ and (2) for $\Delta G$, the locality property of team simulation supports to loc
 %we just do the computation for the balls whose structure is changed due to $\Delta G$.
 \looseness=-1
 
-\stitle{Remark}. By pattern fragmentation and affected balls, we essentially localize the impact of pattern and data updates from the entire to a fraction of $P$ and from all to a subset of balls in $G$ for team simulation.
+%\stitle{Remark}. By pattern fragmentation and affected balls, we essentially localize the impact of pattern and data updates from the entire to a fraction of $P$ and from all to a subset of balls in $G$ for team simulation.
 
 
 %\vspace{-0.5ex}
-\stitle{Algorithm \inc}. We now provide a unified incremental algorithm \inc  to handle both pattern and data updates.
+\stitle{(III) Algorithm framework}. We now provide a unified incremental algorithm to handle both pattern and data updates,
+based on pattern fragmentation and affected balls.
 
 
-Given $P$ with its $h$-fragmentation ${\cal P}_{h}$, $G$, two integers $k, r$,
-and auxiliary structures such as the partial match relations for all pattern fragments and all balls (radius $r$),
-while auxiliary structures are to be presented in next section,
-the algorithm consists of three steps for $\Delta P$ and $\Delta G$, as follows.
+Given pattern $P$ with its $h$-fragmentation ${\cal P}_{h}$, data graph $G$, two integers $r$ and $k$,
+and auxiliary structures (to be introduced in Section \ref{sec-IncAlg}) such as the partial match relations for all pattern fragments and all balls (radius $r$),
+algorithm \inc  consists of three steps for $\Delta P$ and $\Delta G$, as follows.
 
 
 \etitle{(1) Identifying \affballsx}.
@@ -341,24 +342,15 @@ For  simultaneous $\Delta P$ and $\Delta G$, \inc takes the union of the \affbal
 \etitle{(2) Update partial match relations in \affballsx}.
 For a ball affected by $\Delta P$, \inc updates the partial match relations for the updated pattern fragments with incremental computation;
 For a ball affected by $\Delta G$, \inc updates the partial match relations for all pattern fragments;
-And, for a ball affected by both $\Delta P$ and $\Delta G$, \inc follows the same way as $\Delta G$ only.
-Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling continuous separate and simultaneous pattern and data updates.
+And, for a ball affected by both $\Delta P$ and $\Delta G$, \inc follows the same way as it does for $\Delta G$ only.
+Meanwhile, auxiliary structure \fb (to be seen shortly) is updated for handling continuously separate and simultaneous pattern and data updates.
 
 
 \etitle{(3) Combining partial match relations}. \inc combines all partial relations for a subset of \affballsx and computes the top-$k$ perfect subgraphs within them and their inner balls.
 
-\vspace{0.5ex}
-Observe that \inc handles pattern/data updates in a unified way. Better still, it holds a nice property as follows.
 
+Observe that \inc handles pattern and data updates, separately and simultaneously, in a unified way.
 
-\begin{theorem}
-\label{thm-framework-inc}
-With $\tilde{M}(P,G)$ and \fb \wrt an $h$-fragmentation of $P$, given $\Delta P$ and $\Delta G$,
-the incremental algorithm \inc processes $\Delta P$ and $\Delta G$ in time
-determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
-\end{theorem}
-
-We shall prove Theorem~\ref{thm-framework-inc} by providing specific techniques for \inc and analyzing its time complexity in Section~\ref{sec-IncAlg}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -399,10 +391,10 @@ However, as indicated in Challenge (1), the impact of $\Delta P$ is global. By s
 		\subfigure{\label{fig-inc-maintain-batch}
 			\vrule \quad\quad
 			\includegraphics[scale=0.585]{./fig/fig-inc-maintain-batch.eps}}
-		\vspace{-3ex}
+		\vspace{-2ex}
 		\caption{Example auxiliary data structures}
 		\label{fig-auxiliary-structures}
-		\vspace{-3ex}
+		\vspace{-5ex}
 	\end{center}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

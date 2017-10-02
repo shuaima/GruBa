@@ -1,15 +1,17 @@
 \section{Introduction}
 \label{sec-intro}
 
-Given a task and a social network $G(V, E)$, where $V$ is a set of experts labeled with skills and $E$ reflects the collaboration relations among the experts,
-the {\em top-$k$ team formation} problem (\teamF) is to find a list of $k$ highly collaborative teams of experts in $G$ such that each satisfies the skill requirements of the task.
-Various approaches~\cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12} have been proposed for \teamF,
+%Given a task and a social network $G(V, E)$, where $V$ is a set of experts labeled with skills and $E$ reflects the collaboration relations among the experts,
+The {\em top-$k$ team formation} problem is to find a list of $k$ highly collaborative teams of experts such that every team satisfies the skill requirements of a certain task.
+Various approaches~\cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12} have been proposed,
 and fall into two categories in terms of the way to improve the collaborative compatibility of team members:
- (1) minimizing team communication costs,
+ (a) minimizing team communication costs,
 defined with \eg the diameter, minimum spanning tree and the sum of pairwise member distances of the induced subgraph~\cite{Lappas09,Kargar11,ArisLuca12,SamikKVM12}, and
-(2) maximizing team communication relations,
+(b) maximizing team communication relations,
 \eg the density of the induced subgraph~\cite{GajewarS12,realTeamForm13}.
-Further, \cite{GajewarS12} and \cite{realTeamForm13} consider a practical setting that introduces a lower bound on the number of individuals with a specific skill in a team, and an upper bound of the total team members, respectively.
+Further, \cite{GajewarS12} and \cite{realTeamForm13} consider a practical setting by introducing a lower bound on the number of individuals with a specific skill in a team, and an upper bound of the total team members, respectively.
+
+
 
 
 \begin{example}
@@ -19,11 +21,10 @@ in which (a) a node denotes a person labeled with her expertise, \eg project man
 user interface designer (\kw{UD}) and business analyst (\kw{BA}),
 and (b) an edge indicates the collaboration relationship between two persons, \eg ($\kw{PM_{1}}$, $\kw{UD_{1}}$) indicates $\kw{PM_{1}}$ worked well with $\kw{UD_{1}}$ within previous projects.
 
-An HR manager may help to set up a team for developing a new software product,
-and she searches $G_1$ (without dashed edges) for proper candidates.
-The desired team has
-(1) one \kw{PM}, and one to two \kw{BAs}, \kw{UDs}, \kw{SAs}, \kw{SDs} and \kw{STs}, such that
-(2) the \kw{PM} should collaborate with \kw{SAs}, \kw{BAs} and \kw{UDs} well, and the \kw{SDs} and \kw{STs} should collaborate with each other well and both with \kw{SAs} well.
+A headhunt helps to set up a team for a software product by searching proper candidates from $G_1$ (ignore dashed edges).
+A desired team has
+(i) one \kw{PM}, and one to two \kw{BAs}, \kw{UDs}, \kw{SAs}, \kw{SDs} and \kw{STs}, such that
+(ii) \kw{PM} should collaborate with \kw{SAs}, \kw{BAs} and \kw{UDs} well, and \kw{SDs} and \kw{STs} should collaborate with each other well and both with \kw{SAs} well.
 
 \eat{
 One may want to look for candidate teams with existing methods,
@@ -38,9 +39,8 @@ Further, the capacity constraint in \cite{GajewarS12,realTeamForm13} needs to be
 That is, existing methods are not appropriate for identifying the above desired teams.
 }%%%EAT
 
-\revise{One can verify that none of existing methods suffice to identify the above desired teams.
-They can only find teams satisfying the skill requirement~\cite{Lappas09,Kargar11,GajewarS12} and the lower bound capacity requirement~\cite{GajewarS12,realTeamForm13} in search condition (1),
-while cannot guarantee  the specific collaboration relationships among team members, \ie structural constraints in search condition (2) (see details in Example~\ref{exa-teamF}).}
+One may verify that existing methods \cite{Lappas09,Kargar11,GajewarS12,realTeamForm13}, can hardly find a desired team.
+They only find teams satisfying the skill requirement~\cite{Lappas09,Kargar11,GajewarS12} and the lower bound capacity requirement~\cite{GajewarS12,realTeamForm13}  (condition (i)), and cannot guarantee  the specific collaboration relationships among team members, \ie structural constraints (condition (ii)).
  \end{example}
 
 \eat{ It is because existing methods fall short of capturing the collaboration relations between specific team members, \ie the topology constraint (condition (2)).
@@ -56,95 +56,108 @@ However, in practice, it is rather important to take the functionality of differ
 and few of them consider the capacity constraint (in condition (1)), and even consider, they always focus on the lower bounds~\cite{GajewarS12}, which results in a large quantity.}%%%EAT
 
 
-
-\begin{figure}[tb!]
-\begin{center}
-\includegraphics[scale=1.15]{./fig/motivation-example.eps}
-\end{center}
-\vspace{-3.5ex}
-\caption{Motivation example}
-\label{fig-motivation-example}
-\vspace{-5ex}
-\end{figure}
-
 \eat{
 A natural question is how to further capture the {\em structural and capacity constraints} in a unified model for team formation?
 We essentially introduce a revision of graph pattern matching, an extension of graph simulation~\cite{infsimu95} and strong simulation~\cite{MaCFHW14}, for team formation to fill in this gap.
 }%%%EAT
 
 A natural question is how to further capture the {\em structural and capacity constraints} in a unified model for team formation?
-We essentially introduce a revision of {\em graph pattern matching} for team formation to fill in this gap.
-
-Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to find all subgraphs in $G$ that match $P$, and has been extensively studied~\cite{Ullmann76,infsimu95,FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}.  Intuitively, patterns $P$ captures the structural constraint, and we extend graph pattern matching semantics to solve the team formation problem. As shown in Fig.~\ref{fig-motivation-example},  the desired team requirement can be expressed by the pattern graph $P_1$ (ignore dashed edges), such that the nodes represent the skill requirements, the edges specify the topology constraint, and the bounds on nodes are the capacity constraint.
+We  introduce a revision of {\em graph pattern matching} for team formation to fill in this gap.
+%
+Given a pattern graph $P$ and a data graph $G$, graph pattern matching is to find all subgraphs in $G$ that match $P$, and has been extensively studied~\cite{Ullmann76,infsimu95,FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}.  Essentially, we utilize patterns to capture the structural constraint, and revise the semantics of graph pattern matching for team formation. For instance, a desired team requirement can be specified by the pattern $P_1$ (ignore dashed edges) in Fig.~\ref{fig-motivation-example}, in which nodes represent the skill requirements,  edges specify the topology constraint, and the bounds on nodes are the capacity constraint.
 
 %Especially, {\em strong simulation} introduces duality and locality into simulation, and shows a good balance between its computational complexity and its ability to preserve graph topology~\cite{MaCFHW14}.
 
-\vspace{1.0ex}
-Finding desired teams typically needs a lot of labor efforts, and it is even common for professionals to refine search conditions multiple times in order to find ideal teams~\cite{SajjadPG12,HabibiP15}. 
-Moreover, real-life graphs are often big and constantly evolve over time~\cite{FanWW13-tods}. That is, team formation is accompanied with a highly dynamic environment.
-%
-\revise{However, it is often too costly to recompute top-$k$ teams from scratch in response to pattern and data updates.
-These highlight the need for incremental algorithms to compute the updated top-$k$ teams.
-As opposed to batch algorithms, incremental algorithms avoid re-computing from scratch by re-using previous results.
-Traditional incremental algorithms for graph queries including graph pattern matching queries are proposed to compute changes in response to data updates, which has a lot of work~\cite{FanLMTWW10,FanWW13-tods,FanHT17}. 
-However, the study on incremental algorithms for graph pattern updates is in its vacancy.
 
-\eat{
-Given a pattern graph $P$ and a data graph $G$, the graph pattern matching results $P(G)$ in $G$ for $P$ and changes $\Delta G$ to $G$ as input, 
-the traditional incremental matching problem is to compute changes $\Delta O$ to $P(G)$ such that $P(G\oplus\Delta G)$=$P(G)\oplus \Delta O$.
-Here $\oplus$ denotes applying changes $\Delta S$ to $S$, when $S$ is data graph $G$ or query result $P(G)$.
-It is to improve response time by reducing computations on big $G$ to small $\Delta G$ and $\Delta O$.}%%%EAT
+Another issue lies in that team formation is accompanied with a highly dynamic environment. It typically needs many efforts to find the ideal teams, and is common for professionals to refine patterns  (requirements) multiple rounds~\cite{SajjadPG12,HabibiP15}. Further, real-life graphs are often big and constantly evolve over time~\cite{FanWW13-tods}. We show this with an example.
+
+
+\begin{figure}[tb!]
+\vspace{-2ex}
+\begin{center}
+\includegraphics[scale=1.15]{./fig/motivation-example-L.eps}
+\end{center}
+\vspace{-3ex}
+\caption{Motivation example}
+\label{fig-motivation-example}
+\vspace{-4ex}
+\end{figure}
+
+
 
 \begin{example}
 \label{exm-motivation-inc}
-Recall $P_{1}$ and $G_{1}$ in Example~\ref{exm-motivation} and continue.
+Consider $P_{1}$ and $G_{1}$ in Example~\ref{exm-motivation} again.
 	
-\sstab{(1)} When the manager gets the match result, \ie the top-$k$ teams $P_{1}(G_{1})$ to $P_{1}$ in $G_{1}$, 
-she may find $P_1$ is too restrictive to find sensible matches.
-Therefore, she enters a pattern update $\Delta P_1$ on $P_1$, composed of an edge 
+\sstab{(1)} % When the manager gets the match result, \ie the top-$k$ teams $P_{1}(G_{1})$ to $P_{1}$ in $G_{1}$,
+One may find that $P_1$ is too restrictive to find any sensible match in  $G_{1}$.
+Hence, she needs to refine the pattern by updating $P_1$ with $\Delta P_{1}$, \eg an edge
 deletion $(\kw{SD},\kw{ST})^-$.
-We denote $P_{1}\oplus\Delta P_{1}$ the updated pattern.
-It is much better to derive $P_{1}\oplus\Delta P_{1}(G_{1})$ from $P_{1}(G_{1})$
-than a computation for $P_{1}\oplus\Delta P_{1}$ in $G_{1}$ from scratch.
+%We denote $P_{1}\oplus\Delta P_{1}$ the updated pattern.
+%It is much better to derive $P_{1}\oplus\Delta P_{1}(G_{1})$ from $P_{1}(G_{1})$
+%than a computation for $P_{1}\oplus\Delta P_{1}$ in $G_{1}$ from scratch.
 %\looseness=-1
 	
-\sstab{(2)} When a data update $\Delta G_1$ comes on $G_1$, composed of an edge insertion $(\kw{SD_3},\kw{ST_3})^+$.
-Similar with (1), it is better to compute $P_{1}(G_{1}\oplus\Delta G_{1})$ from $P_{1}(G_{1})$ incrementally.
+\sstab{(2)} It is also common that a data update $\Delta G_1$ comes on $G_1$, \eg an edge insertion $(\kw{SD_3},\kw{ST_3})^+$.
+%Similar with (1), it is better to compute $P_{1}(G_{1}\oplus\Delta G_{1})$ from $P_{1}(G_{1})$ incrementally.
 	
-\sstab{(3)} Even better, when it comes to the case pattern $\Delta P_{1}$ and data updates $\Delta G_{1}$ come together, it is desirable to compute $P_{1}\oplus\Delta P_{1}(G_{1}\oplus\Delta G_{1})$ from $P_{1}(G_{1})$ incrementally.
+\sstab{(3)} Finally, it can be the case when pattern update $\Delta P_{1}$  and data update $\Delta G_{1}$ come simultaneously on $P_1$ and $G_1$.
+%,  $P_{1}\oplus\Delta P_{1}(G_{1}\oplus\Delta G_{1})$ from $P_{1}(G_{1})$ incrementally
 \end{example}
 
-This motivates us to study the {\em dynamic top-k team formation} problem (\dynteamF), to handle continuous 
-pattern and data updates, separately and simultaneously.
-As a basis of \dynteamF, we also investigate the incremental problem for graph pattern matching on pattern updates. 
+This motivates us to study the {\em dynamic top-k team formation} problem, to handle continuous
+pattern and data updates, separately and simultaneously. It is known that incremental algorithms avoid re-computing from scratch by re-using previous results~\cite{inc-survey}. However, incremental algorithms of graph pattern matching for pattern updates has not been investigated, though there exist incremental algorithms of graph pattern matching for dealing with data updates~\cite{FanLMTWW10,FanWW13-tods,FanHT17}.
+Further, it is also challenging for incremental algorithms to handle simultaneous pattern and data updates  in a unified way.
+
+
+
+\eat{
+often too costly to recompute top-$k$ teams from scratch in response to pattern and data updates.
+These highlight the need for incremental algorithms to compute the updated top-$k$ teams.
+As opposed to batch algorithms, incremental algorithms avoid re-computing from scratch by re-using previous results.
+Traditional incremental algorithms for graph queries including graph pattern matching queries are proposed to compute changes in response to data updates, which has a lot of work~\cite{FanLMTWW10,FanWW13-tods,FanHT17}.
+However, the study on incremental algorithms for graph pattern updates is in its vacancy.
+
+Given a pattern graph $P$ and a data graph $G$, the graph pattern matching results $P(G)$ in $G$ for $P$ and changes $\Delta G$ to $G$ as input,
+the traditional incremental matching problem is to compute changes $\Delta O$ to $P(G)$ such that $P(G\oplus\Delta G)$=$P(G)\oplus \Delta O$.
+Here $\oplus$ denotes applying changes $\Delta S$ to $S$, when $S$ is data graph $G$ or query result $P(G)$.
+It is to improve response time by reducing computations on big $G$ to small $\Delta G$ and $\Delta O$.
+
+As a basis of \dynteamF, we also investigate the incremental problem for graph pattern matching on pattern updates.
 The definition can be formulated along the same line with existing data incremental problems.
-%different with data incremental algorithms that preserve some desirable properties that the recomputation can be {\em bounded}  by the changes in the input and output as the impact of data updates can be localized~\cite{Reps96, FanLMTWW10,FanWW13-tods,FanHT17}, 
+%different with data incremental algorithms that preserve some desirable properties that the recomputation can be {\em bounded}  by the changes in the input and output as the impact of data updates can be localized~\cite{Reps96, FanLMTWW10,FanWW13-tods,FanHT17},
 However, devising pattern incremental algorithms is quite challenging as the impact of pattern updates is global,
 due to the inherent hardness of the problem.
 Despite of this, we devise an effective unified incremental approach for the \dynteamF\, problem.
 
-\warn{To our knowledge, no previous work has studied pattern updates for incremental pattern matching~\cite{FanHT17,FanWW13-tods}},
-not to mention continuous and simultaneous pattern and data updates. It is the most general dynamic setting studied so far.} 
+ }%%%EAT
+
+
+
+
+
+
 \looseness = -1
 
 \stitle{Contributions}. To this end,  we introduce a graph pattern matching approach for (dynamic) top-$k$ team formation.
 
-\revise{
-\stab (1) We propose {\em team simulation}, a revision of traditional graph pattern matching, for top-$k$ team formation problem. 
-It extends existing methods by incorporating the structural and capacity constraints using pattern graphs (Section~\ref{sec-tsim}).
-We formulate the dynamic top-$k$ team formation problem, to handle separate and simultaneous pattern and data updates,
-in order to cope with the highly dynamic environment of team formation (Section~\ref{sec-tsim}).
-\warn{To the best of our knowledge, this work gives the first investigation on pattern and simultaneous pattern and data incremental computations.} 
-}
 
-\revise{
-\stab (2) We develop a batch algorithm with two optimization techniques for computing top-$k$ teams via team simulation.} 
-We also study the satisfiability problem for pattern graphs, a new problem raised in the presence of capacity bounds for graph pattern matching (Section~\ref{sec-tsimAlg}).
-We develop a unified approach to handling the need for both pattern and data updates.
-We first prove that the dynamic top-$k$ team formation problem is unbounded even for single pattern or data updates, by extending the notion of incremental boundedness~\cite{Reps96}.
-In light of this, we then propose an incremental strategy based on {\em pattern fragmentation} and {\em affected balls} to localize the effects of pattern and data updates (Sections~\ref{sec-dynamictopk}). 
-We finally develop a unified incremental algorithm for dealing with separate and simultaneous pattern and data updates,
-with an optimization technique with the {\em early return} property for incremental top-$k$ algorithms, an analogy of the traditional early termination property (Sections~\ref{sec-IncAlg}).
+\stab (1) We propose {\em team simulation}, a revision of traditional graph pattern matching, for top-$k$ team formation (Section~\ref{sec-tsim}).
+It extends existing methods by incorporating the structural and capacity constraints using pattern graphs.
+To cope with the highly dynamic environment of team formation, we also formulate the dynamic top-$k$ team formation problem  (Section~\ref{sec-tsim}), for dealing with pattern and data updates, separately and simultaneously.
+
+
+
+
+\stab (2) We develop a batch algorithm for computing top-$k$ teams via team simulation (Section~\ref{sec-tsimAlg}).
+We study the satisfiability problem for pattern graphs, a new problem raised in the presence of capacity bounds for graph pattern matching.
+We also propose two optimization techniques, handling radius varied balls and density based filtering, for speeding up the process of computations.
+
+
+
+\stab (3) We develop a unified approach to handling the need for both pattern and data updates (Sections~\ref{sec-dynamictopk} and~\ref{sec-IncAlg}).
+Due to the inherent difficulty of the problem, we propose an incremental strategy based on {\em pattern fragmentation} and {\em affected balls} by localizing the effects of pattern and data updates, and we develop a unified incremental algorithm for dealing with separate and simultaneous pattern and data updates,
+with an optimization technique with the {\em early return} property for incremental top-$k$ algorithms, an analogy of the traditional early termination property.
 
 
 \eat{%%%%%%%%%%%%%%%%move to section 3
@@ -214,10 +227,12 @@ with an optimization technique with the {\em early return} property for incremen
 {\bf Add details}
 }%%%EAT
 
-\stab (3) Using real-life data (\citationd) and synthetic data (\synthetic), we demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) team formation (Section~\ref{sec-expt}).
+\stab (4) Using real-life data (\citationd) and synthetic data (\synthetic), we demonstrate the effectiveness and efficiency of our graph pattern matching approach for (dynamic) team formation (Section~\ref{sec-expt}).
 We find that (a) our method is able to identify more sensible teams than existing team formation methods \wrt \eat{three} practical measurements,
-and (b) our incremental algorithm outperforms our batch algorithm, even when changes reach 36\% for pattern updates, 34\% for data updates and (25\%, 22\%) for simultaneous pattern and data updates, and when 29\% for continuous pattern updates, 26\% for continuous data updates and (20\%, 18\%) for continuous simultaneous pattern and data updates, respectively.
+and (b) our incremental algorithm outperforms our batch algorithm, even when changes reach 36\% for pattern updates, 34\% for data updates and (25\%, 22\%) for simultaneous pattern and data updates, and when 29\% for continuous pattern updates, 26\% for continuous data updates and (20\%, 18\%) for continuously simultaneous pattern and data updates, respectively.
 
+
+To our knowledge, this work is among the first to study simultaneous pattern and data incremental computations, no previous work has studied pattern updates for incremental pattern matching~\cite{FanHT17,FanWW13-tods}, not to mention continuous and simultaneous pattern and data updates.  This is  the most general dynamic setting for incremental computations.
 
 All detailed proofs are available  in the full version~\cite{fullvldb18}.
 
@@ -225,14 +240,14 @@ All detailed proofs are available  in the full version~\cite{fullvldb18}.
 
 %\etitle{Graph pattern matching}.
 
- Graph simulation \cite{infsimu95} and its extensions have been introduced for graph pattern matching~\cite{FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}, in which {\em strong simulation} introduces duality and locality into simulation~\cite{MaCFHW14}, and shows a good balance between its computational complexity and its ability to preserve graph topology. Furthermore, \cite{FanCount16} already adopts capacity bounds on the edges of pattern graphs via subgraph isomorphism, and \cite{FanWWXin13} uses graph pattern matching to find single experts, instead of a team of experts. In this study, team simulation is proposed for team formation as an extension of graph simulation and strong simulation on undirected graphs with capacity constraints on pattern graphs.
+ Graph simulation \cite{infsimu95} and its extensions have been introduced for graph pattern matching~\cite{FanLMTWW10,MaCFHW14,Guanfeng15,FanCount16}, in which {\em strong simulation} introduces duality and locality into simulation~\cite{MaCFHW14}, and shows a good balance between its computational complexity and its ability to preserve graph topology. Furthermore, \cite{FanCount16} already adopts capacity bounds on the edges of pattern graphs via subgraph isomorphism, and \cite{FanWWXin13} uses graph pattern matching to find single experts, instead of a team of experts. In this study, team simulation is proposed for team formation as an extension of graph simulation and strong simulation on undirected graphs with capacity constraints on the nodes of pattern graphs.
 
 
 %\etitle{Team formation}.
 
-There has been a host of work on team formation by minimizing the communication cost of team members, based on the diameter, density, minimum spanning tree, Steiner tree, and sum of pairwise member distances among others \cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12,LiTongCao15}, which are essentially  a specialized class of keyword search on graphs~\cite{Aggarwal10}. Similar to~\cite{Kargar11}, we are to find top-$k$ teams. However, \cite{Kargar11} adopted Lawler's procedure \cite{Lawler1972}, and is inappropriate for large graphs. We also adopt {\em density}  as the communication cost, which shows a better performance~\cite{GajewarS12}, and further require that all team members are {\em close to each other} (located in the same balls), along the same lines as~\cite{Lappas09,Kargar11,ArisLuca12,SamikKVM12}. 
-\revise{Except for simply minimizing the communication cost among team members, 
-\cite{HuangLv16,Kargar11} consider minimizing the cost among team members and team leaders.}
+There has been a host of work on team formation by minimizing the communication cost of team members, based on the diameter, density, minimum spanning tree, Steiner tree, and sum of pairwise member distances among others \cite{Lappas09,Kargar11,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12,LiTongCao15}, which are essentially  a specialized class of keyword search on graphs~\cite{Aggarwal10}. Similar to~\cite{Kargar11}, we are to find top-$k$ teams. However, \cite{Kargar11} adopted Lawler's procedure \cite{Lawler1972}, and is inappropriate for large graphs. We also adopt {\em density}  as the communication cost, which shows a better performance~\cite{GajewarS12}, and further require that all team members are {\em close to each other} (located in the same balls), along the same line with~\cite{Lappas09,Kargar11,ArisLuca12,SamikKVM12}.
+Except for simply minimizing the communication cost among team members,
+\cite{HuangLv16,Kargar11} consider minimizing the cost among team members and team leaders.
 Different from these work, we introduce {\em structural constraints}, in terms of graph pattern matching~\cite{FanLMTWW10,MaCFHW14}, into team formation, while retaining the capacity bounds on specific team members like~\cite{realTeamForm13,GajewarS12}.
 
 
@@ -242,9 +257,9 @@ Different from these work, we introduce {\em structural constraints}, in terms o
 Incremental algorithms (see \cite{inc-survey,FanHT17} for a survey) have proven usefulness in a variety of applications,
 and have been studied for graph pattern matching~\cite{FanLMTWW10,FanWW13-tods} and team formation \cite{ArisLuca12} as well.
 However, \cite{inc-survey,FanHT17,FanLMTWW10,FanWW13-tods} only consider data updates,
-and \cite{ArisLuca12} only consider continuous coming new tasks. In this work, we  deal with both pattern and data updates for team formation, and support both insertions and deletions. To our knowledge, this is the first study on pattern updates, and is the most general and practical dynamic setting considered so far.
+and \cite{ArisLuca12} only considers continuously coming new tasks. In this work, we  deal with both pattern and data updates for team formation, and support both insertions and deletions. To our knowledge, this is the first study on pattern updates, and is the most general and practical dynamic setting considered so far.
 
-{Query reformulation (\aka query rewriting /modification) is to generate alternative queries that may produce better answers,
+{Query reformulation (\aka query rewriting) is to generate alternative queries that may produce better answers,
 and has been studied for structured queries~\cite{MottinEmpty13}, keyword queries~\cite{YaoQReform12} and graph queries~\cite{MottinGReform15}.
 However, different from our study of handling pattern updates, the focus of query reformulation is not on incremental computations.
 

@@ -9,10 +9,10 @@
 \section{Dynamic Team Formation}
 \label{sec-tsim}
 
-\revise{
-We first propose {\em team simulation}, an extension of traditional graph pattern matching.
+
+We first propose {\em team simulation}, a revision of traditional graph pattern matching.
 We then formally introduce the {\em top-$k$ team formation} problem via team simulation.
-We finally present the {\em dynamic top-$k$ team formation} problem.}
+We finally present the {\em dynamic top-$k$ team formation} problem.
 
 \eat{
 In this section, we first present basic notations of graphs, and then propose team simulation, an extension of traditional graph pattern matching.
@@ -115,12 +115,11 @@ from $v$ to $v'$ in $G$.
 }
 
 %\vspace{-4ex}
-\subsection{Pattern Matching for Team Formation}
+\subsection{Team Simulation}
 \label{subsec-extsim}
 
-\revise{
 We first extend pattern graphs of traditional graph pattern matching to carry capacity requirements,
-and then define team simulation on undirected graphs.}
+and then define team simulation on undirected graphs.
 %We then redefine strong simulation on directed graphs, originally defined on directed graphs~\cite{MaCFHW14}.}
 
 We start with basic notations.
@@ -135,13 +134,12 @@ A {\em pattern graph} (or simply pattern) is an undirected graph $P(V_P$, $E_P$,
 
 Intuitively, $f_P(u)$ specifies a range bound for node $u$,
 indicating the required quantity for the matched nodes in data graphs.
-Note that for traditional patterns~\cite{Galla06, b-matching,FanLMTWW10,FanCount16}, bounds are typically carried on edges, not on nodes. 
-
+Note that for traditional patterns~\cite{Galla06, b-matching,FanLMTWW10,FanCount16}, bounds are typically carried on edges, not on nodes.
 We also also denote data and pattern graphs as $G(V$, $E)$ and $P(V_{P}$, $E_{P})$ respectively. The size of $G$ (resp. $P$), denoted by $|G|$ (resp. $|P|$), is defined to be the total number of nodes and edges in $G$ (resp. $P$).
 
 %We define $r$-simulation by extending graph simulation~\cite{infsimu95,FanLMTWW10,MaCFHW14} on undirected graphs  and introducing capacity constraints.
 
-\eat{As strong simulation is an extension of graph simulation, which is also defined on directed graphs~\cite{infsimu95,FanLMTWW10}, 
+\eat{As strong simulation is an extension of graph simulation, which is also defined on directed graphs~\cite{infsimu95,FanLMTWW10},
 We now redefine graph simulation on undirected graphs. Consider a pattern graph $P(V_P$, $E_P)$ and a data graph $G(V$, $E)$.
 }%%%EAT
 
@@ -227,7 +225,7 @@ there exists a {\em ball} $\ball{[v, t]}$ ($t \in [1,r]$, $t \in Z$) in $G$, suc
 \ni(1) $P\eps \ball{[v, t]}$, with the maximum match relation $\Reps$ and the match graph $G_s$ $\wrt$ $\Reps$; and
 
 \vspace{0.5ex}
-\ni(2) for each node $u\in V_P$, the number of nodes $v\in V_s$  with $(u, v)\in \Reps$ falls into $f_P(u)$.
+\ni(2) for each node $u$ in $P$, the number of nodes $v$ in $G_s$  with $(u, v)\in \Reps$ falls into $f_P(u)$.
 
 \vspace{0.5ex}
 We refer to  $G_s$ as a {\em perfect} subgraph of $G$ \wrt $P$.
@@ -241,17 +239,12 @@ Intuitively, (1) pattern graphs $P$ capture the structural and capacity constrai
 
 \begin{example}
 \label{exm-rsimulation}
-Consider $P_1$ and $G_1$ in Fig.~\ref{exm-motivation}.
-When team simulation with $r=2$ is adopted, $P_1$ matches $G_1$ as there is a perfect subgraph in $G_1$,
-\ie the connected component of $G_1$ containing $\kw{PM_{1}}$, which resides in ball
-$\ball{[\kw{PM_1}, 2]}$.
-It maps \kw{PM}, \kw{BA}, \kw{UD}, \kw{SA}, \kw{SD} and \kw{ST} in $P_1$ to \kw{PM_1}, \kw{BA_1}, \{\kw{UD_1}, \kw{UD_2}\}, \{\kw{SA_1}, \kw{SA_2}\}, \{\kw{SD_1}, \kw{SD_2}\} and \{\kw{ST_1}, \kw{ST_2}\}, respectively.
+Consider pattern $P_1$ and data graph $G_1$ in Fig.~\ref{exm-motivation}, and  team simulation with $r=2$ is adopted.
 
-One can easily verify that
-(a) $P_1\eps \ball{[\kw{PM_{1}}, 2]}$, and the ball is exactly the match graph here,
-and (b) the capacity bounds on all pattern nodes are satisfied.
+One can easily verify that $P_1$ matches $G_1$  via team simulation, \ie $P_1 \eeps G_1$,
+as (a) there is a perfect subgraph in in ball
+$\ball{[\kw{PM_1}, 2]}$, \ie the connected component of $G_1$ containing $\kw{PM_{1}}$, which maps \kw{PM}, \kw{BA}, \kw{UD}, \kw{SA}, \kw{SD} and \kw{ST} in $P_1$ to \kw{PM_1}, \kw{BA_1}, \{\kw{UD_1}, \kw{UD_2}\}, \{\kw{SA_1}, \kw{SA_2}\}, \{\kw{SD_1}, \kw{SD_2}\} and \{\kw{ST_1}, \kw{ST_2}\}, respectively, and, moreover, (b) the capacity bounds on all pattern nodes are satisfied.
 \end{example}
-\looseness=-1
 
 \eat{%%%170720
 \stitle{Remarks}.
@@ -262,16 +255,15 @@ when the capacity on each pattern node is $[1, +\infty]$, and $r$ is no less tha
 $r$ is equal to the diameter of pattern graphs, and match graphs only involve with those edges matching edges in pattern graphs.
 }%%%EAT170720
 
-\revise{
+\vspace{-1ex}
 \stitle{Remarks}.
-(1) Team simulation differs from graph simulation and strong simulation in the existence of capacity bounds on pattern graphs and its ability to capture matches on undirected graphs.
-%
-(2) As for locality constraint, different from strong simulation that requires the matched nodes to locate in a ball with a fixed given radius, team simulation adopts a more natural setting that the radius of the balls is flexible, only less than a user specified upper bound.
+(1) Team simulation differs from graph simulation~\cite{infsimu95} and strong simulation~\cite{MaCFHW14} in the existence of capacity bounds on pattern graphs and its ability to capture matches on undirected graphs.
+
+\sstab(2) Different from strong simulation with balls having a fixed radius (\ie the diameter of a pattern), team simulation adopts a more natural setting that the radius of the balls is flexible, and is only less than a user specified upper bound.
 
 %(2) Graph simulation (resp. strong simulation) is a special case of team simulation on undirected graphs when the capacity on each pattern node is $[1, +\infty]$, and $r$ is no less than (resp. equal to) the diameter of data graphs (resp. pattern graphs).
 
 
-}
 
 
 
@@ -347,36 +339,38 @@ Pattern graphs are typically small, and we only consider  satisfiable patterns i
 \subsection{Top-k Team Formation}
 \label{subsec-teamF}
 
- Given $P$, $G$ and two positive integers $r$, $k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
+ Given pattern $P$, data graph $G$, and two positive integers $r$ and $k$, the {\em top-$k$ team formation} problem, denoted as \teamF{(P, G, k)},
 is to find a list $L_{k}$ of $k$ perfect subgraphs (\ie teams) with the top-$k$ largest density in $G$ for $P$, via team simulation.
 \looseness=-1
 
-Here the {\em density}\, $\density{G}$ of graph $G(V, E)$ is $|E|/|V|$, where $|E|$ and $|V|$ are the number of edges and the number of nodes respectively, \revise{as commonly used in data mining applications~\cite{maximumDenseSubgraph,EVMK12}}.
+Here the {\em density}\, $\density{G}$ of graph $G(V, E)$ is $|E|/|V|$, where $|E|$ and $|V|$ are the number of edges and the number of nodes respectively, as commonly used in data mining applications~\cite{maximumDenseSubgraph,EVMK12}.
 Intuitively, the larger $\density{G}$ is, the more collaborative a team is.
 In this way, not only the two objective functions of existing team formation methods are preserved,
 \ie the locality retained by balls and the density function in selecting top-$k$ results,
 but also the relationships among members and the capacity constraint on patterns.
 
-\revise{
+
 \begin{example}
 \label{exa-teamF}
 Consider $P_1, G_1$ in Fig.~\ref{exm-motivation} and $r=2$.
-We simply set $k=1$, as most existing algorithms for \teamF{} only compute the best team, instead of top-$k$ teams.
+We simply set $k=1$, as most existing solutions for \teamF{} only compute the best team \cite{Lappas09,ArisLuca12,GajewarS12,realTeamForm13,SamikKVM12}.
 
-One may want to look for candidate teams with existing methods, satisfying the search conditions in Example \ref{exm-motivation}:
-(a) by minimizing the {\em team diameter} \cite{Lappas09},
-which returns the team with $\{\kw{BA_3}$, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}, \kw{SD_4}, $\kw{ST_4}\}$;
-(b) by minimizing the {\em sum of all-pair distances} of teams \cite{Kargar11},
-which returns exactly the same team as (a) in this case;
-or (c) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team consisting of the nodes of the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3} (excluding \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}).
+One may want to look for candidate teams with existing methods, satisfying the search requirement in Example \ref{exm-motivation}:
+\ni(1) by minimizing the {\em team diameter} \cite{Lappas09},
+which returns the team with $\{\kw{BA_3}$, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}, \kw{SD_4}, $\kw{ST_4}\}$,
 
-However, one may notice that these teams only satisfy the skill requirement, \ie the search condition (1) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members, \ie structural constraints. 
-Indeed, the team found in (a) and (b) is connected by \kw{BA_3} only, and the team found in (c) has loose collaborations among its members.
+\ni(2) by minimizing the {\em sum of all-pair distances} of teams \cite{Kargar11},
+which returns exactly the same team as (1) in this case, or
+
+\ni(3) by maximizing the {\em team density} \cite{GajewarS12}, which returns the team with all the nodes in the two connected components in $G_1$ with \kw{PM_1} and \kw{BA_3}, except \kw{UD_2}, \kw{PM_3}, \kw{UD_4}, \kw{SA_4}.
+
+One may already notice that these teams only satisfy the skill requirement, \ie condition (i) in Example \ref{exm-motivation}, and cannot guarantee  the specific collaboration relationships among team members.
+Indeed, the team found in (1) and (2) is connected by \kw{BA_3} only, and the team found in (3) has loose collaborations among its members.
 That is, existing methods are not appropriate for identifying the the desired teams.
 
 When team simulation is adopted, it returns the perfect subgraph in Example \ref{exm-rsimulation} with its density = 1.4,
-satisfying both search condition (1) and (2), better than the teams found by the existing methods as shown above.
-\end{example}}
+satisfying both conditions (i) and (ii), much better than those teams found by the above existing methods.
+\end{example}
 
 \eat{%%%EAT
 \sstab
@@ -461,10 +455,10 @@ Thus \grouprec is in $O(|V|\cdot(|P||G|+|V_{G_s}|^2))$ time.
 \subsection{Dynamic Top-k Team Formation}
 \label{subsec-dynteamF}
 
-We next introduce dynamic top-$k$ team formation.
+We now introduce dynamic top-$k$ team formation.
 %For convenience, the notations used are summarized in Table~\ref{tab-notation}.
 
-\stitle{Pattern updates}. There are five types of pattern updates:
+\stitle{Pattern updates ($\Delta P$)}. There are five types of pattern updates:
 %
 (1) {\em edge insertions} connecting nodes in $P$,
 %
@@ -479,20 +473,21 @@ We next introduce dynamic top-$k$ team formation.
 while $P$  remains connected in all cases.
 
 
-\stitle{Data updates}. There are four types of data updates, which can be
+\stitle{Data updates ($\Delta G$)}. There are four types of data updates,
 defined along the same lines as the first four types of pattern updates.
 Further, different from pattern updates, there is no need to keep $G$ connected for data updates.
 
 
-\stitle{Dynamic top-$k$ team formation}. Given $P$, $G$, two positive integers $r$, $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
+\stitle{Dynamic top-$k$ team formation}. Given pattern $P$, data graph $G$, positive integers $r$ and $k$, the list $L_{k}(P,G)$ of top-$k$ perfect subgraphs for $P$ in $G$,
 a set of pattern updates $\Delta P$ and a set of data updates $\Delta G$,
 the {\em dynamic top-k team formation} problem, denoted by \dynteamF{(P, G, k, L_{k}, \Delta P, \Delta G)},
 is to find a list of $k$ perfect subgraphs with the top-$k$ largest density for $P\oplus\Delta P$ in $G\oplus\Delta G$, via team simulation.
 
-It is worth mentioned that the \dynteamF{} problem covers a broad range of dynamic conditions,
-\ie handling continuous separate and simultaneous pattern and data updates. 
-Here $\oplus$ denotes applying changes $\Delta P$ to $P$ and $\Delta G$ to $G$.
+
+Here $\oplus$ denotes applying changes $\Delta P$ to $P$ and $\Delta G$ to $G$, and
  $P\oplus\Delta P$ and $G\oplus\Delta G$ denote the updated pattern and data graphs.
+ It is worth mentioning that \dynteamF{} covers a broad range of dynamic situations,
+\ie handling continuously separate and simultaneous pattern and data updates.
 
 \eat{
 \begin{example}

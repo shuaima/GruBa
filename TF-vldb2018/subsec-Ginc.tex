@@ -1,11 +1,11 @@
 \subsection{Dealing with Data Updates}
 \label{subsec-Ginc}
 
-We next propose \incd to handle $\Delta G$, followed the steps in Section~\ref{sec-dynamictopk}.
+We next propose \incd to handle $\Delta G$, following the framework in Section~\ref{subsec-framework}.
 Given auxiliary structures $\tilde{M}(P,G)$ and \fb,
-we show how to combine procedures \identifyaffball, \incmatch and \comb for computing match results for $P$ in $G \oplus \Delta G$.
+we put together procedures \identifyaffball, \incmatch and \comb for computing match results for $P$ in $G \oplus \Delta G$.
 %
-\incmatch and \comb handle $\Delta G$ basically the same as $\Delta P$, so we mainly show how \identifyaffball identifies \affballsx \wrt $\Delta G$.
+As procedures \incmatch and \comb handle $\Delta G$ basically the same as $\Delta P$, so we mainly show how \identifyaffball identifies \affballsx \wrt $\Delta G$.
 
 
 \stitle{Procedure \identifyaffball}.
@@ -16,8 +16,8 @@ Given $G$, $\Delta G$, and \fb, \identifyaffball identifies \affballsx according
 A ball $\ball{[v,r]}$ with center node $v$ in $G$ is identified as an \affballx \wrt $\Delta G$ and \fb,
 
 \sstab{(1)} for some unit data update $\delta$ of $\Delta G$, where
-(a) $\delta$ is an edge insertion/deletion, $(w_1,w_2)^+/(w_1,w_2)^-$, and $v\in V_{\ball{[w_1,r]}}\cap V_{\ball{[w_2,r]}}$, or
-(b) $\delta$ is a node insertion/deletion, $(w,(w,w'))^+$/$(w)^-$, and $v\in V_{\ball{[w,r]}}$; or
+(a) $\delta$ is an edge insertion/deletion, $(w_1,w_2)^+/(w_1,w_2)^-$ and $v$ is in  both $\ball{[w_1,r]}$  and $\ball{[w_2,r]}$, or
+(b) $\delta$ is a node insertion/deletion, $(w,(w,w'))^+$/$(w)^-$ and $v$ is in $\ball{[w,r]}$; or
 
 \sstab{(2)} when $\ball{[v,r]}$ has type code $(1,\ldots,1)$  in \fb.
 \end{lemma}
@@ -35,7 +35,7 @@ then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffb
 %the top-k perfect graphs in $G\oplus \Delta G$ for $P$ must be contained in \affballsx.
 \end{prop}
 
-The proof is deferred to the full version~\cite{fullvldb18}.
+%The proof is deferred to the full version~\cite{fullvldb18}.
 
 Different from pattern updates, procedure \incmatch recomputes partial match relations in $\tilde{M}(P,G)$
 for each pattern fragment of $P$ in each {\em structural affected} ball;
@@ -68,22 +68,28 @@ auxiliary structures by invoking procedures \identifyaffball, \incmatch and \com
 
 \stitle{Correctness \& complexity analyses}. The correctness of \incd \wrt $\Delta G$ follows from Proposition~\ref{prop-affected-datainc} and the correctness of \incmatch and \comb.
 \incd is overall in
-$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See~\cite{fullvldb18}).
+$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx| + |\Delta G|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See~\cite{fullvldb18}).
 \looseness=-1
 
 
-\stitle{Remarks}. Note that the running time of \incd is determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$,
-and hence the part for data updates in Theorem~\ref{thm-framework-inc} is proved. This also completes the proof of Theorem~\ref{thm-framework-inc}.
 
 \subsection{Unifying Pattern and Data Updates}
 \label{subsec-completePG}
 
-We are now ready to provide algorithm \inc, integrating \incp and \incd, \revise{which are presented in Section~\ref{subsec-Qinc} and Section~\ref{subsec-Ginc}, respectively,} to process continuous pattern and data updates, separately and simultaneously.
+We are now ready to provide algorithm \inc, integrating \incp and \incd, presented in Sections~\ref{subsec-Qinc} and~\ref{subsec-Ginc}, respectively, to process continuous pattern and data updates, separately and simultaneously.
 
 Algorithm \inc is able to handle {\em simultaneous} $\Delta P$ and $\Delta G$, because of the consistency in:
-(1) the processes for handling $\Delta P$ and $\Delta G$, which follow the same steps in Section~\ref{sec-dynamictopk};
+(1) the processes for handling $\Delta P$ and $\Delta G$, which follow the same steps in Section~\ref{subsec-framework};
 (2) auxiliary data structures for supporting $\Delta P$ and $\Delta G$; and
 (3) the combination procedures, which suffice to support simultaneous pattern and data updates.
 
-Observe that \inc can handle {\em continuous} simultaneous $\Delta P$ and $\Delta G$,
-as \inc incrementally maintains the auxiliary structures for continuous coming $\Delta P$ and $\Delta G$.
+Observe that \inc can handle {\em continuously} simultaneous $\Delta P$ and $\Delta G$,
+as \inc incrementally maintains the auxiliary structures for continuously coming $\Delta P$ and $\Delta G$.
+
+
+
+
+%\vspace{0.5ex}
+\stitle{Remark}. Note that the running time of \incp and \incd is determined by \{$P, \Delta P, \tilde{M}(P,G)$, $\affballsx$\}
+and \{$P, \Delta G, \tilde{M}(P,G)$, $\affballsx$\}, respectively, not directly depending on $G$.
+From this, we complete the proof of Theorem~\ref{thm-framework-inc}.

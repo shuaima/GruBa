@@ -255,7 +255,7 @@
         \vspace{1ex}
         \refstepcounter{example}
         {\noindent\bf Example \theexample:}}{
-        \eop\vspace{.5ex}}
+        \eop\vspace{1ex}}
 \def\copyrightspace{}
 \renewcommand{\ni}{\noindent}
 \newcommand{\comlore}[1]{\begin{minipage}{3in}\fbox{\fbox{\parbox[t]{3in}{{\vspace{2mm}\noindent \bf COMM(LORE):~
@@ -560,7 +560,7 @@ Finding a list of $k$ teams of experts, referred to as {\em top-$k$ team formati
 However, existing methods have not considered the specific collaboration relationships among different team members, \ie structural constraints, which are typically needed in practice.
 In this study, we first propose a novel graph pattern matching approach for top-$k$ team formation, which incorporates both structural constraints and capacity bounds.
 Second, we formulate and study the {\em dynamic top-$k$ team formation} problem due to the growing need of a dynamic environment.
-%To continuously deal with both pattern and data updates, 
+%To continuously deal with both pattern and data updates,
 Third, we develop an unified incremental approach, together with an optimization technique, to handle continuous pattern and data updates, separately and simultaneously, which has not been explored before.
 \eat{
 To
@@ -576,6 +576,7 @@ Finally, using real-life and synthetic data, we conduct an extensive experimenta
 \input{sec-tsimAlg}
 \input{sec-dynamicTopk}
 \input{sec-IncAlg}
+\balance
 \input{sec-expt}
 %\input{sec-related}
 \input{sec-conclusion}
@@ -584,7 +585,7 @@ Finally, using real-life and synthetic data, we conduct an extensive experimenta
 %
 %This work is supported in part by  NSFC  (No. 61322207) and 973 program  (No. 2014CB340304).
 
-%\balance
+\balance
 \newpage
 \bibliographystyle{abbrv}
 \begin{small}
