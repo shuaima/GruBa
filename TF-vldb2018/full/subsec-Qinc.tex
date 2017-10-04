@@ -1,0 +1,357 @@
+\subsection{Dealing with Pattern Updates}
+\label{subsec-Qinc}
+
+We present algorithm \incp to handle pattern updates $\Delta P$, following the steps in Section~\ref{subsec-framework}, and
+an early return optimization technique for \incp.
+%Note that for any $h$-fragmentation ${\cal P}_h$ of $P$, $|{\cal P}_h|$ = $|P|$.
+
+
+
+
+%\ie identifying \affballsx (Section~\ref{subsubsec-affball}), updating $\tilde{M}(P,G)$ within \affballsx (Section~\ref{subsubsec-updtm}), and combining to get final results (Section~\ref{subsubsec-combine}).
+
+
+
+
+
+
+%\subsubsection{Identifying Affected Balls}
+%\label{subsubsec-affball}
+
+\stab{\bf (I) Identifying affected balls}.
+We first develop procedure \identifyaffball to identify \affballsx with structures \fb and \bfc.
+
+\stitle{Procedure \identifyaffball}.
+Given an $h$-fragmentation ${\cal P}_{h}$ of $P$, $\Delta P$,
+(1) it updates \bfc by processing all unit updates in $\Delta P$.
+(2) For each $j\in [1, 2^h]$, it then executes a bitwise \kw{AND} operation (\&) between type code $tc_j$ of \fs in \fb and updated filtering code $fc_{j\Delta}$ in \bfc, \ie $tc_j\& fc_{j\Delta}$.
+(3) Finally, if $tc_j\& fc_{j\Delta} = fc_{j\Delta}$, \identifyaffball refers to \bs in \fb to mark the balls with type code $tc_j$ as \affballsx, and resets $fc_{j\Delta}$ to $(1, \ldots, 1)$.
+%This is because \affballsx are balls that have the possibility to match all updated pattern fragments.
+The condition $tc_j\& fc_{j\Delta} = fc_{j\Delta}$ holds as long as
+(a) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ is 0, \ie there exists an edge/node deletion on ${P}_{fi}$, which may produce more matched nodes, or
+(b) the $i$-th ($i\in [1, h]$) bit of $fc_{j\Delta}$ and $tc_j$ are both 1, \ie  balls with $tc_j$ already match with ${P}_{fi}$, though there are no edge/node deletions on ${P}_{fi}$.
+
+
+%If there exists a single-edge delete on pattern fragments or single-node insert/delete in $\Delta P$, then \identifyaffball returns all such \affballsx as \affballaccs. Intuitively, \affballsx are those balls that may contain new matches due to the pattern updates, while \affballaccs are those ones that cannot be computed from $P$ and $\tilde{M}(P,G)$ due to node inserts/deletes or edge deletes on pattern fragments in $\Delta P$.
+
+
+\begin{example}
+\label{exa-identifyaffball}
+Consider the input and auxiliary structures in Example~\ref{exa-matchindex}, and \bfc in Fig.~\ref{fig-auxiliary-structures}.
+
+\sstab(1) $\Delta P_1$ comes with a unit edge deletion $\delta_1$=$(\kw{SD},$ $\kw{ST})^-$ on $P_{f_2}$, and all four $fc$ in \bfc are updated from $fc$ (1, 1) to $fc_{\Delta}$ (1, 0), as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(b).
+%
+\identifyaffball identifies ball $\ball{[\kw{PM_1},2]}$ with $tc$ $(1, 1)$ and $\ball{[\kw{PM_2},2]}$ with $tc$ $(1, 0)$ as \affballsx,
+	since $tc (1, 1) \& fc_{\Delta}(1, 0) = fc_{\Delta}(1, 0)$ and $tc (1, 0) \& fc_{\Delta} (1, 0) = fc_{\Delta}(1, 0)$.
+Then \identifyaffball resets the two corresponding filtering codes in \bfc to $(1, 1)$.
+
+
+\sstab(2) Consider another case when $\Delta P'_1$ comes with $\delta_1$ and $\delta_2$, where $\delta_1$ is same as above and $\delta_2 = (\kw{BA},\kw{UD})^+$. \bfc is updated as shown in the second column of \bfc in Fig.~\ref{fig-auxiliary-structures}(c), and \identifyaffball identifies the same \affballsx as above.
+\end{example}
+
+%In practice, the number of balls with type code ($0,\ldots,0$) is much larger than that of balls match with some pattern fragments, which is further larger than the number of \affballsx. By filtering out balls with \eg $tc$ = ($0,\ldots,0$) or ($1,0,\ldots,0$), redundant computations are avoid.
+
+The correctness of \identifyaffball is ensured by the following. 
+
+\begin{prop}
+\label{prop-canaffballs}
+For any ball $\ball{[v,r]}$ in $G$, if there exists a perfect subgraph of $P\oplus \Delta P$ in $\ball{[v,r]}$,
+then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffball.
+\end{prop}
+
+%The proof is deferred to the full version~\cite{fullvldb18}.
+
+
+%\vspace{1ex}
+\stitle{Lazy update policy}. To reduce computation, \incp only updates the partial relations for \affballsx in $\tilde{M}(P,G)$ for computing  $L_k(P\oplus \Delta P, G)$.
+%However, the filtered balls are still in need for handling future pattern updates $\Delta P'$,
+%and their partial match relations are outdated \wrt $P\oplus \Delta P$.
+However, those partial relations in the filtered balls also need an update for handling future updates $\Delta P'$, but
+definitely become outdated \wrt $P\oplus \Delta P$.
+Hence, \incp needs a smart policy to maintain those match relations in the filtered balls.
+%$L_k(P\oplus \Delta P \oplus \Delta P', G)$ even though $\tilde{M}(P,G)$ are not updated entirely for all balls.
+
+
+To do this, algorithm \incp maintains the status of all unit updates applied to $P$ so far, and processes unit updates in $\Delta P$ as {\em late} as possible, while having no effects on future updates $\Delta P'$, \ie a {\em lazy update policy}.
+%In other words, the match results for each $\Delta P$ can be returned as {\em early} as possible.
+
+Algorithm \incp utilizes auxiliary structure \upl together with the $cflag$ item in \bs.
+When handling current $\Delta P$, for each ball $\ball{}$, $\ball{}[\kw{cflag}]$ records the id of the latest processed unit pattern update for $\ball{}$, and is initialized to $0$.
+When future $\Delta P'$ comes, for any \affballx $\ball{}$ \wrt $\Delta P'$ and any fragment $P_{fi}$,
+\incp computes $M(P_{fi}\oplus\Delta P'_{fi}, \ball{})$ based on $M(P_{fi}, \ball{})$ by procedure \incmatch (to be seen shortly),
+where $\Delta P'_{fi}$ consists of the unit updates stored in $T(P_{fi})$ whose ids are larger than $\ball{}[\kw{cflag}]$ in \bs.
+
+
+
+
+\begin{example}
+\label{exa-lazyupdate}
+Continue Example~\ref{exa-identifyaffball}.
+(1) Balls $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$ are \affballsx, and
+\upl is shown in Fig.~\ref{fig-inc-maintain-unit}.
+
+\sstab(a) \upl is updated \wrt\ $\Delta P_1=\{\delta_1\}$.
+\incp updates the partial relations for $P_{f2}$ \wrt\ $\delta_1$ in the two balls,
+and sets their $cflag$ in \bs to $\delta_1$, as the status shown in Fig.~\ref{fig-auxstr-index}.
+
+\sstab
+(b) Afterwards, $\Delta P_2$ with an edge insertion $\delta_2 = (\kw{BA},\kw{UD})^+$ comes.
+\identifyaffball updates \bfc and \upl as shown in Fig.~\ref{fig-inc-maintain-unit} and identifies balls with $tc$ $(1, 1)$ as \affballsx, \eg $\ball{[\kw{PM_1},2]}$.
+
+\sstab
+(c) Finally, $\Delta P_3$ with a node deletion $\delta_3$ = $(\kw{UD})^-$ comes.
+\identifyaffball identifies $tc$ $(1, 1)$, $(0, 1)$ and $(0, 0)$ as \affballsx.
+Take ball $\ball{[\kw{BA_3}, 2]}$ for example, which is the first time identified as an \affballx.
+By referring to \upl, \incp updates the partial relations for $P_{f1}$ \wrt\ $\{\delta_2, \delta_3\}$,
+and for $P_{f2}$ \wrt\ $\{\delta_1\}$.
+\looseness=-1
+
+
+\sstab
+(2) In the case when $\Delta P'_i$ contains multiple\eat{unit} updates, \bfc and \upl are updated accordingly as shown in Fig.~\ref{fig-auxiliary-structures}(c).
+\end{example}
+
+%\vspace{-2ex}
+%\subsubsection{Updating Fragment-Ball Matches}
+%\label{subsubsec-updtm}
+
+\stab{\bf (II) Updating Fragment-Ball matches}. We then update the partial match relations for \affballsx in $\tilde{M}(P,G)$ \wrt $\Delta P$,
+by procedure \incmatch.
+
+
+\stitle{Procedure \incmatch}. Given $h$-fragmentation ${\cal P}_{h}$ of $P$, $G$, $\tilde{M}(P,G)$, $\Delta P$, \upl and \affballsx \wrt $\Delta P$.
+\incmatch updates $M(P_{fi}, \ball{})$ to $M(P_{fi}\oplus\Delta P_{fi}, \ball{})$ in $\tilde{M}(P,G)$ for each fragment $P_{fi}$ and each \affballx $\ball{}$.
+Recall that $\Delta P_{fi}$ consists of unprocessed unit updates accumulated in \upl applied to $P_{fi}$.
+%Recall that $\Delta P_{fi}$ consists of the unit updates in $\Delta P$ applied to $P_{fi}$ we get from \upl.
+We show how to update $M(P_{fi}, \ball{})$ in different cases.
+
+
+
+%\eetitle{(1) Capacity changes in $\Delta P_{fi}$ or updates on $C$ only}.
+
+\eetitle{(1) There exist edge/node deletions in $\Delta P_{fi}$}.
+In this case, \incmatch accesses the \affballx $\ball{[v,r]}$ in $G$.
+It simply computes the maximum match relations for $P_{fi}\oplus \Delta P_{fi}$ in $\ball{[v,r]}$
+by procedure \rgraphsim in $O(|P_{fi}\oplus \Delta P_{fi}||\ball{[v,r]}|)$ time.
+
+\eetitle{(2) No edge/node deletions in $\Delta P_{fi}$}.
+\incmatch processes updates of the same type together in this case as follows.
+
+\sstab{(i) Capacity changes in $\Delta P_{fi}$ or updates on $C$}.
+In this case, no computation is needed for maintaining partial relations for \affballsx at all,
+\ie $M(P_{fi}\oplus\Delta P_{fi}, \ball{}) = M(P_{fi}, \ball{})$.
+Only a capacity check and an inner ball check in the combination procedure are needed (to be seen immediately).
+
+
+%It is same for the updates on cut edges $C$ of ${\cal P}_{h}$ of $P$, which are also processed by the combination procedure.
+
+
+%\eetitle{(3) Edge insertions in $\Delta P_{fi}$ only}.
+\sstab{(ii) Edge insertions in $\Delta P_{fi}$}.
+In this case, \incmatch calls procedure \patedgeinsert to process edge insertions.
+% $|\Delta P_{fi}|$ times.
+
+
+
+\begin{figure}[t!]
+%\vspace{-2ex}
+\begin{center}
+{\small
+\myhrule
+\vspace{-2ex}
+\mat{0ex}{
+\sstab {\sl Input:\/} $M(P_{fi}, \ball{[v,r]})$, $\ball{[v,r]}$, pattern edge insertion $\delta$ = $(u,u')^+$.\\
+{\sl Output:\/} $M(P_{fi}\oplus \delta, \ball{[v,r]})$.\\
+\sstab \bcc \hspace{1ex} \= $\kw{RMv}:=\emptyset$;\\
+\icc \> \For \Each $u \in V_{P}$ \Do $\matchs(u)$ := \{$w | (u,w) \in M(P_{fi}, \ball{[v,r]})$\};\\
+\icc \> \For \Each node $w \in \matchs(u)$\eat{in $M(P_{fi},\ball{[v,r]})$} \Do\\
+\icc \>\hspace{2ex}\= \If there exists no $(w, w')\in E_{\ball{[v,r]}}$ with $w' \in \matchs(u')$ \Then\\
+\icc \>\>\hspace{2ex}\= $\kw{RMv}.\kw{push}([u,w])$;\\
+\icc \> \For \Each node $w' \in \matchs(u')$\eat{$M(P_{fi},\ball{[v,r]})$} \Do\\
+\icc \>\> \If there exists no $(w', w)\in E_{\ball{[v,r]}}$ with $w \in \matchs(u)$ \Then\\
+\icc \>\>\> $\kw{RMv}.\kw{push}([u',w'])$;\\
+\icc \> \While $\kw{RMv}\neq \emptyset$ \Do\\
+\icc \>\hspace{2ex}\= $[u,w]:=\kw{RMv}.\kw{pop}$(); $\matchs(u):=\matchs(u)\setminus\{w\}$;\\
+\icc \>\> \For \Each $(u,u')\in E_{P_{fi}}$ \Do\\
+\icc \>\>\hspace{2ex}\= \For \Each $(w, w')\in E_{\ball{[v,r]}}$ with $w' \in \matchs(u')$ \Do\\
+\icc \>\>\>\hspace{2ex}\= \If there is no $(w', w'')\in E_{\ball{[v,r]}}$ with $w'' \in \matchs(u)$ \Then\\
+\icc \>\>\>\>\hspace{2ex}\= \kw{RMv}.\kw{push}([$u',w'$]);\\
+\icc \> \If there is a node $u\in V_{P_{fi}}$ with $|\matchs(u)| = 0$ \Then $\matchs(\cdot):=\emptyset$;\\
+\icc \> $M(P_{fi}\oplus \delta, \ball{[v,r]})$ := \{$(u,w) | u \in V_{P}, w \in \matchs(u)$\};\\
+\icc \> \Return $M(P_{fi}\oplus \delta, \ball{[v,r]})$;
+}
+\vspace{-2.5ex} \myhrule
+}
+\end{center}
+\vspace{-3ex}
+\caption{Procedure \patedgeinsert} \label{alg-patedgeinsert}
+\vspace{-4ex}
+\end{figure}
+
+
+\stitle{Procedure \patedgeinsert}.
+Given $M(P_{fi}, \ball{[v,r]})$ (also represented by $\matchs(\cdot)$), $\ball{[v,r]}$ and an edge insertion $\delta=(u,u')$, \patedgeinsert computes $M(P_{fi}\oplus\delta, \ball{[v,r]})$ {\em incrementally}, as shown in Fig.~\ref{alg-patedgeinsert},
+along the same lines as for data incremental graph simulation~\cite{FanWW13-tods}.
+\patedgeinsert first finds the directly affected data nodes that need to be removed from $\matchs(\cdot)$ due to the edge insertion to $P_{fi}$,
+and pushes them along with the matched pattern nodes into $\kw{RMv}$ (lines 3-8).
+It then recursively identifies and removes the nodes in $\matchs(\cdot)$ affected by the previous removed nodes (lines 9-14).
+The recursive process is executed by utilizing a stack $\kw{RMv}$.
+If there exists a pattern node $u$ with empty $\matchs(u)$, then $\matchs(\cdot)$ is set to $\emptyset$ (line 15).
+Finally, \patedgeinsert returns the updated $\matchs(\cdot)$ for $P_{fi}\oplus \delta$ (lines 16-17).
+\looseness=-1
+
+
+\begin{example}
+\label{exa-edge-insertion}
+Consider case (1)-(b) in Example~\ref{exa-lazyupdate}.
+Given $\delta_2 = (\kw{BA},\kw{UD})^+$, and $M(P_{f1}, \ball{}_{\kw{PM_1}})$, which is composed of nodes \kw{PM_1}, \kw{BA_1} and \{\kw{UD_1},\kw{UD_2}\} mapped to nodes \kw{PM}, \kw{BA} and \kw{UD} in $P_{f1}$.
+To compute the updated $M(P_{f1}\oplus \delta_2, \ball{}_{\kw{PM_1}})$,
+\patedgeinsert removes \kw{UD_2} that is directly affected by $\delta_2$, and finds no other nodes need to be removed.
+\end{example}
+
+%When update the partial match relations for fragment $P_{f2}$ \wrt\ $\delta_2 = (\kw{BA},\kw{UD})^+$ in ball $\ball{[\kw{PM_1},2]}$,
+%and $M(P_{f2}, \ball{[\kw{PM_1},2]})$ is composed of nodes \kw{PM_1}, \kw{BA_1} and \{\kw{UD_1},\kw{UD_2}\}
+%mapped to nodes \kw{PM}, \kw{BA} and \kw{UD} in $P_1$,
+%\patedgeinsert removes \kw{UD_2} which is directly affected by $\delta_2$,
+%and finds no other nodes need to be removed.
+
+
+%\eetitle{(4) Node insertions in $\Delta P_{fi}$ only}.
+\sstab{(iii) Node insertions in $\Delta P_{fi}$}.
+Node insertions are handled in a similar way as edge insertions, by extending \patedgeinsert.
+
+Given a node insertion $\delta$ = $(u,(u,u'))^+$, where $u$ is a newly inserted node,
+to compute the updated $M(P_{fi}\oplus \delta, \ball{[v,r]})$,
+\incmatch firstly computes the set of nodes $\matchs(u)$ in $\ball{[v,r]}$ that have the same label with $u$, and then calls \patedgeinsert($M(P_{fi}, \ball{[v,r]})$, $\ball{[v,r]}$, $(u,u')$) to get the updated result.
+
+\vspace{0.5ex}
+\stitle{Updating \fb.} After updating $\tilde{M}(P,G)$,
+\incp updates \fb for all \affballsx, by changing the links according to the updated partial relations in $\tilde{M}(P,G)$, and also updating the \kw{cflag} item in \bs, which is in $O(||\affballsx||)$ time.
+
+
+%\subsubsection{Combining Fragment-Ball Matches}
+%\label{subsubsec-combine}
+
+\stab{\bf (III) Combining Fragment-Ball matches}. Algorithm \incp finally combines the updated partial match relations in \affballsx to get the updated top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$ by procedure \comb. Observe that only the balls from \affballsx that match with all pattern fragments of $P\oplus \Delta P$ can enter the combination process.
+
+
+
+\stitle{Procedure \comb}. For an \affballx $\ball{[v,r]}$, \comb invokes $\patedgeinsert(\bigcup_{i\in [1, h]}M(P_{fi},\ball{[v,r]}), \ball{[v,r]}, C\oplus \Delta C)$
+to compute the maximum match relations of $P\oplus \Delta P$ for $\ball{[v,r]}$ incrementally,
+where $\Delta C$ consists of the edge insertions/deletions in $\Delta P$ applied to the cut edges $C$.
+It then checks whether the capacity bounds, together with the updates on them, are satisfied.
+If so, it constructs the perfect subgraph \wrt the match relations above.
+It then checks the inner balls together with the capacity bounds, and finally returns the list of top-$k$ perfect subgraphs $L_{k}(P\oplus \Delta P,G)$.
+
+
+
+\begin{example}
+\label{exa-combination}
+Continue Example~\ref{exa-lazyupdate}-(1), after \incp updated partial relations for \affballsx \wrt $\Delta P_3$,
+balls $\ball{[\kw{PM_1},2]}$, $\ball{[\kw{PM_2},2]}$ and $\ball{[\kw{BA_3},2]}$ enter the combination process.
+
+\sstab
+(1) For $\ball{[\kw{PM_1},2]}$ and $\ball{[\kw{PM_2},2]}$, as $C\oplus \Delta C=\{(\kw{PM},\kw{SA})\}$,
+\comb finds that there is an \kw{SA_i} (resp.\,\kw{PM_j}) connecting to \kw{PM_j} (resp.\,\kw{SA_i}),
+and the capacity bounds are satisfied.
+For inner balls, based on above results, \comb finds that no perfect subgraphs reside in $\ball{[\kw{PM_1},1]}$ and $\ball{[\kw{PM_2},1]}$.
+Hence it returns the above two perfect subgraphs in two balls.
+
+\sstab
+(2) For $\ball{[\kw{BA_3},2]}$, \comb finds no \kw{SA_i} connecting to \kw{PM_j}, and vice versa.
+Hence, no  sensible matches are found.
+\end{example}
+
+
+%\subsubsection{Early Return Optimization Technique}
+%\label{subsubsec-Inc-opt}
+
+\stab{\bf (IV) Early return optimization technique}.
+%As introduced in last section, the {\em lazy update manner} accelerates the process to return updated top-$k$ perfect subgraphs by postponing the processing of each unit pattern update.
+We propose an optimization technique for \incp to further speed-up the incremental computations, by making use of the top-$k$ semantics.
+%
+We first define {\em early return} for incremental top-$k$ algorithms, analogous to {\em early termination} for batch top-$k$ algorithms~\cite{FaginLotem03}.
+
+
+\stitle{Early return}. An algorithm has the {\em early return property},
+if for pattern $P$ with updates $\Delta P$ and for any data graph $G$,
+it outputs $L_k(P\oplus \Delta P, G)$ as early as possible without the need to update match relations for every \affballx,
+while the updates can be executed in background.
+
+
+\begin{prop}
+\label{prop-early-return}
+There exists an algorithm for the dynamic top-$k$ team formation problem with early return property.
+\end{prop}
+
+
+We prove \incp retains the early return property.
+Recall the density based filtering optimization for algorithm \optgrouprec in Section~\ref{sec-tsimAlg}.
+\incp also utilizes density upper bounds for pruning a portion of \affballsx.
+More specifically, given $P$ and $G$, \incp maintains the density upper bound for each ball in the $den$ item in \bs, \ie $\ball{}[\kw{den}]$,
+calculated according to Lemma~\ref{lemma-approximation-bound}.
+Thus, given $\Delta P$, if the top-$k$ densest perfect subgraphs found so far are denser than the density upper bound of the remaining \affballsx,
+\incp\ {\em outputs} the current top-$k$ densest perfect subgraphs as $L_k(P\oplus \Delta P, G)$,
+while continuing updating $\tilde{M}(P, G)$ in \affballsx in {\em background}.
+
+Note that the early return optimization is  effective for pattern updates, but not for data updates and the case when $\Delta P$ contains node insertions with new labels (expertise).
+
+\begin{figure}[t!]
+	%\vspace{-2ex}
+	\begin{center}
+		{\small
+			\myhrule \vspace{-2ex}
+			\mat{0ex}{
+				\sstab {\sl Input:\/} \= $P$, $h$-fragmentation ${\cal P}_{h}$, $G$, integers $r$ and $k$, $\Delta P$, and\\
+				\>auxiliary structures $\tilde{M}(P,G)$, \fb, \bfc and \upl.\\
+				{\sl Output:\/} Top-$k$ perfect subgraphs for $P \oplus \Delta P$ in $G$.\\
+				\sstab \bcc \hspace{1ex} \= $L_{k}$ := $\emptyset$;\\
+				\icc \> \affballsx\ :=  $\identifyaffball({\cal P}_h, \Delta P, \fb, \bfc)$;\\
+				\icc \> Sort \affballsx by $\ball{}[\kw{den}]$ in non-ascending order;\\
+				\icc \> \For \Each $\ball{[v,r]}$ in \affballsx \Do\quad/* non-ascending order */\\
+				\icc \> \hspace{3ex} \= \If $|L_{k}| \geq k$ \And $\ball{[v,r]}[\kw{den}] \leq \density{L_{k}[k-1]}$ \Then \\
+				\icc \>\>\hspace{2ex} \= \bf{Output} $L_{k}[0:k-1]$. /* early-return optimization*/\\
+				%/* Running in background after returning top-$k$ results for $\Delta P$ */\\
+				\icc \>\>$\incmatch(M(P_{fi},\ball{[v,r]}),\ball{[v,r]}, \Delta P_{fi})$ $(i\in[1,h])$;\\
+				\>\> /* runs in the background */\\
+				\icc \>\> $S_{G_s} := \comb(\bigcup_{i\in [1, h]}M(P_{fi},\ball{[v,r]}), \ball{[v,r]}, C\oplus \Delta C)$;\\
+				\icc \>\> Insert the set of perfect subgraphs in $S_{G_s}$ into $L_{k}$;\\
+				\icc \> \Return $L_{k}[0:k-1]$.
+				%\icc \>\> \If $|L_{k}| < k$ or $\kw{den}(G_s) > \density{L_{k}[k]}$ \Then\\
+				%\icc \>\>\hspace{2ex} \= remove the $k$-th result in $L_{k}$ and insert $G_s$ into $L_{k}$.
+				%\icc \hspace{-0.2ex}/*b*\hspace{-0.6ex}/\>\>Update the record of $\ball{[v,r]}$ in \fb;
+			}
+			\vspace{-2.5ex} \myhrule
+		}
+	\end{center}
+	\vspace{-3ex}
+	\caption{Algorithm \incp} \label{alg-optInc}
+	\vspace{-4ex}
+\end{figure}
+
+
+%\subsubsection{The Complete Algorithm for Pattern Updates}
+%\label{subsubsec-completedynamicP}
+
+\stab{\bf (V) The complete algorithm for pattern updates}.
+Given $\tilde{M}(P,G)$, \fb, \bfc and \upl, for pattern update $\Delta P$,
+algorithm \incp computes the top-k perfect subgraphs for $P \oplus \Delta P$ in $G$ with early return property, and maintains auxiliary structures simultaneously by invoking procedure \identifyaffball, \incmatch and \comb one by one.
+
+\stitle{Algorithm \incp}. It works as follows, as shown in Fig.~\ref{alg-optInc}.
+For each $\Delta P$, \incp firstly sets the result list $L_{k}$ to empty,
+and identifies \affballsx \wrt $\Delta P$ by \identifyaffball (lines 1-2).
+It then sorts \affballsx by their density upper bounds $\ball{}[\kw{den}]$ in \bs in non-ascending order (line 3),
+and accesses \affballsx sequentially by this order (lines 4-10).
+Whenever it comes to next \affballx $\ball{[v,r]}$, it firstly checks whether there are already $k$ perfect subgraphs found in $L_{k}$, and moreover,
+the density of the $k$th (smallest) perfect subgraph in $L_{k}$ is larger than $\ball{[v,r]}[\kw{den}]$ (line 5).
+If so, \incp immediately outputs $L_{k}$ as final results (line 6),
+and then continues to update $\tilde{M}(P,G)$ for those \affballsx in background by \incmatch (line 7);
+Otherwise, \incp updates the partial relations and combines them by \comb to get the set of perfect subgraphs $S_{G_s}$ in $\ball{[v,r]}$ and its inner balls (lines 7-8).
+It then inserts the set of perfect subgraphs in $S_{G_s}$ into $L_{k}$ (line 9).
+%It updates $L_{k}$ by inserting the set of perfect subgraphs in $S_{G_s}$ into $L_{k}$ (line 9).
+
+\stitle{Correctness \& complexity analysis}.
+The correctness of \incp is assured by the correctness of \identifyaffball (Proposition~\ref{prop-canaffballs}), \incmatch, \comb, and early return property (Lemma~\ref{lemma-approximation-bound}).
+\incp is in $O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|$ + $r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|$) + $r|P \oplus \Delta P||\affballsx|$+$|\Delta P|)$ time \wrt $\Delta P$, while $r$ is small, \ie 2 or 3 (See full version~\cite{fullvldb18}).
+
+

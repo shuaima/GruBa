@@ -1,0 +1,95 @@
+\subsection{Dealing with Data Updates}
+\label{subsec-Ginc}
+
+We next propose \incd to handle $\Delta G$, following the framework in Section~\ref{subsec-framework}.
+Given auxiliary structures $\tilde{M}(P,G)$ and \fb,
+we put together procedures \identifyaffball, \incmatch and \comb for computing match results for $P$ in $G \oplus \Delta G$.
+%
+As procedures \incmatch and \comb handle $\Delta G$ basically the same as $\Delta P$, so we mainly show how \identifyaffball identifies \affballsx \wrt $\Delta G$.
+
+
+\stitle{Procedure \identifyaffball}.
+Given $G$, $\Delta G$, and \fb, \identifyaffball identifies \affballsx according to the lemma as follows.
+
+\begin{lemma}
+\label{lemma-incgrdata-affballs}
+A ball $\ball{[v,r]}$ with center node $v$ in $G$ is identified as an \affballx \wrt $\Delta G$ and \fb,
+
+\sstab{(1)} for some unit data update $\delta$ of $\Delta G$, where
+(a) $\delta$ is an edge insertion/deletion, $(w_1,w_2)^+/(w_1,w_2)^-$ and $v$ is in  both $\ball{[w_1,r]}$  and $\ball{[w_2,r]}$, or
+(b) $\delta$ is a node insertion/deletion, $(w,(w,w'))^+$/$(w)^-$ and $v$ is in $\ball{[w,r]}$; or
+
+\sstab{(2)} when $\ball{[v,r]}$ has type code $(1,\ldots,1)$  in \fb.
+\end{lemma}
+
+We say a ball which satisfies condition (1) is a {\em structural affected} ball,
+\ie the structure of the ball is changed due to the exertion of some updates in $\Delta G$.
+%The correctness of procedure \identifyaffball is guaranteed by the following.
+
+\vspace{-0.5ex}
+\begin{prop}
+\label{prop-affected-datainc}
+Given $P$, $G$ and $\Delta G$, if there is a perfect subgraph for $P$ in  ball $\widehat{G\oplus\Delta G}{[v,r]}$ of $G\oplus \Delta G$,
+then $\ball{[v,r]}$ must be an affected ball produced by procedure \identifyaffball.
+%Given data graph $G$, pattern graph $P$ and data updates $\Delta G$,
+%the top-k perfect graphs in $G\oplus \Delta G$ for $P$ must be contained in \affballsx.
+\end{prop}
+
+%The proof is deferred to the full version~\cite{fullvldb18}.
+
+Different from pattern updates, procedure \incmatch recomputes partial match relations in $\tilde{M}(P,G)$
+for each pattern fragment of $P$ in each {\em structural affected} ball;
+and no computation is needed for \affballsx that only satisfy condition (2) in Lemma~\ref{lemma-incgrdata-affballs}.
+Procedure \comb combines the partial relations \wrt $\Delta G$ in the same way as handling $\Delta P$.
+
+
+\stitle{Updating \fb}. Algorithm \incd also updates \fb for all \affballsx.
+In addition to updating the links from \fs to \bs in \fb as for pattern updates,
+\incd maintains \bs by
+(a) removing (resp. inserting new) entries from (resp. to) \bs corresponding to balls whose center nodes are removed from (resp. inserted to) $G$, due to node deletions (resp. node insertions);
+and (b) updating the \kw{den} item in \bs \wrt $\Delta G$.
+These updates can be done in $O(|\affballsx|)$ time.
+
+
+\begin{example}
+\label{exa-Ginc}
+Consider $P_1$ and $G_1$ (both without dashed edges) in Fig.~\ref{fig-motivation-example}, and \fb in Fig.~\ref{fig-auxiliary-structures}(a).
+When $\Delta G_1=(\kw{SD_3},\kw{ST_3})^+$ comes,
+by Lemma~\ref{lemma-incgrdata-affballs},
+\identifyaffball identifies $\ball{[\kw{SD_3}, 2]}$, $\ball{[\kw{ST_3},2]}$, $\ball{[\kw{SA_3}, 2]}$ and $\ball{[\kw{PM_2}, 2]}$ as {\em structural affected} balls,
+together with balls with $tc$ $(1, 1)$ in \fb as \affballsx, \ie $\ball{[\kw{PM_1}, 2]}$, while filtering out all other balls.
+\end{example}
+
+
+\stitle{Algorithm \incd.} Given $\tilde{M}(P,G)$, \fb and data updates $\Delta G$,
+\incd computes the match results for $P$ in $G \oplus \Delta G$, and maintains
+auxiliary structures by invoking procedures \identifyaffball, \incmatch and \comb sequentially.
+
+
+\stitle{Correctness \& complexity analyses}. The correctness of \incd \wrt $\Delta G$ follows from Proposition~\ref{prop-affected-datainc} and the correctness of \incmatch and \comb.
+\incd is overall in
+$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx}\bigcup_{i\in[1,h]}$ $r|M(P_{fi}, \widehat{G\oplus\Delta G})|$+$r|P||\affballsx| + |\Delta G|)$ time \wrt $\Delta G$, while $r$ is small, \ie 2 or 3  (See~\cite{fullvldb18}).
+\looseness=-1
+
+
+
+\subsection{Unifying Pattern and Data Updates}
+\label{subsec-completePG}
+
+We are now ready to provide algorithm \inc, integrating \incp and \incd, presented in Sections~\ref{subsec-Qinc} and~\ref{subsec-Ginc}, respectively, to process continuous pattern and data updates, separately and simultaneously.
+
+Algorithm \inc is able to handle {\em simultaneous} $\Delta P$ and $\Delta G$, because of the consistency in:
+(1) the processes for handling $\Delta P$ and $\Delta G$, which follow the same steps in Section~\ref{subsec-framework};
+(2) auxiliary data structures for supporting $\Delta P$ and $\Delta G$; and
+(3) the combination procedures, which suffice to support simultaneous pattern and data updates.
+
+Observe that \inc can handle {\em continuously} simultaneous $\Delta P$ and $\Delta G$,
+as \inc incrementally maintains the auxiliary structures for continuously coming $\Delta P$ and $\Delta G$.
+
+
+
+
+%\vspace{0.5ex}
+\stitle{Remark}. Note that the running time of \incp and \incd is determined by \{$P, \Delta P, \tilde{M}(P,G)$, $\affballsx$\}
+and \{$P, \Delta G, \tilde{M}(P,G)$, $\affballsx$\}, respectively, not directly depending on $G$.
+From this, we complete the proof of Theorem~\ref{thm-framework-inc}.

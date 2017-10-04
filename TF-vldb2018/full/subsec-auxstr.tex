@@ -1,0 +1,103 @@
+\subsection{Auxiliary Data Structures}
+\label{subsec-auxstr}
+
+Auxiliary structures fall into two classes:
+maintain partial matches and handle pattern incremental computing. Consider an $h$-fragmentation ${\cal P}_h$ = \{$P_{f1}, \ldots, P_{fh}, C$\} of pattern $P(V_P, E_P)$, data graph $G(V, E)$, and pattern updates $\Delta P$.
+
+
+\stab(I) Data structures in the first class are as follows.
+
+\etitle{(1) Fragment status (\fs)} consists of $2^h$ boolean vectors $(b_1,\ldots,b_h)$, referred to as {\em type code (tc)}, where $b_i$ $(i\in [1,h])$ is either 0 or 1. Recall that $h$ is very small, \eg 3.
+
+We use \fs to classify the match status of balls in $G$ into $2^h$ types $\wrt$ ${\cal P}_h$.
+For a ball with type code $(b_1,\ldots,b_h)$, $b_i$ is 1 iff $P_{fi}$ matches the ball via graph simulation.
+
+\vspace{0.4ex}
+\etitle{(2) Ball status (\bs)} consists of $|V|$ triples $(bid, cflag, den)$, such that $bid$ is the $id$ of a ball,
+$cflag$ is the id of the latest processed unit pattern update for the ball (initially set to $0$),
+and $den$ is the density upper bound of subgraphs in the ball.
+\looseness=-1
+
+We use \bs to store the basic information for balls in $G$.
+
+\vspace{0.4ex}
+\etitle{(3) Fragment-ball matches} of $P$ in $G$, denote as $\tilde{M}(P,G)$,
+are $\bigcup_{i\in[1,h], v\in V} M(P_{fi},\ball{[v,r]})$,
+such that $M(P_{fi},\ball{[v,r]})$ is the maximum match relation for $P_{fi}$ in ball $\ball{[v,r]}$, via graph simulation,
+and there are in total $|V|$ balls.
+
+Here $\tilde{M}(P,G)$ is used to store match relations for the pattern fragments of $P$ in all balls of $G$. Instead of storing a single $\tilde{M}(P, G)$, we organize $\tilde{M}(P, G)$ in terms of the match status between pattern fragments and balls, \ie\ \fs and \bs.
+
+\vspace{0.4ex}
+\etitle{(4) Fragment-ball-match index (\fb)} links \fs and \bs together, to form the {\em fragment-ball-match index}. Then \fb is linked to $\tilde{M}(P,G)$. The details are shown below.
+
+For each record of ball $\ball{[v,r]}$ in \bs, (a) there is a link from its type code in \fs pointing to the record; and
+(b) there is another link from the record to a set of $M({P}_{fi}, \ball{[v,r]})$ $(i\in [1,h])$ in $\tilde{M}(P,G)$,
+if the type code with which the ball is associated has $b_i = 1$, \ie $M({P}_{fi}, \ball{[v,r]})$ is not empty.
+
+Intuitively, \fb indexes the partial match relations $\tilde{M}(P,G)$ based on the match status of balls \wrt ${\cal P}_h$.
+
+
+
+
+\begin{example}
+\label{exa-matchindex}
+Consider $P_1$ and $G_1$ (both without dashed edges) in Fig.~\ref{exm-motivation}, $r=2$, $k=2$, $h=2$,
+auxiliary structures $\tilde{M}(P,G)$ and \fb\,that are shown in Fig.~\ref{fig-auxiliary-structures}(a).
+
+\ni (1) Pattern $P_1$ is divided into fragments $P_{f1}$ and $P_{f2}$ by algorithm \kw{PFrag},
+so there are $2^2=4$ type codes in \fs.
+
+\ni (2) For balls linked with $tc$ $(1, 1)$, \eg ball $\ball{[\kw{PM_1},2]}$,
+there are matches to both $P_{f1}$ and $P_{f2}$ in the ball.
+Besides, there exist balls $\ball{[\kw{PM_2},2]}$, $\ball{[\kw{BA_3},2]}$ and $\ball{[\kw{PM_4},2]}$
+linked with $tc$ $(1, 0)$, $(0, 1)$ and $(0, 0)$ respectively.
+%
+For simplicity, we use these 4 balls only in the following analysis.
+\end{example}
+
+%Algorithm \inc uses \fb in step (1) and $\tilde{M}(P,G)$ in step (2), and updates both of them in step (2).
+
+These structures enforce a nice property as follows.
+
+\begin{theorem}
+\label{thm-framework-inc}
+With $\tilde{M}(P,G)$ and \fb \wrt an $h$-fragmentation of $P$, given $\Delta P$ and $\Delta G$,
+the incremental algorithm \inc processes $\Delta P$ and $\Delta G$ in time
+determined by $P$, $\tilde{M}(P,G)$ and \affballsx, not directly depending on $G$.
+\end{theorem}
+
+We shall prove Theorem~\ref{thm-framework-inc} by providing specific techniques for \inc and analyzing its time complexity.
+
+
+
+\stab(II) Data structures in the second class are as follows.
+
+\vspace{0.5ex}
+\etitle{(1) Ball filter  (\bfc)} consists of $2^{h}$ boolean vectors $(b_1$, $\ldots$, $b_h)$, referred to as {\em filtering code (fc)},
+such that each $fc$ in \bfc corresponds to a type code $tc$ in \fs.
+Each $b_i$ $(i\in [1, h])$ in an $fc$ of \bfc is initially set to $1$,
+and is updated for each unit pattern update $\delta$ in $\Delta P$:
+(a) when $\delta$ is an edge deletion or a node deletion to ${P}_{fi}$,
+the $i$-th bit of all the $2^{h}$ filtering codes in \bfc is set to $0$; Otherwise, (b) \bfc remains intact.
+
+
+%Algorithm \inc updates and uses \bfc in step (1) for identifying \affballsx for pattern updates.
+\vspace{0.5ex}
+\etitle{(2) Update planner (\upl)} consists of $h+1$ stacks $T({P}_{f1})$, $\ldots$, $T({P}_{fh})$, $T(C)$.
+Stack $T(P_{fi})$ $(i\in [1,h])$ (resp. $T(C)$) records all unit updates in all arrived pattern updates $\Delta P_1$, $\ldots$, $\Delta P_{N}$ that are applied to fragment $P_{fi}$ (resp. $C$) of $P$.
+Initially, all of them are empty, and are dynamically updated for each unit update in each coming set of  pattern updates.
+
+
+
+
+
+
+
+%Algorithm \inc updates \upl in step (1) to organize and accumulate unit pattern updates to pattern fragments, and uses \upl in step (2) to update $\tilde{M}(P,G)$ in \affballsx.
+
+
+%More specifically, we use (a) {\em fragment-ball status index} and (b) {\em ball status index} to organize $\tilde{M}(P, G)$ in terms of the match status between balls and pattern fragments. We then link them to the fragment-ball matches, to form an integrated organization of $\tilde{M}(P, G)$, called {\em fragment-ball math struct}, denoted by \fb.
+
+
+
