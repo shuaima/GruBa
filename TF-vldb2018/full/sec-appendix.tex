@@ -165,9 +165,73 @@ Algorithm~\kw{PFrag} runs in $O(\log h\cdot t_{\kw{BalanceP}})$, where $t_{\kw{B
 \noindent
 {\textbf{1. Proof of Proposition~\ref{prop-pattern-consistency}}}
 
-The satisfiability of patterns $P$ can be checked by treating $P$ as both data and pattern graphs, and computing the maximum match relation $M$ in $P$ for $P$, via graph simulation.
-Indeed, pattern $P$ is satisfiable iff for each $(u, v)\in M$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, $x_v \leq y_u$ holds. 
-Observe that computing graph simulation and the size of $M$ is bounded by $|P|^2$.
+We will prove the proposition by providing the $O(|P|^2)$ time algorithm, along with its correctness proof.
+
+\vspace{-1.5ex}
+The satisfiability of patterns $P$ can be checked by the following algorithm:
+(a) Compute the maximum match relation $\Reps$ of $P \eps P$;
+(b) Check for each $(u, v)\in \Reps$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, whether $x_v \leq y_u$ holds.
+One can verify that step (a) is in $O(|P|^2)$ time by invoking procedure~\ref{alg-rsim}; and step (b) can be checked in $O(|P|^2)$ time as the size of $M$ is bounded by $|P|^2$. Thus the algorithm is overall in $O(|P|^2)$ time.
+
+\vspace{-1.5ex}
+We next prove the correctness of the algorithm.
+
+\vspace{-1.5ex}
+(I) We firstly prove that the when the algorithm outputs ``yes", then pattern $P$ is indeed satisfiable.
+This is correct since if the algorithm outputs ``yes", \ie $P \eps P$ \wrt $\Reps$ and capacity bounds in $\Reps$ are satisfied, there must exist a data graph $G$ such that $P \eeps G$.
+$G$ can be derived by (i) computing equivalent classes of nodes in $P$ based on $\Reps$, such that $u$ and $w$ are in the same class iff both $(u, w)\in \Reps$ and $(w, u)\in \Reps$;
+(ii) creating a set of nodes for each equivalent class, where the cardinality of the set falls in the intersection of capacity bounds on nodes in the equivalent class; and
+(iii) connecting the nodes belong to two equivalent classes iff there exist edges in $P$ connecting two pattern nodes which belong to the same two equivalent classes.
+We also set $r$ to be the radius of $G$. One can verify that $P \eeps G$.
+
+\begin{figure*}[tb!]
+	%\begin{widepage}
+	\vspace{-1.5ex}
+	\begin{center}
+		\hspace{-8ex}
+		\begin{minipage}[t]{0.4\textwidth}
+			\vspace{2ex}
+			\begin{center}
+				\subfigure[{Unboundedness of unit data update}]{\label{fig-inc-complexity-data}
+					\includegraphics[scale=0.31]{./fig/inc-complexity-proof-data.eps}}
+			\end{center}
+			\vspace{-3.5ex}
+		\end{minipage}
+		\hspace{20ex}
+		\begin{minipage}[t]{0.4\textwidth}
+			%\vspace{-20.3ex}
+			\begin{center}
+				\subfigure[{Unboundedness of unit pattern update}]{\label{fig-inc-complexity-pattern}
+					\includegraphics[scale=0.28]{./fig/inc-complexity-proof-pattern.eps}}
+			\end{center}
+			\vspace{-3.5ex}
+		\end{minipage}
+	\end{center}
+	\vspace{-3ex}
+	%\caption{Performance evaluation of algorithm \optgrouprec for top-$k$ team formation}
+	%\label{exp-semantic-effectiveness-citation}
+	%\end{widepage}
+	\vspace{-2.0ex}
+\end{figure*}
+
+\vspace{-1.5ex}
+(II) We then prove that when the algorithm outputs ``no", then pattern $P$ is unsatisfiable.
+If the algorithm outputs ``no", then either (i) $P \not\eps P$ or (ii) $P \eps P$ but capacity bounds are not satisfied.
+We will prove this by contradiction.
+We consider case (i) $P \not\eps P$ and assume that $P$ is satisfiable in this case.
+For convenience, we use $P_1 \not\eps P_2$ to denote $P \not\eps P$, while $P_1$, $P_2$ and $P$ are exactly same.
+From that $P$ is satisfiable, we know that there exists a data graph $G$ such that $P_1 \eeps G$, $P_2 \eeps G$ and $P_1 \eeps G_s$, where $G_s$ is the perfect subgraph in $G$.
+By the definition of team simulation and graph simulation, from $P_2 \eeps G$, we know that $G_s \eps P_2$ holds;
+from $P_1 \eeps G_s$, we know that $P_1 \eps G_s$ holds; and 
+from $P_1 \eps G_s$ and  $G_s \eps P_2$, we know that $P_1 \eeps P_2$ holds.
+This contradicts the assumption.
+We then consider case (ii), \ie $P \eps P$ \wrt $\Reps$ while there exists $(u, v)\in \Reps$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, $x_v > y_u$, and assume that $P$ is satisfiable.
+From $P$ is satisfiable, we know that there exists a data graph $G$ such that $P \eeps G$.
+From $P \eps P$, we know that for any nodes $w$ in $G$, if $w$ matches with the pattern node $v$, then it must match with the pattern node $u$, that is, the number of data nodes match with $u$ is larger than that of data nodes match with $v$.
+However, this contradicts that the upper bound of $u$ ($y_u$) is smaller than the lower bound of $v$ ($x_v$).
+
+%By (I) and (II), we have proven that the algorithm is correct.
+
 
 \noindent
 {\textbf{2. Proof of Theorem~\ref{thm-tsim-radius}}}
@@ -192,7 +256,7 @@ We will prove Theorem (2) using the lemma below.
 
 We next prove the lemma and then use the lemma to prove Theorem~\ref{thm-tsim-radius} (2).
 
-\vspace{-2.3ex}
+\vspace{-1.3ex}
 \stitle{Proofs of Lemma~\ref{lemma-innerball}:} We will prove the lemma by contradiction. 
 We know that $G_1$ is a subgraph of $G_2$, and suppose $M_1 \not\subset M_2$.
 That is, there exists a pair of nodes $(u, v) \in M_1$, where $u$ is a pattern node 
@@ -223,17 +287,18 @@ We also adopt the notion to prove unboundedness of graph algorithms for \dynteam
 \vspace{-1.5ex}
 The proofs below strictly follows the one in \cite{Reps96}.
 
-\vspace{-1.5ex}
-\begin{figure}[ht!]
-\label{fig-inc-complexity-data}
-\begin{center}
-\includegraphics[scale=0.31]{./fig/inc-complexity-proof-data.eps}
-\end{center}
-\vspace{-3ex}
-\caption{Unboundedness of unit data update}
-\vspace{-4ex}
-\end{figure}
+%\vspace{-1.5ex}
+%\begin{figure}[h]
+%	\label{fig-inc-complexity-data}
+%	\begin{center}
+%		\includegraphics[scale=0.3]{./fig/inc-complexity-proof-data.eps}
+%	\end{center}
+%	\vspace{-3ex}
+%	\caption{Unboundedness of unit data update}
+%	\vspace{-2ex}
+%\end{figure}
 
+\vspace{-1.5ex}
 \etitle{(I) \dynteamF\, is unbounded for unit data update}.
 %Following \cite{Reps96, FanWW13-tods},
 Consider the following pattern and data graph, and unit data updates.
@@ -263,22 +328,22 @@ However, $|\kw{AFF}|$ in both cases are 1, such that the complexity of the incre
 Thus, ${\cal A}$ is not a bounded locally persistent incremental algorithm.
 %which contradicts the assumption.
 
-\vspace{-1.5ex}
+\vspace{-1.0ex}
 That is, \dynteamF\, is unbounded even for $k=1$ and unit data update.
 \looseness=-1
 
-\vspace{-1ex}
-\begin{figure}[ht!]
-\label{fig-inc-complexity-pattern}
-\begin{center}
-\includegraphics[scale=0.31]{./fig/inc-complexity-proof-pattern.eps}
-\end{center}
-\vspace{-3ex}
-\caption{Unboundedness of unit pattern update}
-\vspace{-4ex}
-\end{figure}
+%\vspace{-1ex}
+%\begin{figure}[h!]
+%	\label{fig-inc-complexity-pattern}
+%	\begin{center}
+%		\includegraphics[scale=0.3]{./fig/inc-complexity-proof-pattern.eps}
+%	\end{center}
+%	\vspace{-3ex}
+%	\caption{Unboundedness of unit pattern update}
+%	\vspace{-2ex}
+%\end{figure}
 
-\vspace{-1ex}
+\vspace{-1.5ex}
 \etitle{(II) \dynteamF\, is unbounded for unit pattern update}.
 Consider the following pattern and data graph, and unit pattern updates.
 Let data graph $G$ be a cycle ($a'_1$, $b'_1$, $c'_1$, $d'_1$, \ldots, $a'_m$, $b'_m$, $c'_m$, $d'_m$, $a'_1$),
@@ -312,8 +377,9 @@ Thus, ${\cal A}$ is not a bounded locally persistent incremental algorithm.
 %which contradicts the assumption.
 That is, \dynteamF\, is unbounded even for $k=1$ and unit pattern update.
 
-\vspace{-1.5ex}
+\vspace{-1.0ex}
 (1) and (2) together prove that \dynteamF\, is unbounded even for $k=1$ and unit pattern or data update.
+
 
 \noindent
 {\textbf{4. Proof of Theorem~\ref{thm-compose}}}
@@ -346,7 +412,7 @@ Thus, we have $M^{n+1}\subseteq M_{C}^{n+1}$.
 \vspace{-1.5ex}
 By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 
-
+\vspace{4ex}
 \noindent
 {\textbf{5. Proof of Proposition~\ref{prop-fragmentation}}}
 
@@ -461,7 +527,89 @@ The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
 \end{figure*}
 
 
-\begin{figure*}[tb!]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\vspace{1ex}
+\noindent
+{\large \textbf{Appendix C: Detailed Correctness \& Complexity Analysis}}
+\label{sec-apd-complexity}
+
+\noindent
+{\textbf{1. Algorithm \incp (Section~\ref{subsec-Qinc})}}
+
+The correctness of \incp \wrt $\Delta P$ is assured by
+the correctness of (a) \identifyaffball (by Proposition~\ref{prop-canaffballs});
+(b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved in Section~\ref{sec-tsimAlg}, and the correctness of of \patedgeinsert. Indeed, \patedgeinsert only removes
+nodes that are no longer valid matches in each $M(P_{fi}, \ball{[v,r]})$;
+(c) \comb, whose analysis follows the same way as that for \patedgeinsert; and
+(d) the early return property (by Lemma~\ref{lemma-approximation-bound}).
+
+\vspace{-1.5ex}
+Procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$ time, where it takes $O(2^{h}\cdot|\Delta P|)$ time to update \bfc, $O(2^{h}\cdot h)$ to do the AND-operation, and $O(||\affballsx||)$ to identify \affballsx.
+%Thus, procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$.
+As $h$ is typically small, \eg 2 to 5, thus \identifyaffball is in $O(|\Delta P|+||\affballsx||)$;
+\patedgeinsert is in $O(|M(P_{fi}, \ball{[v,r]})|+|V_{P_{fi}}||E_{\ball{[v,r]}}|)$ time.
+Indeed, the recursive process for checking invalid nodes in $M(P_{fi}, \ball{[v,r]})$ is bounded by $O(|V_{P_{fi}}||E_{\ball{[v,r]}}|)$,
+and the process to update $M(P_{fi}, \ball{[v,r]})$ is bounded by the size of its changes, which is monotonically decreasing;
+According to \patedgeinsert,
+\comb is in $O(|\bigcup^{h}_{i=1} rM(P_{fi}\oplus\Delta P_{fi},\ball{[v,r]})|+r|V_{P\oplus \Delta P}||E_{\ball{[v,r]}}|)$ time.
+
+\vspace{-1.5ex}
+Putting these together, algorithm \incp is in
+$O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|+r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|) + r|P \oplus \Delta P||\affballsx|$ +$|\Delta P|)$ time \wrt $\Delta P$.
+
+
+\noindent
+{\textbf{2. Algorithm \incd (Section~\ref{subsec-Ginc})}}
+
+The correctness of \incd \wrt $\Delta G$ is assured by the correctness of
+\identifyaffball (by Proposition~\ref{prop-affected-datainc}) and procedures \incmatch and \comb,
+which can be proved along the same lines as for pattern updates.
+
+\vspace{-1.5ex}
+One can verify that \identifyaffball is in $O(|\affballsx| + |\Delta G|)$,
+\incmatch for all fragments and all \affballsx is in $O(|P||\affballsx|)$ time, and \comb is in $O(\bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|$ + $r|V_{P}||E_{\widehat{G\oplus\Delta G}}|)$ time.
+Therefore, algorithm \incd is in
+$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx} \bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|+r|P||\affballsx| + |\Delta G|)$ time \wrt $\Delta G$.
+
+\vspace{1ex}
+\noindent
+{\large \textbf{Appendix D: Extra Experiments}}
+\label{sec-apd-exp}
+
+\vspace{-0.5ex}
+
+We also used another real-life dataset {\em \youtube}~\cite{youtubeWeb} for experimental verification.
+It contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
+
+\vspace{-1.5ex}
+The experimental results on \youtube are reported here.
+
+\vspace{-1.8ex}
+\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis, \denalk on \youtube \wrt four quality measures.
+The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
+We find \optgrouprec strikes a balance at capturing the practical requirements.
+
+\vspace{-1.8ex}
+\stitle{Exp-2: Efficiency of \inc for one set of updates}. Varying the amount of updates in one update set from 4.5\% to 49.5\% for pattern updates, 2.5\% to 27.5\% (resp. 3\% to 33\%) for data insertions and hybrid data updates (resp. data deletions), and (4.5\%, 2.5\%) to (31.5\%, 17.5\%) for simultaneous pattern and data updates, the results are reported in Fig.~\ref{fig-exp-patinc-del-youtube} to~\ref{fig-exp-hyb-patdata-youtube}.
+We find that \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\Delta P$, $\Delta G)$ are no more than 36\%, 22.5\% and (27\%, 15\%).
+%for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
+
+\vspace{-1.8ex}
+\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of updates,
+varying the amount of updates from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
+and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
+We evaluated the average time took by \inc to process these sets of updates one by one.
+The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
+We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous updates respectively.
+
+\vspace{-1.8ex}
+\stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
+it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
+\ie 50.8\% compared with the original dataset.
+
+\begin{figure*}[t!]
 	%\begin{widepage}
 	%\vspace{-1.5ex}
 	\begin{center}
@@ -514,85 +662,3 @@ The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
 	%\end{widepage}
 	\vspace{-3.0ex}
 \end{figure*}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\vspace{1ex}
-\noindent
-{\large \textbf{Appendix C: Detailed Correctness \& Complexity Analysis}}
-\label{sec-apd-complexity}
-
-\noindent
-{\textbf{1. Algorithm \incp (Section~\ref{subsec-Qinc})}}
-
-The correctness of \incp \wrt $\Delta P$ is assured by
-the correctness of (a) \identifyaffball (by Proposition~\ref{prop-canaffballs});
-(b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved in Section~\ref{sec-tsimAlg}, and the correctness of of \patedgeinsert. Indeed, \patedgeinsert only removes
-nodes that are no longer valid matches in each $M(P_{fi}, \ball{[v,r]})$;
-(c) \comb, whose analysis follows the same way as that for \patedgeinsert; and
-(d) the early return property (by Lemma~\ref{lemma-approximation-bound}).
-
-\vspace{-1.5ex}
-Procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$ time, where it takes $O(2^{h}\cdot|\Delta P|)$ time to update \bfc, $O(2^{h}\cdot h)$ to do the AND-operation, and $O(||\affballsx||)$ to identify \affballsx.
-%Thus, procedure \identifyaffball runs in $O(2^{h}\cdot(|\Delta P|+h) +||\affballsx||)$.
-As $h$ is typically small, \eg 2 to 5, thus \identifyaffball is in $O(|\Delta P|+||\affballsx||)$;
-\patedgeinsert is in $O(|M(P_{fi}, \ball{[v,r]})|+|V_{P_{fi}}||E_{\ball{[v,r]}}|)$ time.
-Indeed, the recursive process for checking invalid nodes in $M(P_{fi}, \ball{[v,r]})$ is bounded by $O(|V_{P_{fi}}||E_{\ball{[v,r]}}|)$,
-and the process to update $M(P_{fi}, \ball{[v,r]})$ is bounded by the size of its changes, which is monotonically decreasing;
-According to \patedgeinsert,
-\comb is in $O(|\bigcup^{h}_{i=1} rM(P_{fi}\oplus\Delta P_{fi},\ball{[v,r]})|+r|V_{P\oplus \Delta P}||E_{\ball{[v,r]}}|)$ time.
-
-\vspace{-1.5ex}
-Putting these together, algorithm \incp is in
-$O(\bigcup_{\hat{G}\in \affballsx}\bigcup_{i\in[1,h]}(|M(P_{fi}, \hat{G})|+r|M(P_{fi} \oplus \Delta P_{fi}, \hat{G})|) + r|P \oplus \Delta P||\affballsx|$ +$|\Delta P|)$ time \wrt $\Delta P$.
-
-
-\noindent
-{\textbf{2. Algorithm \incd (Section~\ref{subsec-Ginc})}}
-
-The correctness of \incd \wrt $\Delta G$ is assured by the correctness of
-\identifyaffball (by Proposition~\ref{prop-affected-datainc}) and procedures \incmatch and \comb,
-which can be proved along the same lines as for pattern updates.
-
-\vspace{-1.5ex}
-One can verify that procedure \identifyaffball is in $O(|\affballsx|)$,
-\incmatch for all fragments and all \affballsx is in $O(|P||\affballsx|)$ time, and \comb is in $O(\bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|$ + $r|V_{P}||E_{\widehat{G\oplus\Delta G}}|)$ time.
-Therefore, algorithm \incd is in
-$O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx} \bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|+r|P||\affballsx|)$ time \wrt $\Delta G$.
-
-\vspace{1ex}
-\noindent
-{\large \textbf{Appendix D: Extra Experiments}}
-\label{sec-apd-exp}
-
-\vspace{-0.5ex}
-
-We also used another real-life dataset {\em \youtube}~\cite{youtubeWeb} for experimental verification.
-It contains 2.03M video nodes and 12.2M edges, which represent recommendations between two videos. We used the undirected version, and generated 400 labels based on the built-in categories and ages of videos.
-
-\vspace{-1.5ex}
-The experimental results on \youtube are reported here.
-
-\vspace{-1.8ex}
-\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis, \denalk on \youtube \wrt four quality measures.
-The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
-We find \optgrouprec strikes a balance at capturing the practical requirements.
-
-\vspace{-1.8ex}
-\stitle{Exp-2: Efficiency of \inc for one set of updates}. Varying the amount of updates in one update set from 4.5\% to 49.5\% for pattern updates, 2.5\% to 27.5\% (resp. 3\% to 33\%) for data insertions and hybrid data updates (resp. data deletions), and (4.5\%, 2.5\%) to (31.5\%, 17.5\%) for simultaneous pattern and data updates, the results are reported in Fig.~\ref{fig-exp-patinc-del-youtube} to~\ref{fig-exp-hyb-patdata-youtube}.
-We find that \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\Delta P$, $\Delta G)$ are no more than 36\%, 22.5\% and (27\%, 15\%).
-%for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
-
-\vspace{-1.8ex}
-\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of updates,
-varying the amount of updates from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
-and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
-We evaluated the average time took by \inc to process these sets of updates one by one.
-The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
-We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous updates respectively.
-
-\vspace{-1.8ex}
-\stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
-it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
-\ie 50.8\% compared with the original dataset.
