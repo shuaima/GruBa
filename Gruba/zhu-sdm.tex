@@ -95,6 +95,7 @@
 %\newtheorem{lemma}[theorem]{Lemma}
 %\newtheorem{corollary}[theorem]{Corollary}
 %
+%\newcommand{\exa}[2]{{\tt\begin{tabbing}\hspace{#1}\=\+\kill #2\end{tabbing}}}
 \newcommand{\sys}{\textcolor{blue}{\uppercase{G}\lowercase{ru}\uppercase{B}\lowercase{a}}}
 \newcommand{\tbc}{\textcolor{blue}{[To Be Completed]}}
 \newcommand{\refe}{\textcolor{blue}{[reference]}}
@@ -113,28 +114,34 @@
 %\setcounter{section}{3} % comment these two lines out.
 
 
-\title{\Large Incorporating User Grouping into \Retg{} Behavior Modeling\thanks{Supported by NSFC (U1636210), 973 program (2014CB340300), NSFC (61322207\&61421003), Special Funds of Beijing Municipal Science \& Technology Commission, Beijing Advanced Innovation Center for Big Data and Brain Computing, and MSRA Collaborative Research Program.}}
-\author{Jinhan Zhu, Shuai Ma, Jing Wang, Hui Zhang, Chunming Hu\thanks{Beihang University, China. Email: zhujh@act.buaa.edu.cn, mashuai@buaa.edu.cn, wjseawind@gmail.com, zhanghui@act.
-buaa.edu.cn, hucm@buaa.edu.cn.} \\
+\newcommand{\beihang}{SKLSDE Lab, Beihang University, China. Email: \{zhujh@act., mashuai, zhanghui@act., hucm@\}buaa.edu.cn, wjseawind@gmail.com}
+\newcommand{\ackfunding}{Supported by NSFC (U1636210, 61421003, 61403090, U1636123), Beijing Advanced Innovation Center for Big Data and Brain Computing.}
+
+
+\title{\Large Incorporating User Grouping into \Retg{} Behavior Modeling\thanks{\ackfunding}}
+\author{Jinhan Zhu\thanks{\beihang}\hspace{2ex} Shuai Ma$^{\dag}$\hspace{2ex} Jing Wang$^{\dag}$\hspace{2ex} Hui Zhang$^{\dag}$\hspace{2ex} Chunming Hu$^{\dag}$\\
 \and
-Xiong Li\thanks{National Computer network Emergency Response technical Team/Coordination Center of China.
-\newline Email:li.xiong@foxmail.com}}
+\hspace{-2ex}Xiong Li\thanks{National Computer Network Emergency Response Technical Team/Coordination Center of China. Email:li.xiong@foxmail.com}}
+\date{}	
+
 \date{}	
 
 
 \maketitle
 
+
+%\footnote[1]{\footnotesize{\textbf{SKLSDE Lab, Beihang University, China. Email: \{zhujh@act., mashuai, zhanghui@act., hucm@\}buaa.edu.cn., wjseawind@gmail.com}}}}
+
 % Copyright Statement
-% When submitting your final paper to a SIAM proceedings, it is requested that you include 
-% the appropriate copyright in the footer of the paper.  The copyright added should be 
+% When submitting your final paper to a SIAM proceedings, it is requested that you include
+% the appropriate copyright in the footer of the paper.  The copyright added should be
 % consistent with the copyright selected on the copyright form submitted with the paper.
 % Please note that "20XX" should be changed to the year of the meeting.
 
 % Default Copyright Statement
-\fancyfoot[R]{\footnotesize{\textbf{Copyright \textcopyright\ 2018 by SIAM\\
-Unauthorized reproduction of this article is prohibited}}}
+%\fancyfoot[R]{\footnotesize{\textbf{Copyright \textcopyright\ 2018 by SIAM\\ Unauthorized reproduction of this article is prohibited}}}
 
-% Depending on which copyright you agree to when you sign the copyright form, the copyright 
+% Depending on which copyright you agree to when you sign the copyright form, the copyright
 % can be changed to one of the following after commenting out the default copyright statement
 % above.
 
