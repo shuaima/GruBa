@@ -46,7 +46,7 @@ As shown in Fig~\ref{alg-rsim}, given $P$ and ball $\ball{[v, r]}$,
 \rgraphsim finds the match graph for $P$ in $\ball{[v, r]}$.
 For each node $u$ in $V_{P}$, it first computes the set $\matchs(u)$ of candidate matches $w$ containing the label of $u$ (lines 1-2),
 and then removes nodes from $\matchs(u)$ iteratively (lines 3-7).
-A node $w$ is removed from $\matchs(u)$ if there is a adjacent node $u'$ of $u$,
+A node $w$ is removed from $\matchs(u)$ if there is an adjacent node $u'$ of $u$,
 but there exists no adjacent node $w'$ of $w$ such that $w'\in \matchs(u')$.
 If so, \rgraphsim constructs the match graph $G_s$ \wrt the maximum match relation $\Reps$ and returns it (lines 8-10).
 
@@ -171,13 +171,13 @@ We will prove the proposition by providing the $O(|P|^2)$ time algorithm, along 
 The satisfiability of patterns $P$ can be checked by the following algorithm:
 (a) Compute the maximum match relation $\Reps$ of $P \eps P$;
 (b) Check for each $(u, v)\in \Reps$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, whether $x_v \leq y_u$ holds.
-One can verify that step (a) is in $O(|P|^2)$ time by invoking procedure~\ref{alg-rsim}; and step (b) can be checked in $O(|P|^2)$ time as the size of $M$ is bounded by $|P|^2$. Thus the algorithm is overall in $O(|P|^2)$ time.
+One can verify that step (a) is in $O(|P|^2)$ time by invoking procedure \rgraphsim; and step (b) can be checked in $O(|P|^2)$ time as the size of $M$ is bounded by $|P|^2$. Thus the algorithm is overall in $O(|P|^2)$ time.
 
 \vspace{-1.5ex}
 We next prove the correctness of the algorithm.
 
 \vspace{-1.5ex}
-(I) We firstly prove that the when the algorithm outputs ``yes", then pattern $P$ is indeed satisfiable.
+(I) We firstly prove that when the algorithm outputs ``yes", then pattern $P$ is indeed satisfiable.
 This is correct since if the algorithm outputs ``yes", \ie $P \eps P$ \wrt $\Reps$ and capacity bounds in $\Reps$ are satisfied, there must exist a data graph $G$ such that $P \eeps G$.
 $G$ can be derived by (i) computing equivalent classes of nodes in $P$ based on $\Reps$, such that $u$ and $w$ are in the same class iff both $(u, w)\in \Reps$ and $(w, u)\in \Reps$;
 (ii) creating a set of nodes for each equivalent class, where the cardinality of the set falls in the intersection of capacity bounds on nodes in the equivalent class; and
@@ -199,10 +199,10 @@ We also set $r$ to be the radius of $G$. One can verify that $P \eeps G$.
 		\end{minipage}
 		\hspace{20ex}
 		\begin{minipage}[t]{0.4\textwidth}
-			%\vspace{-20.3ex}
+			\vspace{-0.6ex}
 			\begin{center}
 				\subfigure[{Unboundedness of unit pattern update}]{\label{fig-inc-complexity-pattern}
-					\includegraphics[scale=0.28]{./fig/inc-complexity-proof-pattern.eps}}
+					\includegraphics[scale=0.29]{./fig/inc-complexity-proof-pattern.eps}}
 			\end{center}
 			\vspace{-3.5ex}
 		\end{minipage}
@@ -218,30 +218,29 @@ We also set $r$ to be the radius of $G$. One can verify that $P \eeps G$.
 (II) We then prove that when the algorithm outputs ``no", then pattern $P$ is unsatisfiable.
 If the algorithm outputs ``no", then either (i) $P \not\eps P$ or (ii) $P \eps P$ but capacity bounds are not satisfied.
 We will prove this by contradiction.
-We consider case (i) $P \not\eps P$ and assume that $P$ is satisfiable in this case.
+We consider case (i) $P \not\eps P$ and assume that $P$ is satisfiable.
 For convenience, we use $P_1 \not\eps P_2$ to denote $P \not\eps P$, while $P_1$, $P_2$ and $P$ are exactly same.
 From that $P$ is satisfiable, we know that there exists a data graph $G$ such that $P_1 \eeps G$, $P_2 \eeps G$ and $P_1 \eeps G_s$, where $G_s$ is the perfect subgraph in $G$.
-By the definition of team simulation and graph simulation, from $P_2 \eeps G$, we know that $G_s \eps P_2$ holds;
-from $P_1 \eeps G_s$, we know that $P_1 \eps G_s$ holds; and 
-from $P_1 \eps G_s$ and  $G_s \eps P_2$, we know that $P_1 \eeps P_2$ holds.
+By the definition of team simulation and graph simulation, from $P_2 \eeps G$, we know that $G_s \eps P_2$;
+from $P_1 \eeps G_s$, we know that $P_1 \eps G_s$; and 
+from $P_1 \eps G_s$ and  $G_s \eps P_2$, we know that $P_1 \eps P_2$.
 This contradicts the assumption.
-We then consider case (ii), \ie $P \eps P$ \wrt $\Reps$ while there exists $(u, v)\in \Reps$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, $x_v > y_u$, and assume that $P$ is satisfiable.
+We then consider case (ii), $P \eps P$ \wrt $\Reps$ while there exists $(u, v)\in \Reps$ with the capacity bounds $[x_u, y_u]$ on $u$ and $[x_v, y_v]$ on $v$, respectively, and $x_v > y_u$, and assume that $P$ is satisfiable.
 From $P$ is satisfiable, we know that there exists a data graph $G$ such that $P \eeps G$.
-From $P \eps P$, we know that for any nodes $w$ in $G$, if $w$ matches with the pattern node $v$, then it must match with the pattern node $u$, that is, the number of data nodes match with $u$ is larger than that of data nodes match with $v$.
+From $P \eps P$ \wrt $\Reps$ and $(u, v)\in \Reps$, we know that for any nodes $w$ in $G$, if $w$ matches the pattern node $v$, then it must match the pattern node $u$, that is, the number of data nodes match $u$ is larger than that of data nodes match $v$.
 However, this contradicts that the upper bound of $u$ ($y_u$) is smaller than the lower bound of $v$ ($x_v$).
-
-%By (I) and (II), we have proven that the algorithm is correct.
+%From (I) and (II) the correctness of the algorithm follows.
 
 
 \noindent
 {\textbf{2. Proof of Theorem~\ref{thm-tsim-radius}}}
 
 We will prove Theorem~\ref{thm-tsim-radius} (1) firstly.
-We know that $P\eps \ball{[v, t]}$, and suppose that $M_t$ is a binary match relation for $P$ in $\ball{[v, t]}$.
+We know that $P\eps \ball{[v, t]}$, and suppose that $M_t$ is the maximum match relation for $P$ in $\ball{[v, t]}$.
 Since $\ball{[v, t]}$ is a subgraph of $\ball{[v, r]}$, 
 there must exist a binary relation $M_r$ such that for any $(u, v) \in M_t$, where $u$ is a pattern node and $v$ is the matched data node of $u$ in $\ball{[v, t]}$, 
 $(u, v) \in M_r$ holds, where $v$ is the matched data node of $u$ in $\ball{[v, r]}$, \ie $M_t \subset M_r$.
-Since $M_t$ is a match relation for $P$ in $\ball{[v, t]}$ and $M_t \subset M_r$, by the definition of graph simulation, then $P\eps \ball{[v, r]}$ and $M_r$ is a match relation for $P$ in $\ball{[v, r]}$.	
+Since $M_t$ is the maximum match relation for $P$ in $\ball{[v, t]}$ and $M_t \subset M_r$, by the definition of graph simulation, then $P\eps \ball{[v, r]}$ and $M_r$ is a match relation for $P$ in $\ball{[v, r]}$.	
 
 \vspace{-1ex}	
 We will prove Theorem (2) using the lemma below. 
@@ -249,7 +248,7 @@ We will prove Theorem (2) using the lemma below.
 \vspace{-2.7ex}
 \begin{lemma}
 	\label{lemma-innerball}
-	For any data graphs $G_1$ and $G_2$, pattern graph $P$. If $G_1$ is a subgraph of $G_2$,
+	For any data graphs $G_1$ and $G_2$, and pattern graph $P$, if $G_1$ is a subgraph of $G_2$,
 	then $M_1 \subset M_2$, where $M_i$ $(i=1,2)$ is the maximum match relation for $P$ in $G_i$ via graph simulation. 
 \end{lemma}
 \vspace{-2.5ex}
@@ -257,7 +256,7 @@ We will prove Theorem (2) using the lemma below.
 We next prove the lemma and then use the lemma to prove Theorem~\ref{thm-tsim-radius} (2).
 
 \vspace{-1.3ex}
-\stitle{Proofs of Lemma~\ref{lemma-innerball}:} We will prove the lemma by contradiction. 
+\stitle{Proof of Lemma~\ref{lemma-innerball}:} We will prove the lemma by contradiction. 
 We know that $G_1$ is a subgraph of $G_2$, and suppose $M_1 \not\subset M_2$.
 That is, there exists a pair of nodes $(u, v) \in M_1$, where $u$ is a pattern node 
 and $v$ is the matched data node of $u$, but $(u, v) \not\in M_2$.
@@ -267,8 +266,8 @@ From $(u, v) \not\in M_2$, we know that there exists a child node $u''$ of $u$ i
 but there exist no child nodes $v''$ of $v$ in $G_2$, such that $(u'', v'') \eps M_2$.
 The process to compute maximum match relations for graph simulation is a recursive process to 
 remove invalid matches from the initialized match relations $M$.
-Because there exist no $u''$ in $G_2$ such that $(u'', v'') \eps M_2$, so $(u, v)$ is removed from $M_2$.
-As $G_1$ is a subgraph of $G_2$, so $(u, v)$ should also be removed from $M_1$, 
+Because there exist no $u''$ in $G_2$ such that $(u'', v'') \eps M_2$, $(u, v)$ is removed from $M_2$.
+Since $G_1$ is a subgraph of $G_2$, $(u, v)$ should also be removed from $M_1$, 
 such that $(u, v) \not\in M_1$.
 This contradicts the assumption that $(u, v) \in M_1$, and we get the lemma proved.
 \eop
