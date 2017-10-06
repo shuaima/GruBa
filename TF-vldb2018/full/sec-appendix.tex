@@ -265,7 +265,7 @@ there exists a child node $v'$ of $v$ in $G_1$ such that $(u', v') \in M_1$.
 From $(u, v) \not\in M_2$, we know that there exists a child node $u''$ of $u$ in $P$, 
 but there exist no child nodes $v''$ of $v$ in $G_2$, such that $(u'', v'') \eps M_2$.
 The process to compute maximum match relations for graph simulation is a recursive process to 
-remove invalid matches from the initialized match relations $M$.
+remove unmatched nodes from the initialized match relations $M$.
 Because there exist no $u''$ in $G_2$ such that $(u'', v'') \eps M_2$, $(u, v)$ is removed from $M_2$.
 Since $G_1$ is a subgraph of $G_2$, $(u, v)$ should also be removed from $M_1$, 
 such that $(u, v) \not\in M_1$.
@@ -388,7 +388,7 @@ Given pattern $P(V_P,E_P)$ and its fragmentation \{${P}_{f1}$, \ldots, ${P}_{fh}
 we use $P^{C}(V_{P^{C}},E_{P^{C}})$ to denote the pattern with $V_{P^{C}}$=$V_P$ and $E_{P^{C}}$=$E_P/C$.
 %we use $P^{C}(V_P,E_P/C)$ to denote the pattern with the same node set $V_P$ with $P$, and edges excluding the cut $C$ from $E_P$.
 Graph simulation is an iterative process to remove unmatched nodes from the candidate nodes,
-as illustrated in Fig.~\ref{alg-rsim} (lines~1-6).
+as illustrated in procedure \rgraphsim in Fig.~\ref{alg-rsim}.
 We utilize $M_{C}^{k}$ (resp. $M_{i}^{k}$, $M^{k}$) to denote the match relation for $P^{C}$ (resp. $P_{fi}$, $P$) in $\ball{}$ in the $kth$ iteration.
 By the definition of graph simulation, we have $M_{C}^{k}$ = $\bigcup_{i=1}^{h}M_{i}^{k}$.
 To prove $M\subseteq\bigcup_{i=1}^{h}M_{i}$,
@@ -396,13 +396,13 @@ we next prove $M^{k}\subseteq M_{C}^{k}$ for each iteration instead.
 
 \vspace{-1.8ex}
 \sstab{(1)} For $k=0$, \ie the initialization step of graph simulation algorithm,
-the algorithm computes the set of candidate matches for each pattern node with the same label.
+the algorithm computes the set of candidate matches for each pattern node.
 As $P$ and $P^{C}$ have exactly the same node set, we have $M^{0}= M_{C}^{0}$.
 
 \vspace{-1.8ex}
-\sstab{(2)} For $k=n$ $(n\geq 0)$, if $M^{n}\subseteq M_{C}^{n}$ exists, we prove $M^{n+1}\subseteq M_{C}^{n+1}$ exists in the $(n+1)th$ iteration.
-Suppose both $(u,w)\in M^{n}$ and $(u,w)\in M_{C}^{n}$ exist,
-and in the $(n+1)th$ iteration, $(u,w)$ is removed from $M_{C}^{n}$ if there is a adjacent node $u'$ of $u$ in $P_{C}$,
+\sstab{(2)} For $k=n$ $(n\geq 0)$, if $M^{n}\subseteq M_{C}^{n}$ holds, we prove $M^{n+1}\subseteq M_{C}^{n+1}$ holds in the $(n+1)th$ iteration.
+Suppose both $(u,w)\in M^{n}$ and $(u,w)\in M_{C}^{n}$ hold,
+and in the $(n+1)th$ iteration, $(u,w)$ is removed from $M_{C}^{n}$ if there is an adjacent node $u'$ of $u$ in $P_{C}$,
 but there exists no adjacent node $w'$ of $w$ in $G$ such that $(u',w')\in M_{C}^{n}$.
 Therefore, $(u,w)$ must be removed from $M^{n}$ as $E_{P^{C}} \subseteq E_{P}$,
 that is, the edge $(u,u')$ in $E_{P^{C}}$ must belong to $E_{P}$.
@@ -470,18 +470,18 @@ Indeed, the minimum cut problem is a special case of the of $h$-fragmentation pr
 \noindent
 {\textbf{6. Proof of Proposition~\ref{prop-canaffballs}}}
 
-The proposition is correct as when $\Delta P$ comes, the perfect graphs must reside in the balls that match with each pattern fragment of $P\oplus \Delta P$.
-\identifyaffball identifies \affballsx who already match with each fragment of $P$;
+The proposition is correct as when $\Delta P$ comes, the perfect subgraphs must reside in the balls that match all pattern fragments of $P\oplus \Delta P$.
+\identifyaffball identifies \affballsx who already match all fragments of $P$;
 Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
-there must exist an update in $\Delta P$ on $P_{fi}$,
-such that the ball may match with the updated fragment $P_{fi}\oplus \Delta P$.
-Therefore, \identifyaffball filters out the balls that do not match with a fragment of $P$, and there are no pattern updates on the fragment.
+there must exist an edge/node deletion in $\Delta P$ on $P_{fi}$,
+such that the ball may match the updated fragment $P_{fi}\oplus \Delta P$.
+Thus, \identifyaffball filters out the balls that cannot not match at least one fragment of $P$, and there are no deletion updates on the fragment.
 
 \noindent
 {\textbf{7. Proof of Proposition~\ref{prop-affected-datainc}}}
 	
 The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
-\identifyaffball filters out the balls that cannot match all $h$ pattern fragments,	and there are no data updates on the ball.
+\identifyaffball filters out the balls that cannot match all pattern fragments,	and there are no data updates on the ball.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -541,7 +541,7 @@ The correctness of \incp \wrt $\Delta P$ is assured by
 the correctness of (a) \identifyaffball (by Proposition~\ref{prop-canaffballs});
 (b) \incmatch, which is assured by the correctness of \rgraphsim that has been proved in Section~\ref{sec-tsimAlg}, and the correctness of of \patedgeinsert. Indeed, \patedgeinsert only removes
 nodes that are no longer valid matches in each $M(P_{fi}, \ball{[v,r]})$;
-(c) \comb, whose analysis follows the same way as that for \patedgeinsert; and
+(c) \comb, whose analysis follows the same way as that of \patedgeinsert; and
 (d) the early return property (by Lemma~\ref{lemma-approximation-bound}).
 
 \vspace{-1.5ex}
