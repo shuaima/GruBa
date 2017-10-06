@@ -6,7 +6,7 @@
 \subsection{Problem Formulation}
 % {user, blog, user-blog} => model
 % query (a user u, a blog b that is created or forwarded by u's friend)
-% returns: Y/N u shall forward b 
+% returns: Y/N u shall forward b
 
 We consider people's \retg{} behavior in social media.
 For simplicity, with a given user, we assume that blogs created or \retd{} by his/her followees cover the overall candidates, from which the said user may \ret{}.
@@ -39,10 +39,10 @@ Informally, providing a set of users $\{U\}$ and the associated blogs $\{B\}$, a
 \subsection{\sys{} Framework}
 \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media.
 Figure \ref{fig:framework} shows the architectural components of \sys{}, comprising three subsystems: Data Storage, Processing Runtime and Profile Demonstrator.
- 
+
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.96\linewidth]{figures/architecture}
+\includegraphics[width=.75\linewidth]{figures/architecture}
 \caption{\sys{} Architecture}
 \label{fig:framework}
 \end{figure}
@@ -74,11 +74,11 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}, compris
 In the heart of \sys{} lies the Processing Runtime subsystem, which consists of three major components as follows.
 \begin{enumerate}
 	\item Feature Extractor: By coalescing the blog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Info} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored data by Feature Extractor and serve as the input of User Clusterer.
-	\item User Clusterer: Providing the user-based features, User Clusterer takes charge of the clustering task such that each user falls into a proper group. 
+	\item User Clusterer: Providing the user-based features, User Clusterer takes charge of the clustering task such that each user falls into a proper group.
 	\item Group Modeler: For each group obtained by User Clusterer, Group Modeler employs both positive and negative samples to train a model, over which the testing of users' \retg{} behavior is performed.
 \end{enumerate}
 	
-\textbf{Profile Demonstrator.} At the top layer of \sys{}, it is the Profile Demonstrator subsystem for visualization. 
+\textbf{Profile Demonstrator.} At the top layer of \sys{}, it is the Profile Demonstrator subsystem for visualization.
 For the time being, Profile Demonstrator presents \tbc{}.
 
 
