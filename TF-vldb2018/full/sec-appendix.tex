@@ -297,10 +297,10 @@ The proofs below strictly follows the one in \cite{Reps96}.
 %	\vspace{-2ex}
 %\end{figure}
 
-\vspace{-1.5ex}
+%\vspace{-0.5ex}
 \etitle{(I) \dynteamF\, is unbounded for unit data update}.
 %Following \cite{Reps96, FanWW13-tods},
-Consider the following pattern and data graph, and unit data updates, as shown in Fig.~\ref{proof-patdata-inc} (a).
+Consider the following pattern and data graph, as shown in Fig.~\ref{proof-patdata-inc} (a), and unit data updates.
 Let data graph $G$ consist of two chains ($a_1$, $b_1$, $c_1$, \ldots, $a_n$, $b_n$, $c_n$) and ($a_{n+1}$, $b_{n+1}$, $c_{n+1}$, \ldots, $a_{2n}$, $b_{2n}$, $c_{2n}$) where $a_i$, $b_i$ and $c_i$ have labels $A$, $B$ and $C$ respectively.
 Let pattern graph be a triangle with nodes $a$, $b$ and $c$ with labels $A$, $B$ and $C$ respectively.
 Consider two unit edge insertions $\delta_1$ = $(c_n$, $a_{n+1})^+$ and $\delta_2$ = $(c_{2n}$, $a_1)^+$,
@@ -344,7 +344,7 @@ That is, \dynteamF\, is unbounded even for $k=1$ and unit data update.
 
 \vspace{-1.5ex}
 \etitle{(II) \dynteamF\, is unbounded for unit pattern update}.
-Consider the following pattern and data graph, and unit pattern updates, as shown in Fig.~\ref{proof-patdata-inc} (b).
+Consider the following pattern and data graph, as shown in Fig.~\ref{proof-patdata-inc} (b), and unit pattern updates.
 Let data graph $G$ be a cycle ($a'_1$, $b'_1$, $c'_1$, $d'_1$, \ldots, $a'_m$, $b'_m$, $c'_m$, $d'_m$, $a'_1$),
 where $a'_i$, $b'_i$, $c'_i$ and $d'_i$ have labels $A$, $B$, $C$ and $D$ respectively.
 Let pattern graph be a cycle ($a_1$, $b_1$, $c_1$, $d_1$, \ldots, $a_n$, $b_n$, $c_n$, $d_n$, $a_{n+1}$, $b_{n+1}$, $c_{n+1}$, $d_{n+1}$, \ldots, $a_{2n}$, $b_{2n}$, $c_{2n}$, $d_{2n}$, $a_1$) and two extra edges ($a_1$, $c_1$) and ($b_{n+1}$, $d_{n+1}$),
@@ -590,16 +590,16 @@ We find that \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\De
 %for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
 
 \vspace{-1.8ex}
-\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of updates,
-varying the amount of updates from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
+\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of hybrid updates,
+varying the amount of updates in each set from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
 and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
-We evaluated the average time took by \inc to process these sets of updates one by one.
+We tested the average time took by \inc to process all these sets one by one.
 The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
-We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous updates respectively.
+We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous pattern and data updates, respectively.
 
 \vspace{-1.8ex}
 \stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
-it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which need 114MB space to store itself,
+it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which needs 114MB space to store itself,
 \ie 50.8\% compared with the original dataset.
 
 \begin{figure*}[t!]
