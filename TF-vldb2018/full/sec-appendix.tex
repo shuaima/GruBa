@@ -411,77 +411,6 @@ Thus, we have $M^{n+1}\subseteq M_{C}^{n+1}$.
 \vspace{-1.5ex}
 By (1) and (2), we have proven that $M\subseteq\bigcup_{i=1}^{h}M_{i}$.
 
-\noindent
-{\textbf{5. Proof of Proposition~\ref{prop-fragmentation}}}
-
-The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
-is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
-(a) $\max_i |P_{fi}| \leq r_1\cdot\frac{|P|}{h}$ and (b) $|C|\leq r_2|P|$.
-
-\vspace{-1.5ex}
-\etitle{Upper bound.} We show the \NP upper bound by providing an \NP algorithm to determine whether there exists an $h$-fragmentation of $P$.\,Given $P$, the algorithm works as follows.
-\looseness=-1
-
-\vspace{-1.8ex}
-\sstab{(1)} Guess an $h$-fragmentation ${\cal P}_h$ of $P$.
-
-\vspace{-1.8ex}
-\sstab{(2)} Check whether it satisfies restrictions of $r_1$ and $r_2$ (conditions (a) and (b) in the definition of $\kw{dOFGP}$).
-If so, return yes, otherwise go to the first step and guess another instance.
-
-\vspace{-1.5ex}
-The algorithm is in \NP since step~(2) can be checked in \PTIME (liner time, indeed).
-
-\revise{
-\vspace{-1.5ex}
-\etitle{Lower bound.}
-We next show that it is \NP-hard to determine whether there exists an $h$-fragmentation and remains \NP-hard even when $h$ = 2,
-by reduction from the {\em minimum cut} problem, which is known \NP-complete\footnote{\small http://www.nada.kth.se/$\sim$viggo/wwwcompendium/node85.html}.
-
-\vspace{-1ex}
-An instance of the minimum cut problem is given an undirected graph $H=(V_{H},E_{H})$ and a positive integer $m$,
-to find a set $S \subseteq E_{H}$ of edges whose removal leaves two disjoint connected components, with $|S|\leq m$.
-
-\vspace{-1ex}
-Given an instance of the minimum cut problem,
-we construct an instance of $h$-fragmentation problem.
-It can be achieved by taking $H$ as $P$, and setting $h=2$, $r_1=h$ and $r_2 = m/|P|$.
-Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.}
-
-
-\eat{%%%% Wrong proof %%%
-\vspace{-2.5ex}
-\etitle{Lower bound.}
-We next show that it is \NP-hard to determine whether there exists an $h$-fragmentation and remains \NP-hard even when $h$ = 2,
-by reduction from the {\em minimum cut} problem, which is known \NP-complete\footnote{\small http://www.nada.kth.se/$\sim$viggo/wwwcompendium/node85.html}.
-
-\vspace{-2ex}
-An instance of the minimum cut problem is given an undirected graph $H=(V_{H},E_{H})$ and a positive integer $m$,
-to find a set $S \subseteq E_{H}$ of edges whose removal leaves two disjoint connected components, with $|S|\leq m$.
-
-\vspace{-2ex}
-Given an instance of the minimum cut problem,
-we construct an instance of $h$-fragmentation problem.
-It can be achieved by taking $H$ as $P$, and setting $h=2$, $r_1=h$ and $r_2 = m/|P|$.
-Indeed, the minimum cut problem is a special case of the of $h$-fragmentation problem.
-}%%EAT
-
-\noindent
-{\textbf{6. Proof of Proposition~\ref{prop-canaffballs}}}
-
-The proposition is correct as when $\Delta P$ comes, the perfect subgraphs must reside in the balls that match all pattern fragments of $P\oplus \Delta P$.
-\identifyaffball identifies \affballsx who already match all fragments of $P$;
-Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
-there must exist an edge/node deletion in $\Delta P$ on $P_{fi}$,
-such that the ball may match the updated fragment $P_{fi}\oplus \Delta P$.
-Thus, \identifyaffball filters out the balls that cannot not match at least one fragment of $P$, and there are no deletion updates on the fragment.
-
-\noindent
-{\textbf{7. Proof of Proposition~\ref{prop-affected-datainc}}}
-	
-The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
-\identifyaffball filters out the balls that cannot match all pattern fragments,	and there are no data updates on the ball.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}[tb!]
@@ -527,6 +456,128 @@ The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\noindent
+{\textbf{5. Proof of Proposition~\ref{prop-fragmentation}}}
+
+The decision version of the {\em pattern fragmentation} problem, denoted by $\kw{dOFGP}(P, h, r_1, r_2)$,
+is to decide whether there exists a fragmentation \{${P}_{f1}$, \ldots, $P_{fh}$, $C$\} such that,
+(a) $\max_i |P_{fi}| \leq r_1\frac{|P|}{h}$ and (b) $|C|\leq r_2|P|$.
+
+\vspace{-1.5ex}
+\etitle{Upper bound.} We show the \NP upper bound by providing an \NP algorithm to determine whether there exists an $h$-fragmentation of $P$.\,Given $P$, the algorithm works as follows.
+\looseness=-1
+
+\vspace{-1.8ex}
+\sstab{(1)} Guess an $h$-fragmentation ${\cal P}_h$ of $P$.
+
+\vspace{-1.8ex}
+\sstab{(2)} Check whether it satisfies restrictions of $r_1$ and $r_2$ (conditions (a) and (b) in the definition of $\kw{dOFGP}$).
+If so, return yes, otherwise go to the first step and guess another instance.
+
+\vspace{-1.5ex}
+The algorithm is in \NP since step~(2) can be checked in \PTIME (liner time, indeed).
+
+\vspace{-1.5ex}
+\etitle{Lower bound}.
+We next show that $\kw{dOFGP}(P, h, r_1, r_2)$ is \NP-hard by
+reduction from the 3\SAT\ problem. An instance of 3\SAT\ is a formula
+$\psi = C_{1}\land \ldots \land C_{m}$, where each $C_{i}$ is a
+disjunction of three literals, \ie $C_{i} = \ell_{1}^{i}\lor
+\ell^{i}_{2}\lor \ell^{i}_{3} (i\in [1, m])$, in which
+$\ell_{j}^{i}(j\in [1, 3])$ is either a variable $x_{k}$ or the
+negation of variable $\bar x_{k} (k\in [1, n])$ from a universal set $U =
+\{x_{1}, \ldots, x_{n}\}$ of variables. Given a $\psi$, 3\SAT\ is to decide
+whether $\psi$ is satisfiable, \ie there exists a truth assignment $\mu$ to
+variables in $U$ such that $\psi$ is \True\ under $\mu$. It is known that 3\SAT\
+is \NP-complete~\cite{Papa1994}.
+
+\vspace{-1.5ex}
+Given $\psi$ of 3\SAT, we next construct an instance of $\kw{dOFGP}$, \ie a
+pattern graph $P$, the number of fragments $h$, and two ratios $r_{1}$ and
+$r_{2}$, such that $\psi$ is satisfiable if and only if $\kw{dOFGP}(P, h,
+r_{1}, r_{2})$ is \True.
+
+\vspace{-1.5ex}
+\eetitle{(1) Pattern graph $P$}. Pattern $P$ is constructed in two steps:
+(1.a) construct a graph $P'$; and (1.b) expand $P'$ to $P$. We below
+describe the two steps. 
+
+\vspace{-1.5ex}
+\sstab
+(1.a) $P'$ is constructed as follows. 
+First, for each $C_{i} (i\in [1, m])$, construct a set $V_{i}$ of
+three nodes $u_{1}^{i}$, $u_{2}^{i}$, and $u_{3}^{i}$, yielding $3m$ nodes in
+$V_{1}$, \ldots, $V_{m}$. Intuitively, node $u^{i}_{j}(i\in [1, m], j\in
+[1, 3])$ is to encode literal $\ell_{j}^{i}$. 
+Then connect nodes as follows: for each $i, j \in [1, m]$ and $i\neq j$, connect
+$u^{i}_{s}$ in $V_{i}$ and $u^{j}_{t}$ in $V_{j}$ ($s, t\in [1, 3]$) if they do not encode
+complement literals, \ie $\ell^{j}_{t} \neq \bar \ell^{i}_{s}$. In other words,
+$u^{j}_{t}$ and $u^{i}_{s}$ are not connected only when $\ell^{i}_{s} = x$ and
+$\ell^{j}_{t} = \bar x$ or $\ell^{i}_{s} = \bar x$ and
+$\ell^{j}_{t} = x$  for some $x \in U$.
+
+%One can verify the following property.
+
+%Property (I): $\psi$ is satisfiable if and only if $P'$ has an $m$-clique.
+
+\vspace{-1.5ex}
+\sstab
+(1.b) We next expand $P'$ to $P$ as follows. For each node set $V_{i}$
+constructed in $P'$, connect it with an $(m-2)$-clique $K_{i}$, such that 
+each node $u^{i}_{j}(j\in [1,3])$ in $V_{i}$ is connected to every node in
+the clique $K_{i}$.
+
+%Hence $P$ has $(m-2) * m + 3m = m^{2}+m$ nodes and $(C_{m-2}^{2}+3*(m-2))*m + $
+%One can verify the following property.
+
+%Property (II): $P$ has 
+
+\vspace{-1.5ex}
+\eetitle{(2) $h$}.  Let $h = m + 1$. 
+
+\vspace{-2ex}
+\eetitle{(3) $r_{1}$}. Let $r_{1} = (m+1)*(C_{m}^{2}+m)/|P|$, \ie
+$r_{1}*\dfrac{|P|}{h} = C_{m}^{2}+m$ is the size of a $m$-clique.
+
+\vspace{-1.5ex}
+\eetitle{(4) $r_{2}$}. Let $r_{2} = \dfrac{|E_{P}| - (C_{m}^{2} + m) -
+	m*(C_{m}^{2} + m -1)}{|P|}$.
+
+\vspace{-1.0ex}
+One can verify that $\psi$ is satisfiable if and only if $P$ has an $h$-fragmentation $P_{1}$,
+\ldots, $P_{h}$ such that $max_{i}|P_{i}|\leq r_{1}*\frac{|P|}{h} (i\in [1, h])$
+and $|C|\leq r_{2}*|P|$.
+This indeed is verified by using the following properties of
+the above construction:
+
+\vspace{-2.5ex}
+\bi
+\item[$\circ$] $\psi$ is satisfiable if and only if $P'$ has an $m$-clique; 
+\item[$\circ$] $P$ has a unique $m+1$ fragmentation satisfying that
+(i) an $m$-clique is the largest fragment and
+(ii) cut is no larger than $|E_{P}| - (C_{m}^{2} + m) -
+m*(C_{m}^{2} + m -1)$: the $m$-clique fragment must come from $P'$, which
+leaves the $m$ extended $(m-2)$-clique as the remaining $m$ fragments, each
+of size equal to that of an $m$-clique minus 1.
+\ei
+
+
+\noindent
+{\textbf{6. Proof of Proposition~\ref{prop-canaffballs}}}
+
+The proposition is correct as when $\Delta P$ comes, the perfect subgraphs must reside in the balls that match all pattern fragments of $P\oplus \Delta P$.
+\identifyaffball identifies \affballsx who already match all fragments of $P$;
+Or else, if there exists a fragment $P_{fi}$ of $P$ that an \affballx cannot match,
+there must exist an edge/node deletion in $\Delta P$ on $P_{fi}$,
+such that the ball may match the updated fragment $P_{fi}\oplus \Delta P$.
+Thus, \identifyaffball filters out the balls that cannot not match at least one fragment of $P$, and there are no deletion updates on the fragment.
+
+\noindent
+{\textbf{7. Proof of Proposition~\ref{prop-affected-datainc}}}
+	
+The proof is similar to the one of Proposition~\ref{prop-canaffballs}.
+\identifyaffball filters out the balls that cannot match all pattern fragments,	and there are no data updates on the ball.
+
 
 \vspace{1ex}
 \noindent
@@ -570,37 +621,6 @@ One can verify that \identifyaffball is in $O(|\affballsx| + |\Delta G|)$,
 \incmatch for all fragments and all \affballsx is in $O(|P||\affballsx|)$ time, and \comb is in $O(\bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|$ + $r|V_{P}||E_{\widehat{G\oplus\Delta G}}|)$ time.
 Therefore, algorithm \incd is in
 $O(\bigcup_{\widehat{G\oplus\Delta G}\in \affballsx} \bigcup_{i\in[1,h]}r|M(P_{fi}, \widehat{G\oplus\Delta G})|+r|P||\affballsx| + |\Delta G|)$ time \wrt $\Delta G$.
-
-\vspace{1ex}
-\noindent
-{\large \textbf{Appendix D: Extra Experiments}}
-\label{sec-apd-exp}
-
-\vspace{-0.5ex}
-The experimental results on \youtube are reported here.
-
-\vspace{-1.8ex}
-\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis and \denalk on \youtube \wrt four quality measures.
-The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
-We find \optgrouprec strikes a balance at capturing the practical requirements.
-
-\vspace{-1.8ex}
-\stitle{Exp-2: Efficiency of \inc for single set of updates}. Varying the amount of updates in one update set from 4.5\% to 49.5\% for pattern updates, 2.5\% to 27.5\% (resp. 3\% to 33\%) for data insertions and hybrid data updates (resp. data deletions), and (4.5\%, 2.5\%) to (31.5\%, 17.5\%) for simultaneous pattern and data updates, the results are reported in Fig.~\ref{fig-exp-patinc-del-youtube} to~\ref{fig-exp-hyb-patdata-youtube}.
-We find that \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\Delta P$, $\Delta G)$ are no more than 36\%, 22.5\% and (27\%, 15\%), respectively.
-%for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
-
-\vspace{-1.8ex}
-\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of hybrid updates,
-varying the amount of updates in each set from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
-and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
-We tested the average time took by \inc to process all these sets one by one.
-The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
-We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous pattern and data updates, respectively.
-
-\vspace{-1.8ex}
-\stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
-it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which needs 114MB space to store itself,
-\ie 50.8\% compared with the original dataset.
 
 \begin{figure*}[t!]
 	%\begin{widepage}
@@ -655,3 +675,34 @@ it takes 58MB extra space to store all auxiliary structures utilized by \inc on 
 	%\end{widepage}
 	\vspace{-3.0ex}
 \end{figure*}
+
+
+\noindent
+{\large \textbf{Appendix D: Extra Experiments}}
+\label{sec-apd-exp}
+
+\vspace{-0.5ex}
+The experimental results on \youtube are reported here.
+
+\vspace{-1.8ex}
+\stitle{Exp-1: Performance of \optgrouprec}. We firstly evaluated the performance of \optgrouprec vs. \mindia, \minsumdis and \denalk on \youtube \wrt four quality measures.
+The results are reported in Fig.~\ref{fig-exp-semantic-youtube-diameter} to~\ref{fig-exp-semantic-youtube-link-varyk}.
+We find \optgrouprec strikes a balance at capturing the practical requirements.
+
+\vspace{-1.8ex}
+\stitle{Exp-2: Efficiency of \inc for single set of updates}. Varying the amount of updates in one update set from 4.5\% to 49.5\% for pattern updates, 2.5\% to 27.5\% (resp. 3\% to 33\%) for data insertions and hybrid data updates (resp. data deletions), and (4.5\%, 2.5\%) to (31.5\%, 17.5\%) for simultaneous pattern and data updates, the results are reported in Fig.~\ref{fig-exp-patinc-del-youtube} to~\ref{fig-exp-hyb-patdata-youtube}.
+We find that \inc outperforms \optgrouprec when $\Delta P$, $\Delta G$ and $(\Delta P$, $\Delta G)$ are no more than 36\%, 22.5\% and (27\%, 15\%), respectively.
+%for hybrid pattern, hybrid data, and simultaneous pattern and data updates.
+
+\vspace{-1.8ex}
+\stitle{Exp-3: Efficiency of \inc for continuous sets of updates}. We generated 5 sets of hybrid updates,
+varying the amount of updates in each set from 4.5\% to 27\% for pattern updates, 2.5\% to 15\% for data updates,
+and (4.5\%, 2.5\%) to (22.5\%, 12.5\%) for simultaneous pattern and data updates.
+We tested the average time took by \inc to process all these sets one by one.
+The results are reported in Fig.~\ref{fig-exp-patinc-multi-youtube} to~\ref{fig-exp-hyb-datapat-multi-youtube}.
+We find \inc outperforms \optgrouprec when changes are no more than 27\%, 10\% and (13.5\%, 7.5\%) for continuous pattern, data and simultaneous pattern and data updates, respectively.
+
+\vspace{-1.8ex}
+\stitle{Exp-4: Physical storage of auxiliary structures}. As shown in Fig.~\ref{fig-exp-youtube-extraspace},
+it takes 58MB extra space to store all auxiliary structures utilized by \inc on \youtube, which needs 114MB space to store itself,
+\ie 50.8\% compared with the original dataset.
