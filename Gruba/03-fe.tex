@@ -135,7 +135,7 @@ Thus, by looking into the similarity of $b$ against all topics in lexicon, the e
 
 If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textit{Step 3} and \textit{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$.
 
-\textit{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF \refe{} to calculate the weight distribution of words in blog $b$:
+\textit{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF (term-frequency and inverse document-frequency) to calculate the weight distribution of words in blog $b$:
 \begin{equation}
 \label{eq:tf}
 W_f = \{(w_i, p_i)\}
