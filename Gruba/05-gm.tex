@@ -26,7 +26,7 @@ E \in
 And the data of item $E$ could be further divided into three parts.
 \begin{itemize}
 	\item \textit{User Info}: contains a list of aforementioned metrics \{\#$R_s$, \#$E_s$, $R_{ee}$, \#$B_s$, \#$W_r$\}.
-	\item \textit{Blog Info}: consists of a metric $C_h$, referring to the correlation between blog contents and recent events returned by Ring \refe{}. $C_h$ is in the form of a normalized vector with each dimension represents one event (similar as $P_f$ in formula \ref{eq:inte}). Specifically, each event could be viewed as a topic $t$, over which the correlation of a blog $b$ could be obtained by formula \ref{eq:simbt}.
+	\item \textit{Blog Info}: consists of a metric $C_h$, referring to the correlation between blog contents and recent events returned by Ring \cite{IEEEexample:ring}. $C_h$ is in the form of a normalized vector with each dimension represents one event (similar as $P_f$ in formula \ref{eq:inte}). Specifically, each event could be viewed as a topic $t$, over which the correlation of a blog $b$ could be obtained by formula \ref{eq:simbt}.
 	\item \textit{Interaction Info}: includes three correlation metrics. They are of blog $b$ versus the user $u$'s \textit{Interest Feature} $P_f(u)$ (a.k.a. long-term/stable interest in this work), $b$ versus $u$'s short-term interest $P_s(u)$ that is mined from $u$'s recent blogs (e.g., within 30 days) in the same manner of $P_f(u)$, and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_t$.
 \end{itemize}
 As a result, the obtained group model could learn what does a positive/negative item look like over each metric mentioned above.
