@@ -153,8 +153,8 @@ Ditto for $|D_i|$ and $|D|$, except that the scope is the overall dataset, rathe
 Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight} (see Definition \ref{eq:tf}).
 Go to \textit{Step 5}.
 
-\textit{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA \refe{} to result the word weight distribution of blog $b$.
-Unlike TF-IDF \refe{}, Twitter-LDA \refe{} first trains the overall blogs, allocating each blog with a \textit{tag}.
+\textit{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA \ref{IEEEexample:zhao2011comparing} to result the word weight distribution of blog $b$.
+Unlike TF-IDF, Twitter-LDA first trains the overall blogs, allocating each blog with a \textit{tag}.
 %
 The structure of \textit{tag} is as follows:
 \begin{equation}
@@ -166,7 +166,7 @@ where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probabili
 Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
 Go to \textit{Step 6}.
 
-\textit{Step 5:} TF-IDF \refe{} based similarity is calculated.
+\textit{Step 5:} TF-IDF based similarity is calculated.
 For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
 \begin{equation}
 \label{eq:sim-tf1}
@@ -180,7 +180,7 @@ sim(w_i, t) = \sum_{\substack{j}} sim(w_i, c_j)
 Go to \textit{Step 7}.
 
 
-\textit{Step 6:} Accordingly, Twitter-LDA \refe{} based similarity is available.
+\textit{Step 6:} Accordingly, Twitter-LDA based similarity is available.
 Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined as:
 \begin{equation}
 \label{eq:sim-tw1}
@@ -199,7 +199,7 @@ Go to \textit{Step 7}.
 \label{eq:simbt}
 sim(b, t) = \alpha * sim(W_f, t) + (1 - \alpha) * sim(W_t, t)
 \end{equation}
-where the $\alpha$ is a parameter by which \sys{} could set flexible priorities between TF-IDF \refe{} and Twitter-LDA \refe{}.
+where the $\alpha$ is a parameter by which \sys{} could set flexible priorities between TF-IDF and Twitter-LDA.
 Go to \textit{Step 8}.
 
 \textit{Step 8:} Repeat the above steps (Step 1 to Step 7) for the blog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$.
