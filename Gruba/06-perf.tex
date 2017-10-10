@@ -99,3 +99,39 @@ As shown in Fig.\ \ref{fig:11}, the default setting wins in most cases.
   \caption{\sys{} Performance of Using Various Data Items for Modeling.}
   \label{fig:11}
 \end{figure*}
+
+\stitle{Case Study for Feature Extraction}
+In this section, we show the results of our demo system for user features extraction.
+Considering the huge amount of users, we carefully selected one typical user for analysis.
+Here we chose Mary(a famous drama and movie actor in China) as a representative.
+The features extraction result for Mary is displayed in Fig.\ \ref{fig:userFeatures}.
+Then we can see the basic information of Mary from the result. Her nickname is Actor Mary(演员马丽) and she is from Beijing(北京). 
+The number of followers of Mary is much more than the number of her friends.
+The Sina Microblog tag she made for herself is "actor"(演员).
+As the result of the long-term interest extraction shows, she is interested in stage performances(舞台喝彩), drama performances(话剧表演),films(电影光影) and so on, which is consistent with her actual situation.
+What's more, the probability distribution of tweeting and retweeting behavior on different time periods in one day indicates that her activities at night is much more than daytime.
+The time interval distribution of her behaviors is also shown in Fig.\ \ref{fig:userFeatures}. The time interval is mostly distributed within 48 hours, which indicates that she is a active user.
+We developed a function for querying user's short-term interest. 
+Here we queried Mary's short-term interest between 09/01/2016 and 09/30/2016, and got it as shown in Fig.\ \ref{fig:userFeatures}. We analyzed her microblogs in the this period, she has been working tirelessly to promote the drama "Earl of Oolong Mountain"(基督山伯爵). So the results are in line with expectations.
+
+\begin{figure}
+  \centering
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/1.eps}}
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/2.eps}}
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/3.eps}}
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/4.eps}}
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/5.eps}}
+  \subfigure{
+      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/6.eps}}
+  \subfigure{
+  \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/7.eps}}
+  \subfigure{
+  \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/8.eps}}
+  \caption{Visualization for User Features.}
+  \label{fig:userFeatures} %% label for entire figure
+\end{figure}
