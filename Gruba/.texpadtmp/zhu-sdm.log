@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.6.21)  10 OCT 2017 13:49
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.6.21)  10 OCT 2017 17:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -396,28 +396,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 139--139
 \OT1/cmr/m/n/8 sponse Tech-ni-cal Team/Coordination Cen-ter of China.
  []
 
-(./00-abstr.tex) (./01-intro.tex
-Overfull \vbox (1.1826pt too high) has occurred while \output is active []
-
-) (./02-overview.tex Excluding 'comment' comment. [1
+(./00-abstr.tex) (./01-intro.tex) (./02-overview.tex [1
 
 
-]
+] Excluding 'comment' comment.
 File: figures/architecture.pdf Graphic file (type QTm)
- <use  "figures/architecture.pdf" > Excluding 'comment' comment. Excluding 'comment' comment.) (./03-fe.tex
+ <use  "figures/architecture.pdf" > Excluding 'comment' comment. Excluding 'comment' comment.
+Underfull \hbox (badness 1097) in paragraph at lines 81--83
+\OT1/cmr/m/n/10 neg-a-tive sam-ples (i.e., blogs that were or weren't
+ []
+
+) (./03-fe.tex
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
- [2] [3]
-
-LaTeX Warning: Reference `IEEEexample:zhao2011comparing' on page 4 undefined on input line 156.
-
-) (./04-uc.tex
+ [2] [3] Excluding 'comment' comment. Excluding 'comment' comment.) (./04-uc.tex
 Underfull \hbox (badness 2088) in paragraph at lines 25--26
 []\OT1/cmr/m/n/9 In-put: \OT1/cmr/m/it/9 Fea-ture Data \OT1/cmr/m/n/9 of users $\OMS/cmsy/m/n/9 f\OML/cmm/m/it/9 F\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 u\OT1/cmr/m/n/9 )\OMS/cmsy/m/n/9 g$\OT1/cmr/m/n/9 , the min-i-
  []
 
 [4]
-Overfull \hbox (2.04239pt too wide) detected at line 117
+Overfull \hbox (2.04239pt too wide) detected at line 118
 \OML/cmm/m/it/10 G[] \OT1/cmr/m/n/10 = []
  []
 
@@ -425,7 +423,10 @@ Overfull \hbox (2.04239pt too wide) detected at line 117
 File: figures/Interests.eps Graphic file (type eps)
  <figures/Interests.eps>
 File: figures/clustering.eps Graphic file (type eps)
- <figures/clustering.eps> [6]
+ <figures/clustering.eps>
+Underfull \vbox (badness 1810) has occurred while \output is active []
+
+ [6]
 File: figures/precision.eps Graphic file (type eps)
  <figures/precision.eps>
 File: figures/recall.eps Graphic file (type eps)
@@ -452,16 +453,12 @@ Overfull \vbox (0.52779pt too high) has occurred while \output is active []
 
 Overfull \vbox (2.47223pt too high) has occurred while \output is active []
 
- [10] (/Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+ [10] (/Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux) ) 
 Here is how much of TeX's memory you used:
- 4755 strings out of 493591
- 65845 string characters out of 6143546
- 137620 words of memory out of 5000000
- 8038 multiletter control sequences out of 15000+600000
+ 4752 strings out of 493591
+ 65790 string characters out of 6143546
+ 137562 words of memory out of 5000000
+ 8035 multiletter control sequences out of 15000+600000
  15611 words of font info for 59 fonts, out of 8000000 for 9000
  1347 hyphenation exceptions out of 8191
  36i,13n,45p,2061b,342s stack positions out of 5000i,500n,10000p,200000b,80000s

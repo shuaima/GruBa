@@ -32,13 +32,13 @@ Each follower/followee per se refers to a user.
 \end{definition}
 
 The mapping between blog $B$ and user $U$ is a bilateral operation, i.e., $U = O(B)$ and $B \in B_s(U)$, through ID(s) of user and blog respectively.
-
+%
 Informally, providing a set of users $\{U\}$ and the associated blogs $\{B\}$, as well as a blog query $b$ and a follower of $O(b)$ written as $f$, i.e., $f \in R_s(O(b))$, \sys{} shall build a \retg{} model for $(\{U\},\ \{B\})$, upon which Y/N is returned regarding whether $f$ shall \ret{} $b$.
 
 
 \subsection{\sys{} Framework}
 \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media.
-Figure \ref{fig:framework} shows the architectural components of \sys{}, comprising three subsystems: Data Storage, Processing Runtime and Profile Demonstrator.
+Figure \ref{fig:framework} shows the architectural components of \sys{}, mainly comprising three subsystems: Data Storage, the central Processing Runtime and Profile Demonstrator.
 
 \begin{figure}[!htb]
 \centering
@@ -68,17 +68,20 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}, compris
 \end{comment}
 
 
-\textbf{Data Storage.} The underlying Data Storage subsystem stores data to be processed by \sys{}, i.e., data of blogs and users, as shown in \textit{Definition} \textit{\ref{def:blog}} and \textit{\ref{def:user}}.
+\stitle{Data Storage.} The underlying Data Storage subsystem stores data to be processed by \sys{}, i.e., data of blogs and users, as shown in \textit{Definition} \textit{\ref{def:blog}} and \textit{\ref{def:user}}.
 
-\textbf{Processing Runtime.}
+\stitle{Processing Runtime.}
 In the heart of \sys{} lies the Processing Runtime subsystem, which consists of three major components as follows.
-\begin{enumerate}
-	\item Feature Extractor: By coalescing the blog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Info} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored data by Feature Extractor and serve as the input of User Clusterer.
-	\item User Clusterer: Providing the user-based features, User Clusterer takes charge of the clustering task such that each user falls into a proper group.
-	\item Group Modeler: For each group obtained by User Clusterer, Group Modeler employs both positive and negative samples to train a model, over which the testing of users' \retg{} behavior is performed.
-\end{enumerate}
+%\begin{enumerate}
+
+	\stab(1)  Feature Extractor: By coalescing the blog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Info} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored data by Feature Extractor and serve as the input of User Clusterer.
 	
-\textbf{Profile Demonstrator.} At the top layer of \sys{}, it is the Profile Demonstrator subsystem for visualization.
+	\stab(2)  User Clusterer: Providing the user-based features, User Clusterer takes charge of the clustering task such that each user falls into a proper group.
+	
+	\stab(3)  Group Modeler: For each group obtained by User Clusterer, Group Modeler employs both positive and negative samples (i.e., blogs that were or weren't \retd{}) to train a model, over which the testing of users' \retg{} behavior is performed.
+%\end{enumerate}
+	
+\stitle{Profile Demonstrator.} At the top layer of \sys{}, it is the Profile Demonstrator subsystem for visualization.
 For the time being, Profile Demonstrator presents \tbc{}.
 
 

@@ -1,10 +1,12 @@
 \section{Performance Evaluation}
 \label{sec:perf}
 
+In this section, we shall first detail the experimental setting of machine info, dataset and parameters; and then present the result and analysis, showing the benefit of \sys{} against state of the art approaches.
+
 \subsection{Experimental Setting}
 
 Experiments were run on a machine with two Intel Xeon E5C2630 2.4GHz CPUs and 64 GB of Memory, running 64 bit Windows 7 professional system.
-
+%
 We have employed a real-world dataset Sina that consists of 24 million blogs that are associated with 43.5K users.
 
 With respect to the parameters of \sys{}, we use the default values as mentioned in previous sections.
@@ -15,7 +17,7 @@ in Behavior Modeler, a user's recent 30 days blogs are used for short-term inter
 \subsection{Result and Analysis}
 Next, we shall report the performance of \sys{} over each component.
 
-\textbf{Feature Extractor}
+\stitle{Feature Extractor}
 %
 Fig.\ \ref{fig:fe} shows the testing results of using various $\alpha$ values.
 Apparently, \sys{} results the optimal results when $\alpha$ is 0.7, upon which the interest feature extracting is performed for the overall dataset with 43.5K users and 24 million blogs.
@@ -28,7 +30,7 @@ Apparently, \sys{} results the optimal results when $\alpha$ is 0.7, upon which 
 \end{figure}
 
 
-\textbf{User Clusterer}
+\stitle{User Clusterer}
 %
 Fig.\ \ref{fig:uc} depicts the Silhouette Coefficient Values of multiple clustering solutions, with the cluster number from 2 to 10.
 Specially, we used different testing datasets, with \textit{Data} containing the overall 43.5K users and \textit{Data1,...,5} contains 10K randomly selected users each.
@@ -42,17 +44,19 @@ Except for \textit{Data1}, solutions with 4 clusters sweep.
 \end{figure}
 
 
-\textbf{Behavior Modeler}
+\stitle{Behavior Modeler}
 %
 Fig.\ \ref{fig:10} shows the performance of \sys{} against state of the art approach LRC-BQ \cite{IEEEexample:conf/ijcai/ZhangLTCL13}.
 We compare the metrics of precision, recall, as well as $F_1$ score.
 LRC-BQ does not deal with user grouping.
 Hence, we not only study the modeling effect per group (i.e., ``Group-One/Two/Three/Four'' with user clustering), but also examine \sys{} versus LRC-BQ in the case that all users are in mono group (i.e., ``All-Users'').
 The results are interesting in that:
-\begin{itemize}
-	\item With user clustering, \sys{} performs better than LRC-BQ in most cases.
-	\item For \sys{}, having user clustering is better than the alternative mono group. Ditto for LRC-BQ.
-\end{itemize}
+%\begin{itemize}
+
+	\stab(1) With user clustering, \sys{} performs better than LRC-BQ in most cases.
+	
+	\stab(2) For \sys{}, having user clustering is better than the alternative mono group. Ditto for LRC-BQ.
+%\end{itemize}
 
 
 

@@ -117,9 +117,9 @@ Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be gen
 
 For instance, the following steps depict the ``mining'' process of the interest feature $P_f$ for a user $u$.
 
-\textit{Step 1:} Each blog of $u$ is decomposed into a word set, i.e., $b = \{w\}$ where $b \in B_s(u)$.
+\stitle{Step 1:} Each blog of $u$ is decomposed into a word set, i.e., $b = \{w\}$ where $b \in B_s(u)$.
 
-\textit{Step 2:} Explicit interests are explored. Specifically, every word $w$ is sent to match each cell word $c$ of lexicon topics.
+\stitle{Step 2:} Explicit interests are explored. Specifically, every word $w$ is sent to match each cell word $c$ of lexicon topics.
 If $w$ and $c$ are identical, $sim(w, c) = 1$.
 Otherwise, $sim(w, c) = 0$.
 As to the similarity of $b$ against a lexicon topic $t$, it is:
@@ -133,9 +133,9 @@ If $sim(b, t)$ satisfies a certain threshold (3 by default) , topic $t$ is label
 the user $u$ is then discovered having an explicit interest (topic) $t$.
 Thus, by looking into the similarity of $b$ against all topics in lexicon, the explicit interests of $u$ is returned, in the form of interest feature (see Definition \ref{def:inte}).
 
-If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textit{Step 3} and \textit{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$.
+If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textbf{Step 3} and \textbf{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$.
 
-\textit{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF (term-frequency and inverse document-frequency) to calculate the weight distribution of words in blog $b$:
+\stitle{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF (term-frequency and inverse document-frequency) to calculate the weight distribution of words in blog $b$:
 \begin{equation}
 \label{eq:tf}
 W_f = \{(w_i, p_i)\}
@@ -151,9 +151,11 @@ in which we use the operator $|\ |$ to measure the cardinality, such that $|b_i|
 Ditto for $|D_i|$ and $|D|$, except that the scope is the overall dataset, rather than a single blog $b$.
 
 Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight} (see Definition \ref{eq:tf}).
-Go to \textit{Step 5}.
+Go to \textbf{Step 5}.
 
-\textit{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA \ref{IEEEexample:zhao2011comparing} to result the word weight distribution of blog $b$.
+\stitle{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA  %\ref{IEEEexample:zhao2011comparing} 
+\refe{}
+to result the word weight distribution of blog $b$.
 Unlike TF-IDF, Twitter-LDA first trains the overall blogs, allocating each blog with a \textit{tag}.
 %
 The structure of \textit{tag} is as follows:
@@ -161,48 +163,58 @@ The structure of \textit{tag} is as follows:
 \label{eq:tw-tag}
 W_t = \{(w'_i, p'_i)\}
 \end{equation}
-where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in blogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$ ($|W_t|\ =\ 30$ by default).
+where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in blogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$ ($|W_t|\ =\ 30$ in this work by default).
 %
 Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
-Go to \textit{Step 6}.
+Go to \textbf{Step 6}.
 
-\textit{Step 5:} TF-IDF based similarity is calculated.
+\stitle{Step 5:} TF-IDF based similarity is calculated.
 For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
 \begin{equation}
 \label{eq:sim-tf1}
 sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t)
 \end{equation}
-where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and:
+where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector \refe{}.
+Go to \textbf{Step 7}.
+
+\begin{comment}
+:
 \begin{equation}
 \label{eq:sim-tf2}
 sim(w_i, t) = \sum_{\substack{j}} sim(w_i, c_j)
 \end{equation}
-Go to \textit{Step 7}.
+\end{comment}
 
 
-\textit{Step 6:} Accordingly, Twitter-LDA based similarity is available.
+
+\stitle{Step 6:} Accordingly, Twitter-LDA based similarity is available.
 Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined as:
 \begin{equation}
 \label{eq:sim-tw1}
 sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
 \end{equation}
-where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, and:
+where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector \refe{}.
+Go to \textbf{Step 7}.
+
+\begin{comment}
+:
 \begin{equation}
 \label{eq:sim-tw2}
 sim(w'_i, t) = \sum_{\substack{j}} sim(w'_i, c_j)
 \end{equation}
-Go to \textit{Step 7}.
+\end{comment}
 
 
-\textit{Step 7:} Hence, the similarity of a blog $b$ against a lexicon topic $t$ is given by:
+
+\stitle{Step 7:} Hence, the similarity of a blog $b$ against a lexicon topic $t$ is given by:
 \begin{equation}
 \label{eq:simbt}
 sim(b, t) = \alpha * sim(W_f, t) + (1 - \alpha) * sim(W_t, t)
 \end{equation}
 where the $\alpha$ is a parameter by which \sys{} could set flexible priorities between TF-IDF and Twitter-LDA.
-Go to \textit{Step 8}.
+Go to \textbf{Step 8}.
 
-\textit{Step 8:} Repeat the above steps (Step 1 to Step 7) for the blog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$.
+\stitle{Step 8:} Repeat the above steps (Step 1 to Step 7) for the blog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$.
 Such computation further extends to all the blogs owned by user $u$, such that:
 $\forall b_m \in B_s(u)$, $\forall t_k \in L$, there exists a similarity of $sim(b_m, t_k)$.
 Hence, the overall similarity of user $u$ over lexicon topics $\{t\}$ (i.e., $L$), written as $S(u,\ L)$, could be denoted by a vector:
