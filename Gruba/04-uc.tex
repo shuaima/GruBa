@@ -10,10 +10,10 @@
 Providing the \textit{Feature Data}, User Clusterer takes the charge of grouping each user concerned into a proper cluster.
 Algorithm \ref{alg:uc} illustrates such overall procedure.
 
-The idea is to enumerate a number of clustering trials (line \ref{enu}) and select the optimal solution with the best coefficient value ($v$ in line \ref{opti}).
+The idea is to enumerate a number of clustering trials (line \ref{enu}) and select the optimal solution with the best Silhouette coefficient value ($v$ in line \ref{opti}).
 In principle, each trial (referred by $t$ in line \ref{enu}) first performs a clustering task (line \ref{task}; to be detailed in section \ref{sec:cluster}), resulting a cluster (by $l(u)$) for each user $u$ (line \ref{l});
-then, each user obtains a coefficient value $v(u)$ stemmed from the in/out-cluster distances (lines \ref{v-b}--\ref{v-e}; shall be illustrated in section \ref{sec:compu});
-finally, the averaged coefficient value of all users serves as the coefficient value of the current trial, written as $v(t)$ (line \ref{avg}), by which the said selection process is conducted (line \ref{opti}).
+then, each user obtains a Silhouette coefficient value $v(u)$ stemmed from the in/out-cluster distances (lines \ref{v-b}--\ref{v-e}; shall be illustrated in section \ref{sec:compu});
+finally, the averaged Silhouette coefficient value of all users serves as the Silhouette coefficient value of the current trial, written as $v(t)$ (line \ref{avg}), by which the said selection process is conducted (line \ref{opti}).
 
 
 \begin{algorithm}[t]
@@ -31,7 +31,7 @@ finally, the averaged coefficient value of all users serves as the coefficient v
 	\ForAll {$u \in \{u\}$}
 		\State in-cluster distance $d_i(u)$ \label{v-b}
 		\State out-cluster distance $d_o(u)$
-		\State coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$ \label{v-e}
+		\State Silhouette coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$ \label{v-e}
 	\EndFor
 	\State $v(t)\ =\ Avg\{v(u)\}$ \label{avg}
 \EndFor
@@ -43,7 +43,7 @@ finally, the averaged coefficient value of all users serves as the coefficient v
 \end{small}
 \end{algorithm}
 
-Next, we shall now first detail how \sys{} performs the clustering task and subsequently illustrate the computation regarding the metric of coefficient value.
+Next, we shall now first detail how \sys{} performs the clustering task and subsequently illustrate the computation regarding the metric of Silhouette coefficient value.
 
 \subsection{Clustering in \sys{}}
 \label{sec:cluster}
@@ -94,7 +94,7 @@ Then, the distance between such two vectors $Y^{\ast}\ = (Y^{\ast}_0, Y^{\ast}_1
 %
 \begin{equation}
 \label{eq:vd}
-D_v(Y^{\ast}, Z^{\ast}) = \sum_{\substack{e}} Y^{\ast}_e \cdot Z^{\ast}_e
+D_v(Y^{\ast}, Z^{\ast}) = 1- \sum_{\substack{e}} Y^{\ast}_e \cdot Z^{\ast}_e
 \end{equation}
 where $\cdot$ refers to the dot product operation between two normalized vectors $Y^{\ast}_e$ and $Z^{\ast}_e$.
 
@@ -117,10 +117,10 @@ G_e =
 \end{equation}
 
 
-\subsection{Coefficient Metric Computation}
+\subsection{Silhouette Coefficient Metric Computation}
 \label{sec:compu}
 
-In \sys{}, coefficient value serves as the fundamental criteria for the optimal clustering selection.
+In \sys{}, Silhouette coefficient value serves as the fundamental criteria for the optimal clustering selection.
 Providing a clustering result, each user is associated with a cluster.
 For a given user $u$ of cluster $l$, we employ the vector $Y$ to denote the \textit{Feature Data} as in formula \ref{eq:fu-flat}.
 
@@ -146,7 +146,7 @@ where $d^{\ast}$ is given by:
 
 \begin{definition}
 \label{def:coef}
-The coefficient value $v(u)$ is thus concluded:
+The Silhouette coefficient value $v(u)$ is thus concluded:
 \begin{equation}
 \label{eq:coef}
 v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}	
@@ -154,8 +154,8 @@ v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}
 \end{definition}
 
 Intuitively, a good clustering solution should result bigger $d_o$ and smaller $d_i$, such that samples with obvious differences go to various clusters and vice versa.
-When $d_o$ is far more than $d_i$, coefficient value approaches to 1.
-Hence, the larger coefficient value is, the better clustering performs, by which the optimal solution is selected.
+When $d_o$ is far more than $d_i$, Silhouette coefficient value approaches to 1.
+Hence, the larger Silhouette coefficient value is, the better clustering performs, by which the optimal solution is selected.
 
 
 

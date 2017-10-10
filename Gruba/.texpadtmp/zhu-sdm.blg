@@ -2,47 +2,62 @@ This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: /Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux
 The style file: abbrv.bst
-I found no \citation commands---while reading file /Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux
 Database file #1: ../zhu-sdm.bib
-You've used 0 entries,
+A bad cross reference---entry "IEEEexample:conf/icde/ParkHHL09"
+refers to entry "DBLP:conf/icde/2009", which doesn't exist
+A bad cross reference---entry "IEEEexample:conf/icde/FanCTWC16"
+refers to entry "DBLP:conf/icde/2016", which doesn't exist
+A bad cross reference---entry "IEEEexample:conf/icde/FengW14"
+refers to entry "DBLP:conf/icde/2014", which doesn't exist
+A bad cross reference---entry "IEEEexample:conf/aaai/WangDNGEB16"
+refers to entry "DBLP:conf/aaai/2016", which doesn't exist
+A bad cross reference---entry "IEEEexample:conf/pakdd/GiatsoglouCSFV15"
+refers to entry "DBLP:conf/pakdd/2015-1", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/icde/2009"
+Warning--I didn't find a database entry for "DBLP:conf/icde/2016"
+Warning--I didn't find a database entry for "DBLP:conf/icde/2014"
+Warning--I didn't find a database entry for "DBLP:conf/pakdd/2015-1"
+Warning--I didn't find a database entry for "DBLP:conf/aaai/2016"
+Warning--to sort, need author or key in IEEEexample:ring
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            497 strings with 3793 characters,
-and the built_in function-call counts, 18 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 2
-:= -- 7
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
+            720 strings with 13629 characters,
+and the built_in function-call counts, 15364 in all, are:
+= -- 1525
+> -- 716
+< -- 22
++ -- 284
+- -- 248
+* -- 1041
+:= -- 2279
+add.period$ -- 100
+call.type$ -- 33
+change.case$ -- 222
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+cite$ -- 34
+duplicate$ -- 638
+empty$ -- 1211
+format.name$ -- 248
+if$ -- 3391
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 3
-num.names$ -- 0
-pop$ -- 0
+int.to.str$ -- 33
+missing$ -- 32
+newline$ -- 166
+num.names$ -- 64
+pop$ -- 287
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 190
 quote$ -- 0
-skip$ -- 1
+skip$ -- 534
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 1107
+swap$ -- 265
+text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 2
-(There was 1 error message)
+type$ -- 132
+warning$ -- 1
+while$ -- 143
+width$ -- 35
+write$ -- 360
+(There were 5 error messages)

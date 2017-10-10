@@ -1,3 +1,217 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{IEEEexample:ring}
+\url{http://ring.cnbigdata.org/}.
+
+\bibitem{IEEEexample:conf/recsys/BhattacharyaZGGG14}
+P.~Bhattacharya, M.~B. Zafar, N.~Ganguly, S.~Ghosh, and K.~P. Gummadi.
+\newblock Inferring user interests in the twitter social network.
+\newblock In {\em Eighth {ACM} Conference on Recommender Systems, RecSys '14,
+  Foster City, Silicon Valley, CA, {USA} - October 06 - 10, 2014}, pages
+  357--360, 2014.
+
+\bibitem{IEEEexample:conf/emnlp/CiotSR13}
+M.~Ciot, M.~Sonderegger, and D.~Ruths.
+\newblock Gender inference of twitter users in non-english contexts.
+\newblock In {\em Proceedings of the 2013 Conference on Empirical Methods in
+  Natural Language Processing, {EMNLP} 2013, 18-21 October 2013, Grand Hyatt
+  Seattle, Seattle, Washington, USA, {A} meeting of SIGDAT, a Special Interest
+  Group of the {ACL}}, pages 1136--1145, 2013.
+
+\bibitem{IEEEexample:journals/snam/DevineniKFF17}
+P.~Devineni, D.~Koutra, M.~Faloutsos, and C.~Faloutsos.
+\newblock Facebook wall posts: a model of user behaviors.
+\newblock {\em Social Netw. Analys. Mining}, 7(1):6:1--6:15, 2017.
+
+\bibitem{IEEEexample:conf/icde/FanCTWC16}
+Y.~Fan, Y.~Chen, K.~Tung, K.~Wu, and A.~L.~P. Chen.
+\newblock A framework for enabling user preference profiling through wi-fi
+  logs.
+\newblock In {\em 32nd {IEEE} International Conference on Data Engineering,
+  {ICDE} 2016, Helsinki, Finland, May 16-20, 2016}, pages 1550--1551, 2016.
+
+\bibitem{IEEEexample:journals/tmm/FangSXH15}
+Q.~Fang, J.~Sang, C.~Xu, and M.~S. Hossain.
+\newblock Relational user attribute inference in social media.
+\newblock {\em {IEEE} Trans. Multimedia}, 17(7):1031--1044, 2015.
+
+\bibitem{IEEEexample:conf/wsdm/FengW13}
+W.~Feng and J.~Wang.
+\newblock Retweet or not?: personalized tweet re-ranking.
+\newblock In {\em Sixth {ACM} International Conference on Web Search and Data
+  Mining, {WSDM} 2013, Rome, Italy, February 4-8, 2013}, pages 577--586, 2013.
+
+\bibitem{IEEEexample:conf/icde/FengW14}
+W.~Feng and J.~Wang.
+\newblock We can learn your {\#}hashtags: Connecting tweets to explicit topics.
+\newblock In {\em {IEEE} 30th International Conference on Data Engineering,
+  Chicago, {ICDE} 2014, IL, USA, March 31 - April 4, 2014}, pages 856--867,
+  2014.
+
+\bibitem{IEEEexample:conf/pakdd/GiatsoglouCSFV15}
+M.~Giatsoglou, D.~Chatzakou, N.~Shah, C.~Faloutsos, and A.~Vakali.
+\newblock Retweeting activity on twitter: Signs of deception.
+\newblock In {\em Advances in Knowledge Discovery and Data Mining - 19th
+  Pacific-Asia Conference, {PAKDD} 2015, Ho Chi Minh City, Vietnam, May 19-22,
+  2015, Proceedings, Part {I}}, pages 122--134, 2015.
+
+\bibitem{IEEEexample:conf/music/GuoLTL12}
+Z.~Guo, Z.~Li, H.~Tu, and L.~Li.
+\newblock Characterizing user behavior in weibo.
+\newblock In {\em Third {FTRA} International Conference on Mobile, Ubiquitous,
+  and Intelligent Computing, {MUSIC} 2012, Vancouver, Canada, June 26-28,
+  2012}, pages 60--65, 2012.
+
+\bibitem{IEEEexample:he2014overlapping}
+C.~He, H.~Ma, S.~Kang, and R.~Cui.
+\newblock An overlapping community detection algorithm based on link clustering
+  in complex networks.
+\newblock In {\em Military Communications Conference (MILCOM), 2014 IEEE},
+  pages 865--870. IEEE, 2014.
+
+\bibitem{IEEEexample:huang1997clustering}
+Z.~Huang.
+\newblock Clustering large data sets with mixed numeric and categorical values.
+\newblock In {\em Proceedings of the 1st pacific-asia conference on knowledge
+  discovery and data mining,(PAKDD)}, pages 21--34. Singapore, 1997.
+
+\bibitem{IEEEexample:conf/sigir/JiangLSLLMW16}
+B.~Jiang, J.~Liang, Y.~Sha, R.~Li, W.~Liu, H.~Ma, and L.~Wang.
+\newblock Retweeting behavior prediction based on one-class collaborative
+  filtering in social networks.
+\newblock In {\em Proceedings of the 39th International {ACM} {SIGIR}
+  conference on Research and Development in Information Retrieval, {SIGIR}
+  2016, Pisa, Italy, July 17-21, 2016}, pages 977--980, 2016.
+
+\bibitem{IEEEexample:conf/cikm/JiangLSW15}
+B.~Jiang, J.~Liang, Y.~Sha, and L.~Wang.
+\newblock Message clustering based matrix factorization model for retweeting
+  behavior prediction.
+\newblock In {\em Proceedings of the 24th {ACM} International Conference on
+  Information and Knowledge Management, {CIKM} 2015, Melbourne, VIC, Australia,
+  October 19 - 23, 2015}, pages 1843--1846, 2015.
+
+\bibitem{IEEEexample:jiang2013understanding}
+Z.~Jiang, Y.~Zhang, H.~Wang, and P.~Li.
+\newblock Understanding human dynamics in microblog posting activities.
+\newblock {\em Journal of Statistical Mechanics: Theory and Experiment},
+  2013(02):P02006, 2013.
+
+\bibitem{IEEEexample:kosinski2013private}
+M.~Kosinski, D.~Stillwell, and T.~Graepel.
+\newblock Private traits and attributes are predictable from digital records of
+  human behavior.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  110(15):5802--5805, 2013.
+
+\bibitem{IEEEexample:conf/wikis/LimD13}
+K.~H. Lim and A.~Datta.
+\newblock Interest classification of twitter users using wikipedia.
+\newblock In {\em Proceedings of the 9th International Symposium on Open
+  Collaboration, Hong Kong, China, August 05 - 07, 2013}, pages 22:1--22:2,
+  2013.
+
+\bibitem{IEEEexample:journals/fcsc/LiuCS12}
+Z.~Liu, X.~Chen, and M.~Sun.
+\newblock Mining the interests of chinese microbloggers via keyword extraction.
+\newblock {\em Frontiers of Computer Science in China}, 6(1):76--87, 2012.
+
+\bibitem{IEEEexample:conf/and/MichelsonM10}
+M.~Michelson and S.~A. Macskassy.
+\newblock Discovering users' topics of interest on twitter: a first look.
+\newblock In {\em Proceedings of the Fourth Workshop on Analytics for Noisy
+  Unstructured Text Data, {AND} 2010, Toronto, Ontario, Canada, October 26th,
+  2010 (in conjunction with {CIKM} 2010)}, pages 73--80, 2010.
+
+\bibitem{IEEEexample:conf/icde/ParkHHL09}
+S.~Park, S.~P. Han, S.~Huh, and H.~Lee.
+\newblock Preprocessing uncertain user profile data: Inferring user's actual
+  age from ages of the user's neighbors.
+\newblock In {\em Proceedings of the 25th International Conference on Data
+  Engineering, {ICDE} 2009, March 29 2009 - April 2 2009, Shanghai, China},
+  pages 1619--1624, 2009.
+
+\bibitem{IEEEexample:conf/icwsm/PennacchiottiP11}
+M.~Pennacchiotti and A.~Popescu.
+\newblock A machine learning approach to twitter user classification.
+\newblock In {\em Proceedings of the Fifth International Conference on Weblogs
+  and Social Media, Barcelona, Catalonia, Spain, July 17-21, 2011}, 2011.
+
+\bibitem{IEEEexample:journals/corr/RanganathMHTL15}
+S.~Ranganath, F.~Morstatter, X.~Hu, J.~Tang, and H.~Liu.
+\newblock Predicting online protest participation of social media users.
+\newblock {\em CoRR}, abs/1512.02968, 2015.
+
+\bibitem{IEEEexample:conf/www/RuanFP13}
+Y.~Ruan, D.~Fuhry, and S.~Parthasarathy.
+\newblock Efficient community detection in large networks using content and
+  links.
+\newblock In {\em 22nd International World Wide Web Conference, {WWW} '13, Rio
+  de Janeiro, Brazil, May 13-17, 2013}, pages 1089--1098, 2013.
+
+\bibitem{IEEEexample:conf/aaai/ShiokawaFO13}
+H.~Shiokawa, Y.~Fujiwara, and M.~Onizuka.
+\newblock Fast algorithm for modularity-based graph clustering.
+\newblock In {\em Proceedings of the Twenty-Seventh {AAAI} Conference on
+  Artificial Intelligence, July 14-18, 2013, Bellevue, Washington, {USA.}},
+  2013.
+
+\bibitem{IEEEexample:conf/acl/VolkovaCD14}
+S.~Volkova, G.~Coppersmith, and B.~V. Durme.
+\newblock Inferring user political preferences from streaming communications.
+\newblock In {\em Proceedings of the 52nd Annual Meeting of the Association for
+  Computational Linguistics, {ACL} 2014, June 22-27, 2014, Baltimore, MD, USA,
+  Volume 1: Long Papers}, pages 186--196, 2014.
+
+\bibitem{IEEEexample:conf/aaai/WangDNGEB16}
+X.~Wang, R.~Donaldson, C.~Nell, P.~Gorniak, M.~Ester, and J.~Bu.
+\newblock Recommending groups to users using user-group engagement and
+  time-dependent matrix factorization.
+\newblock In {\em Proceedings of the Thirtieth {AAAI} Conference on Artificial
+  Intelligence, February 12-17, 2016, Phoenix, Arizona, {USA.}}, pages
+  1331--1337, 2016.
+
+\bibitem{IEEEexample:conf/webi/XuLXY11}
+Z.~Xu, R.~Lu, L.~Xiang, and Q.~Yang.
+\newblock Discovering user interest on twitter with a modified author-topic
+  model.
+\newblock In {\em Proceedings of the 2011 {IEEE/WIC/ACM} International
+  Conference on Web Intelligence, {WI} 2011, Campus Scientifique de la Doua,
+  Lyon, France, August 22-27, 2011}, pages 422--429, 2011.
+
+\bibitem{IEEEexample:conf/wsdm/YangL13}
+J.~Yang and J.~Leskovec.
+\newblock Overlapping community detection at scale: a nonnegative matrix
+  factorization approach.
+\newblock In {\em Sixth {ACM} International Conference on Web Search and Data
+  Mining, {WSDM} 2013, Rome, Italy, February 4-8, 2013}, pages 587--596, 2013.
+
+\bibitem{IEEEexample:conf/ijcai/ZhangLTCL13}
+J.~Zhang, B.~Liu, J.~Tang, T.~Chen, and J.~Li.
+\newblock Social influence locality for modeling retweeting behaviors.
+\newblock In {\em {IJCAI} 2013, Proceedings of the 23rd International Joint
+  Conference on Artificial Intelligence, Beijing, China, August 3-9, 2013},
+  pages 2761--2767, 2013.
+
+\bibitem{IEEEexample:journals/tkdd/ZhangTLLX15}
+J.~Zhang, J.~Tang, J.~Li, Y.~Liu, and C.~Xing.
+\newblock Who influenced you? predicting retweet via social influence locality.
+\newblock {\em {TKDD}}, 9(3):25:1--25:26, 2015.
+
+\bibitem{IEEEexample:zhang2015retweet}
+Q.~Zhang, Y.~Gong, Y.~Guo, and X.~Huang.
+\newblock Retweet behavior prediction using hierarchical dirichlet process.
+\newblock In {\em AAAI}, pages 403--409, 2015.
+
+\bibitem{IEEEexample:journals/tkdd/ZhangCFLYZY17}
+T.~Zhang, P.~Cui, C.~Faloutsos, Y.~Lu, H.~Ye, W.~Zhu, and S.~Yang.
+\newblock comengo: {A} dynamic model for social group evolution.
+\newblock {\em {TKDD}}, 11(4):41:1--41:22, 2017.
+
+\bibitem{IEEEexample:zhao2011comparing}
+W.~X. Zhao, J.~Jiang, J.~Weng, J.~He, E.-P. Lim, H.~Yan, and X.~Li.
+\newblock Comparing twitter and traditional media using topic models.
+\newblock In {\em European Conference on Information Retrieval}, pages
+  338--349. Springer, 2011.
 
 \end{thebibliography}
