@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.6.21)  11 OCT 2017 15:11
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016) (preloaded format=xelatex 2016.6.21)  11 OCT 2017 17:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -431,70 +431,52 @@ LaTeX Font Info:    Checking defaults for C62/song/m/n on input line 88.
 LaTeX Font Info:    ... okay on input line 88.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/cjk/texinput/standard.bdg
-File: standard.bdg 2015/04/18 4.8.4
-) (/usr/local/texlive/2016/texmf-dist/tex/latex/cjk/texinput/extended.enc
-File: extended.enc 2015/04/18 4.8.4
-) (/usr/local/texlive/2016/texmf-dist/tex/latex/cjk/texinput/extended.chr
-File: extended.chr 2015/04/18 4.8.4
-)
 \c@definition=\count129
 \c@problem=\count130
 \c@remark=\count131
  Excluding 'comment' comment.
-LaTeX Font Info:    Try loading font information for U+msa on input line 141.
+LaTeX Font Info:    Try loading font information for U+msa on input line 146.
  (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 141.
+LaTeX Font Info:    Try loading font information for U+msb on input line 146.
  (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 141.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 146.
  (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 141.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 146.
 
-Underfull \hbox (badness 6063) in paragraph at lines 141--141
+Underfull \hbox (badness 6063) in paragraph at lines 146--146
 [][]\OT1/cmr/m/n/8 SKLSDE Lab, Bei-hang Uni-ver-sity, China. Email:
  []
 
 
-Underfull \hbox (badness 4403) in paragraph at lines 141--141
-\OMS/cmsy/m/n/8 f\OT1/cmr/m/n/8 zhujh@act., mashuai, zhanghui@act., hucm@\OMS/cmsy/m/n/8 g\OT1/cmr/m/n/8 buaa.edu.cn,
+Underfull \hbox (badness 1490) in paragraph at lines 146--146
+[][]\OT1/cmr/m/n/8 Beijing Ad-vanced In-no-va-tion Cen-ter for Big Data and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 146--146
 [][]\OT1/cmr/m/n/8 National Com-puter Net-work Emer-gency Re-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 146--146
 \OT1/cmr/m/n/8 sponse Tech-ni-cal Team/Coordination Cen-ter of China.
  []
 
-(./00-abstr.tex) (./01-intro.tex
-Overfull \vbox (1.1826pt too high) has occurred while \output is active []
-
-) (./02-overview.tex [1
+(./00-abstr.tex) (./01-intro.tex) (./02-overview.tex [1
 
 
 ] Excluding 'comment' comment.
 File: figures/architecture.pdf Graphic file (type QTm)
- <use  "figures/architecture.pdf" > Excluding 'comment' comment. Excluding 'comment' comment.
-Underfull \hbox (badness 1097) in paragraph at lines 81--83
-\OT1/cmr/m/n/10 neg-a-tive sam-ples (i.e., blogs that were or weren't
- []
-
-) (./03-fe.tex
+ <use  "figures/architecture.pdf" > Excluding 'comment' comment. Excluding 'comment' comment.) (./03-fe.tex
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
-
-Underfull \vbox (badness 1418) has occurred while \output is active []
-
  [2] [3] Excluding 'comment' comment. Excluding 'comment' comment.) (./04-uc.tex
 Underfull \hbox (badness 2088) in paragraph at lines 25--26
 []\OT1/cmr/m/n/9 In-put: \OT1/cmr/m/it/9 Fea-ture Data \OT1/cmr/m/n/9 of users $\OMS/cmsy/m/n/9 f\OML/cmm/m/it/9 F\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 u\OT1/cmr/m/n/9 )\OMS/cmsy/m/n/9 g$\OT1/cmr/m/n/9 , the min-i-
@@ -525,124 +507,58 @@ File: figures/recallofdifferentfeatures.eps Graphic file (type eps)
  <figures/recallofdifferentfeatures.eps>
 File: figures/fmeasureofdifferentfeatures.eps Graphic file (type eps)
  <figures/fmeasureofdifferentfeatures.eps>
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 108 replaced by U+FFFD.
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no Ա in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-LaTeX Font Info:    Try loading font information for C19+song on input line 108.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/cjk/texinput/GB/c19song.fd
-File: c19song.fd 2015/04/18 4.8.4
-)
-Invalid UTF-8 byte or sequence at line 110 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 110 replaced by U+FFFD.
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no Ա in font cmr10!
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 111 replaced by U+FFFD.
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no ̨ in font cmr10!
-
-
-./06-perf.tex:111: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.111 ...rested in stage performances(��̨ºȲ
-                                                  �), drama performances(�...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
-Missing character: There is no � in font cmr10!
-
-./06-perf.tex:111: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.111 ...�̨ºȲ�), drama performances(»°¾�
-                                                  ���),films(µ�Ӱ¹...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-
-./06-perf.tex:111: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.111 ...formances(»°¾����),films(µ�
-                                                  Ӱ¹�Ӱ) and so on, whic...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
-Missing character: There is no Ӱ in font cmr10!
-
-./06-perf.tex:111: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.111 ...es(»°¾����),films(µ�Ӱ¹�
-                                                  Ӱ) and so on, which is co...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
-Missing character: There is no Ӱ in font cmr10!
-Invalid UTF-8 byte or sequence at line 115 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 115 replaced by U+FFFD.
-
-./06-perf.tex:115: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.115 ...the drama "Earl of Oolong Mountain"(»�
-                                                  ¶½ɽ²®¾�). So the r...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
-Missing character: There is no ɽ in font cmr10!
-
-./06-perf.tex:115: Package CJK Error: Invalid character code.
-
-See the CJK package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.115 ... of Oolong Mountain"(»�¶½ɽ²®¾�
-                                                  ). So the results are in l...
-The second byte of the CJK code is out of range.
-Do you use the right encoding scheme?
-
+Missing character: There is no Ñ in font cmr10!
+Missing character: There is no Ý in font cmr10!
+Missing character: There is no Ô in font cmr10!
+Missing character: There is no ± in font cmr10!
+Missing character: There is no Â in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no À in font cmr10!
+Missing character: There is no ö in font cmr10!
+Missing character: There is no ± in font cmr10!
+Missing character: There is no ± in font cmr10!
+Missing character: There is no ¾ in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no Ñ in font cmr10!
+Missing character: There is no Ý in font cmr10!
+Missing character: There is no Ô in font cmr10!
+Missing character: There is no ± in font cmr10!
+Missing character: There is no Î in font cmr10!
+Missing character: There is no è in font cmr10!
+Missing character: There is no Ì in font cmr10!
+Missing character: There is no ¨ in font cmr10!
+Missing character: There is no º in font cmr10!
+Missing character: There is no È in font cmr10!
+Missing character: There is no ² in font cmr10!
+Missing character: There is no Ê in font cmr10!
+Missing character: There is no » in font cmr10!
+Missing character: There is no ° in font cmr10!
+Missing character: There is no ¾ in font cmr10!
+Missing character: There is no ç in font cmr10!
+Missing character: There is no ± in font cmr10!
+Missing character: There is no í in font cmr10!
+Missing character: There is no Ñ in font cmr10!
+Missing character: There is no Ý in font cmr10!
+Missing character: There is no µ in font cmr10!
+Missing character: There is no ç in font cmr10!
+Missing character: There is no Ó in font cmr10!
+Missing character: There is no ° in font cmr10!
+Missing character: There is no ¹ in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no Ó in font cmr10!
+Missing character: There is no ° in font cmr10!
+Missing character: There is no » in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ¶ in font cmr10!
+Missing character: There is no ½ in font cmr10!
+Missing character: There is no É in font cmr10!
+Missing character: There is no ½ in font cmr10!
+Missing character: There is no ² in font cmr10!
+Missing character: There is no ® in font cmr10!
+Missing character: There is no ¾ in font cmr10!
+Missing character: There is no ô in font cmr10!
 File: IMAGE/features/userFeatures/1.eps Graphic file (type eps)
-<IMAGE/features/userFeatures/1.eps>
+ <IMAGE/features/userFeatures/1.eps>
 File: IMAGE/features/userFeatures/2.eps Graphic file (type eps)
  <IMAGE/features/userFeatures/2.eps>
 File: IMAGE/features/userFeatures/3.eps Graphic file (type eps)
@@ -667,100 +583,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Package balance Warning: You have called \balance in second column
 (balance)                Columns might not be balanced.
 
-[8] [9]) (./10-appendix.tex
+[8] [9])
 Overfull \vbox (1.375pt too high) has occurred while \output is active []
 
- [10]
-Invalid UTF-8 byte or sequence at line 10 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 10 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 10 replaced by U+FFFD.
-Invalid UTF-8 byte or sequence at line 10 replaced by U+FFFD.
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no Ů in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no � in font cmr10!
-Missing character: There is no Ů in font cmr10!
-File: IMAGE/group-images/11.eps Graphic file (type eps)
- <IMAGE/group-images/11.eps>
-File: IMAGE/group-images/12.eps Graphic file (type eps)
- <IMAGE/group-images/12.eps>
-File: IMAGE/group-images/13.eps Graphic file (type eps)
- <IMAGE/group-images/13.eps>
-File: IMAGE/group-images/14.eps Graphic file (type eps)
- <IMAGE/group-images/14.eps>
-File: IMAGE/group-images/15.eps Graphic file (type eps)
- <IMAGE/group-images/15.eps>
-File: IMAGE/group-images/16.eps Graphic file (type eps)
- <IMAGE/group-images/16.eps>
-File: IMAGE/group-images/17.eps Graphic file (type eps)
- <IMAGE/group-images/17.eps>
-File: IMAGE/group-images/18.eps Graphic file (type eps)
- <IMAGE/group-images/18.eps>
-File: IMAGE/group-images/19.eps Graphic file (type eps)
- <IMAGE/group-images/19.eps>
-File: IMAGE/group-images/21.eps Graphic file (type eps)
- <IMAGE/group-images/21.eps>
-File: IMAGE/group-images/22.eps Graphic file (type eps)
- <IMAGE/group-images/22.eps>
-File: IMAGE/group-images/23.eps Graphic file (type eps)
- <IMAGE/group-images/23.eps>
-File: IMAGE/group-images/24.eps Graphic file (type eps)
- <IMAGE/group-images/24.eps>
-File: IMAGE/group-images/25.eps Graphic file (type eps)
- <IMAGE/group-images/25.eps>
-File: IMAGE/group-images/26.eps Graphic file (type eps)
- <IMAGE/group-images/26.eps>
-File: IMAGE/group-images/27.eps Graphic file (type eps)
- <IMAGE/group-images/27.eps>
-File: IMAGE/group-images/28.eps Graphic file (type eps)
- <IMAGE/group-images/28.eps>
-File: IMAGE/group-images/29.eps Graphic file (type eps)
- <IMAGE/group-images/29.eps>
-File: IMAGE/group-images/31.eps Graphic file (type eps)
- <IMAGE/group-images/31.eps>
-File: IMAGE/group-images/32.eps Graphic file (type eps)
- <IMAGE/group-images/32.eps>
-File: IMAGE/group-images/33.eps Graphic file (type eps)
- <IMAGE/group-images/33.eps>
-File: IMAGE/group-images/34.eps Graphic file (type eps)
- <IMAGE/group-images/34.eps>
-File: IMAGE/group-images/35.eps Graphic file (type eps)
- <IMAGE/group-images/35.eps>
-File: IMAGE/group-images/36.eps Graphic file (type eps)
- <IMAGE/group-images/36.eps>
-File: IMAGE/group-images/37.eps Graphic file (type eps)
- <IMAGE/group-images/37.eps>
-File: IMAGE/group-images/38.eps Graphic file (type eps)
- <IMAGE/group-images/38.eps>
-File: IMAGE/group-images/39.eps Graphic file (type eps)
- <IMAGE/group-images/39.eps>
-File: IMAGE/group-images/41.eps Graphic file (type eps)
- <IMAGE/group-images/41.eps>
-File: IMAGE/group-images/42.eps Graphic file (type eps)
- <IMAGE/group-images/42.eps>
-File: IMAGE/group-images/43.eps Graphic file (type eps)
- <IMAGE/group-images/43.eps>
-File: IMAGE/group-images/44.eps Graphic file (type eps)
- <IMAGE/group-images/44.eps>
-File: IMAGE/group-images/45.eps Graphic file (type eps)
- <IMAGE/group-images/45.eps>
-File: IMAGE/group-images/46.eps Graphic file (type eps)
- <IMAGE/group-images/46.eps>
-File: IMAGE/group-images/47.eps Graphic file (type eps)
- <IMAGE/group-images/47.eps>
-File: IMAGE/group-images/48.eps Graphic file (type eps)
- <IMAGE/group-images/48.eps>
-File: IMAGE/group-images/49.eps Graphic file (type eps)
- <IMAGE/group-images/49.eps>) [11] [12] (/Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux) ) 
+ [10] (/Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux) ) 
 Here is how much of TeX's memory you used:
- 5897 strings out of 493591
- 78439 string characters out of 6143546
- 156623 words of memory out of 5000000
- 9104 multiletter control sequences out of 15000+600000
- 16691 words of font info for 63 fonts, out of 8000000 for 9000
+ 5641 strings out of 493591
+ 75192 string characters out of 6143546
+ 147106 words of memory out of 5000000
+ 8906 multiletter control sequences out of 15000+600000
+ 15611 words of font info for 59 fonts, out of 8000000 for 9000
  1347 hyphenation exceptions out of 8191
- 36i,13n,45p,2061b,599s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,13n,45p,2061b,336s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Error 256 (driver return code) generating output;
-file /Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.pdf may not be valid.
+Output written on /Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.pdf (10 pages).

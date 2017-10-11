@@ -9,35 +9,34 @@
 \section{Feature Extraction}
 \label{sec:fe}
 
-With the underlying data in Data Storage subsystem, Feature Extraction is responsible for ``mining'' the user characteristics, resulting three features for each user.
-These features are \textit{Info Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, which constitute the \textit{Feature Data} in \sys{}, i.e., \textit{Feature Data} = \{\textit{Info Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
+With the underlying Sina Microblog Data, Feature Extraction is responsible for ``mining'' the user characteristics, resulting three features for each user.
+These features are \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, which constitute the \textit{Feature Data} in \sys{}, i.e., \textit{Feature Data} = \{\textit{Basic Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
 
-\subsection{Info Feature}
+\subsection{Basic Feature}
 
-\textit{Info Feature} employs a vector $I$ to cover the basic info of user.
+\textit{Basic Feature} employs a vector $I$ to cover the basic info of user.
 \begin{equation}
 \label{eq:info}
-	I = (\#R_s,\ \#E_s,\ R_{ee},\ \#B_s,\ R_{oc},\ U_t)
+	I = (\#R_u,\ \#E_u,\ R_{ee},\ \ U_t)
 \end{equation}
 where each variable is illustrated in Table \ref{tbl:fe-info}.
-Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
+%Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
 
 \begin{table}[!htb]
 \centering
 \begin{small}
-\caption{Illustration of Variables in Info Feature}
+\caption{Illustration of Variables in Basic Feature}
 \vspace{0.3cm}
 \label{tbl:fe-info}
 \begin{tabular}{ll}
 \toprule
 \multicolumn{1}{c}{\textbf{variable}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
-\#$R_s$				& number of followers				\\	\midrule
-\#$E_s$				& number of followees				\\	\midrule
-\multirow{2}{*}{$R_{ee}$}      & \multirow{2}{*}{a ratio defined as $\frac{\#R_s}{\#E_s}$}	\\
- 						&                       									\\	\midrule
-\#$B_s$				& number of microblogs owned by the user				\\	\midrule
-\multirow{2}{*}{$R_{oc}$}      & \multirow{2}{*}{a ratio defined as $\frac{\#(B_s | R(B)==1)}{\#(B_s | R(B)==0)}$}	\\
- 						&                       									\\	\midrule
+\#$R_u$				& number of followers				\\	\midrule
+\#$E_u$				& number of followees				\\	\midrule
+\multirow{4}{*}{$R_{ee}$} & \multirow{2}{*}{a ratio defined as the number of followers} \\
+                   &                     \\
+                   & \multirow{2}{*}{over that of followees, i.e., $\frac{\#R_u}{\#E_u}$} \\
+                   & 						\\	\midrule
 $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 \end{tabular}
 \end{small}
@@ -52,16 +51,16 @@ $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 \begin{table}[!htb]
 \centering
 \begin{small}
-\caption{Category of Info}
+\caption{Category of User Type}
 \vspace{0.3cm}
 \label{tbl:ucate}
 \begin{tabular}{ll}
 \toprule
 \multicolumn{1}{c}{\textbf{value}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
-0                       & $\#E_s \le 50 \ \& \ \#R_s \le 50$				\\	\midrule
-\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_s}{\#R_s} \ \ge 5$}	\\
+0                       & $\#E_u \le 50 \ \& \ \#R_u \le 50$				\\	\midrule
+\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
  						&                       									\\	\midrule
-\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_s}{\#E_s} \ \ge 5$}  \\
+\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
 						&															\\	\midrule
 3                   	& other cases 												\\ \bottomrule
 \end{tabular}
@@ -71,9 +70,11 @@ $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 
 \subsection{Behavior Feature}
 
-Unlike \textit{Info Feature}, \textit{Behavior Feature} shows several statistics regarding the user's \retg{} behavior.
+Unlike \textit{Basic Feature}, \textit{Behavior Feature} shows several statistics regarding the user's \retg{} behavior.
 Such statistics include:
 \begin{itemize}
+	\item a value for the number of owned microblogs $\#B_u$
+	\item a ratio $R_{oc}$ that is defined as the number of \retd{} microblogs over that of originally created, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$
 	\item a value showing the average number of \retd{} microblogs per week: $\#W_r$
 	\item a normalized vector regarding the time distribution of a user's \retg{} behavior: $P_t\ = (p'_0,\ p'_1,\ ...,\ p'_{11})$, where $p'_0$ is the probability that the \retg{} activity happens from 0am to 2am, $p'_1$ is the probability that the \retg{} activity happens from 2am to 4am, and so on.
 	\item a normalized vector with respect to the gap distribution of a user's \retg{} behavior: $P_g\ = (p''_0,\ p''_1,\ ...,\ p''_{5})$, in which $p''_0$ is the probability that the gap between two \retd{} microblogs is within 1 min. Ditto for $p''_1$ (1 min to 1 hour), $p''_2$ (1 to 12 hours), $p''_3$ (12 to 24 hours), $p''_4$ (24 to 48 hours) and  $p''_5$ (more than 48 hours).
@@ -88,18 +89,18 @@ where $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
 
 \subsection{Interest Feature}
 
-Different from the straightforward notions of \textit{Info Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics.
+Different from the straightforward notions of \textit{Basic Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics.
 In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the probability that the said user matches a \textit{topic}.
 
 \begin{definition}
 \label{def:lexi}
-A lexicon $L = \{t\}$ consists of a set of topics while each topic $t = \{c\}$ is associated with a list of cell words $\{c\}$. Each cell word $c$ refers to one unique word in $L$.
+A lexicon $L$ consists of a set of topics $t$ such that each topic is associated with a set of cell words $c$. Each cell word depicts an aspect of the topic.
 \end{definition}
 
 \begin{definition}
 \label{def:bw}
 %used \label{def:blog} previously
-With a given user $u$, each microblog $b \in B_s(u)$ could be decomposed into a set of words $\{w\}$, i.e., $b = \{w\}$.
+With a given user $u$, each microblog $b \in B_u$ could be decomposed into a set of words $w$.
 \end{definition}
 
 \begin{definition}
@@ -112,12 +113,17 @@ P_f\ = (p_0,\ p_1,\ ...,\ p_{x-1})
 in which the said user matches $x$ \textit{topics} in lexicon and $p_i$ refers to the similarity of the user and each matched topic (interest). The definition of such similarity shall be detailed in each scenario (explicit/implicit interest analysis, towards words/topics, etc).
 \end{definition}
 
+
+Next, we shall present the ``mining'' process for interest features. 
+In short, \sys{} employs a well established lexicon to discover the explicit interests of users.
+In case no proper explicit interests are found, TF-IDF and Twitter-LDA are leveraged to explore the implicit interests, during which word2vector participates to provide the similarity between two words.
+
 In \sys{}, a word, either in the form of $c$ or $w$, acts as the minimum unit for analysis.
-Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be generalized to the similarity of a microblog against one topic $sim(b, t)$, and finally to a user versus each topic in lexicon $sim(u, \{t\})$; topics with similarity satisfying certain thresholds are allocated to the user $u$ and constitute the interests of $u$.
+Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be generalized to the similarity of a microblog against one topic $sim(b, t)$, and finally to a user versus each topic in lexicon $sim(u, t)$; topics with similarity satisfying certain thresholds are allocated to the user $u$ and constitute the interests of $u$.
 
 For instance, the following steps depict the ``mining'' process of the interest feature $P_f$ for a user $u$.
 
-\stitle{Step 1:} Each microblog of $u$ is decomposed into a word set, i.e., $b = \{w\}$ where $b \in B_s(u)$.
+\stitle{Step 1:} Each microblog of $u$ is decomposed into a word set. %, i.e., $b = \{w\}$ where $b \in B_s(u)$.
 
 \stitle{Step 2:} Explicit interests are explored. Specifically, every word $w$ is sent to match each cell word $c$ of lexicon topics.
 If $w$ and $c$ are identical, $sim(w, c) = 1$.
@@ -193,7 +199,9 @@ Again, a single topic $t$ in lexicon is used for yardstick and the similarity of
 \label{eq:sim-tw1}
 sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
 \end{equation}
-where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
+%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, 
+where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$, 
+and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
 Go to \textbf{Step 7}.
 
 \begin{comment}
@@ -236,7 +244,7 @@ As a result, the \textit{Feature Data} for every user $u$, written as $F(u)$, is
 \label{eq:fu}
 	F(u) = (I,\ H,\ P_f)
 \end{equation}
-where $I$, $H$ and $P_f$ refer to \textit{Info Feature}, \textit{Behavior Feature} and \textit{Interest Feature} separately (see formulas \ref{eq:info}, \ref{eq:beha} and \ref{def:inte}).
+where $I$, $H$ and $P_f$ refer to \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature} separately (see formulas \ref{eq:info}, \ref{eq:beha} and \ref{def:inte}).
 And it could be written as a vector:
 \begin{equation}
 \label{eq:fu-flat}

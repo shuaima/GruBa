@@ -12,7 +12,7 @@ A given \textit{item} is either positive or negative.
 
 \begin{definition}
 \label{def:gm-it}
-An item $E$ involves a microblog $b$ and a user $f$ such that $f\ \in R_s(O(b))$, i.e., $f$ is a follower of  the owner of microblog $b$.
+An item $E$ involves a microblog $b$ and a user $f$ such that $f\ \in R_{b.O}$, i.e., $f$ is a follower of  the owner of microblog $b$.
 \begin{equation}
 \label{eq:gm-it}
 E \in
@@ -26,7 +26,7 @@ E \in
 And the data of item $E$ could be further divided into three parts.
 %\begin{itemize}
 
-	\stab(1) \stitle{User Info} contains a list of aforementioned metrics \{\#$R_s$, \#$E_s$, $R_{ee}$, \#$B_s$, \#$W_r$\}.
+	\stab(1) \stitle{User Info} contains a list of aforementioned metrics \{\#$R_u$, \#$E_u$, $R_{ee}$, \#$B_u$, \#$W_r$\}.
 	
 	\stab(2) \stitle{Microblog Info} considers the correlation between microblog contents and recent events, where the latter is returned by Ring \cite{IEEEexample:ring}. The correlation metric $C_h$ is in the form of a normalized vector with each dimension represents one event (similar as $P_f$ in formula \ref{eq:inte}). Each event could be viewed as a topic $t$, over which the correlation of a microblog $b$ could be obtained by formula \ref{eq:simbt}.
 	
