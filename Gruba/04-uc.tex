@@ -75,14 +75,14 @@ normalized vectors			& $P_t$, $P_g$, $P_f$			\\ \bottomrule
 As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers, categories and normalized vectors.
 For simplicity, we shall first illustrate the distance calculation of the simple vectors with mono data type on each dimension and then demonstrate that of complex vectors in K-Gru.
 
-Given two numerical vectors $Y'\ = (y'_0, y'_1, ...)$ and $Z'\ = (z'_0, z'_1, ...)$, the \od{} \refe{} between $Y'$ and $Z'$ is given by :
+Given two numerical vectors $Y'\ = (y'_0, y'_1, ...)$ and $Z'\ = (z'_0, z'_1, ...)$, the \od{} \cite{IEEEexample:books/mk/HanKP2011} between $Y'$ and $Z'$ is given by :
 %
 \begin{equation}
 \label{eq:od}
 D_n(Y', Z') = \sum_{\substack{e}} (y_e - z_e)^2
 \end{equation}
 
-As to the categorical vectors $Y''\ = (y''_0, y''_1, ...)$ and  $Z''\ = (z''_0, z''_1, ...)$, the \hd{} \refe{} of $Y''$ and $Z''$ is:
+As to the categorical vectors $Y''\ = (y''_0, y''_1, ...)$ and  $Z''\ = (z''_0, z''_1, ...)$, the \hd{} \cite{IEEEexample:huang1997clustering} of $Y''$ and $Z''$ is:
 %
 \begin{equation}
 \label{eq:hd}
@@ -90,7 +90,7 @@ D_h(Y'', Z'') = \sum_{\substack{e}} H_e
 \end{equation}
 where $H_e$ refers to the \hd{} over each dimension, with $H_e\ =\ 1$ if $y''_e$ and $z''_e$ share the identical value, and $H_e\ =\ 0$ otherwise.
 
-Regarding two vectors where each dimension is a normalized vector per se, Cosine Similarity \refe{} is leveraged to compute the distance.
+Regarding two vectors where each dimension is a normalized vector per se, Cosine Similarity is leveraged to compute the distance.
 Then, the distance between such two vectors $Y^{\ast}\ = (Y^{\ast}_0, Y^{\ast}_1, ...)$ and $Z^{\ast}\ = (Z^{\ast}_0, Z^{\ast}_1, ...)$ is:
 %
 \begin{equation}

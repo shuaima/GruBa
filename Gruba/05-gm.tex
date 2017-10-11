@@ -32,7 +32,9 @@ And the data of item $E$ could be further divided into three parts.
 	
 	\stab(3) \stitle{Interaction Info} includes three correlation metrics. They are of blog $b$ versus the user $u$'s \textit{Interest Feature} $P_f(u)$ (a.k.a. long-term/stable interest in this work), $b$ versus $u$'s short-term interest $P_s(u)$ that is mined from $u$'s recent blogs (e.g., within 30 days) in the same manner of $P_f(u)$, and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_t$.
 %\end{itemize}
-As a result, the obtained group model could learn what does a positive/negative item look like over each metric mentioned above.
+In this paper, we see modeling retweeting behavior of group as a classification problem and use random forest classifier to solve the problem. The advantage of using classification model is that we can integrate different combinations of the features into the model conveniently. As a result, the obtained group behavior model could learn what does a positive/negative item look like over each metric mentioned above.\par
+
+
 
 
 
