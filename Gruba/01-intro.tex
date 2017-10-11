@@ -5,7 +5,7 @@ Social media is overwhelming nowadays, with massive users on Facebook, Twitter a
 These users behave variously, knowledge of which is significant in recommendation system, activity prediction and Big Thing analysis.
 Hence emerges the demand of developing systems and algorithms that could properly model user behaviors, which has already attracted the attention from both academia and industry.
 
-Central to user behavior modeling, is the need to choose the unit of model (i.e., how many users share one model; for example, the mono model for all users, one model per user, etc), as well as the variety of features to be selected for differentiating these units.
+Central to user behavior modeling, is the need to choose the granularity of model (i.e., how many users share one model), as well as the variety of features to be selected for differentiating these units.
 Already, there exist work of building a single model for all the users \cite{IEEEexample:conf/wsdm/FengW13,IEEEexample:conf/ijcai/ZhangLTCL13,IEEEexample:journals/tkdd/ZhangTLLX15}.
 Apparently, such model bears the limitation of being coarse.
 On the other hand, modeling each user is not practical, due to the tremendous number of users.
@@ -13,8 +13,9 @@ On the other hand, modeling each user is not practical, due to the tremendous nu
 The key driver of our work is the realization that in social media applications, users could fall into groups and each group shares representative behaviors.
 %
 As one example, consider the film \textit{Brave Heart}, fans of which are probably addicted to highland, bagpipe and war films, and thus likely to \ret{} blogs of these topics.
-Particularly, we study the \retg{} behavior of users and our work can be generalized to other behaviors of like and comment as well.
-The main challenge is to properly model user groups upon behavior analysis.
+Particularly, we study the \retg{} behavior of users and our work can be generalized to other behaviors of like and comment as well. 
+In the realm of social network behavior research, few work has been done towards making use of grouping, which however has been proved to be effective in other fields.
+This motivates us to explore the incorporation of user grouping into the \retg{} behavior modeling, filling the gap of existed studies in literature.
 
 \stitle{Contributions.}
 This work contributes as follows:

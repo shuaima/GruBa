@@ -7,20 +7,20 @@ In this section, we shall first detail the experimental setting of machine info,
 
 Experiments were run on a machine with two Intel Xeon E5C2630 2.4GHz CPUs and 64 GB of Memory, running 64 bit Windows 7 professional system.
 %
-We have employed a real-world dataset Sina that consists of 24 million blogs that are associated with 43.5K users.
+We have employed a real-world dataset Sina that consists of 24 million microblogs that are associated with 43.5K users.
 
 With respect to the parameters of \sys{}, we use the default values as mentioned in previous sections.
-Particularly, in Feature Extractor, for practical reason, we employed a smaller testing dataset to obtain the proper value of $\alpha$ for extracting \textit{Interest Feature};
+Particularly, in Feature Extraction, for practical reason, we employed a smaller testing dataset to obtain the proper value of $\alpha$ for extracting \textit{Interest Feature};
 in User Cluster, we studied the clustering solutions with the minimum/maximum number of clusters 2 and 10;
-in Behavior Modeler, a user's recent 30 days blogs are used for short-term interest analysis and popular words of the latest 24 hours are returned by Ring as the Hot Event keywords.
+in Behavior Modeling, a user's recent 30 days microblogs are used for short-term interest analysis and popular words of the latest 24 hours are returned by Ring as the Hot Event keywords.
 
 \subsection{Result and Analysis}
 Next, we shall report the performance of \sys{} over each component.
 
-\stitle{Feature Extractor}
+\stitle{Feature Extraction}
 %
 Fig.\ \ref{fig:fe} shows the testing results of using various $\alpha$ values.
-Apparently, \sys{} results the optimal results when $\alpha$ is 0.7, upon which the interest feature extracting is performed for the overall dataset with 43.5K users and 24 million blogs.
+Apparently, \sys{} results the optimal results when $\alpha$ is 0.7, upon which the interest feature extracting is performed for the overall dataset with 43.5K users and 24 million microblogs.
 
 \begin{figure}[!htb]
 \centering
@@ -30,7 +30,7 @@ Apparently, \sys{} results the optimal results when $\alpha$ is 0.7, upon which 
 \end{figure}
 
 
-\stitle{User Clusterer}
+\stitle{User Clustering}
 %
 Fig.\ \ref{fig:uc} depicts the Silhouette Coefficient Values of multiple clustering solutions, with the cluster number from 2 to 10.
 Specially, we used different testing datasets, with \textit{Data} containing the overall 43.5K users and \textit{Data1,...,5} contains 10K randomly selected users each.
@@ -44,7 +44,7 @@ Except for \textit{Data1}, solutions with 4 clusters sweep.
 \end{figure}
 
 
-\stitle{Behavior Modeler}
+\stitle{Behavior Modeling}
 %
 Fig.\ \ref{fig:10} shows the performance of \sys{} against state of the art approach LRC-BQ \cite{IEEEexample:conf/ijcai/ZhangLTCL13}.
 We compare the metrics of precision, recall, as well as $F_1$ score.
@@ -79,7 +79,7 @@ The results are interesting in that:
 
 
 Fig.\ \ref{fig:11} explores the performance of \sys{} when using alternative data items for modeling.
-By default, \sys{} uses ``UI+II+MI'', i.e., items of users (UI), blogs (MI) and interactions (II).
+By default, \sys{} uses ``UI+II+MI'', i.e., items of users (UI), microblogs (MI) and interactions (II).
 How about using other combinations of the above item(s)?
 As shown in Fig.\ \ref{fig:11}, the default setting wins in most cases.
 
@@ -105,14 +105,14 @@ In this section, we show the results of our demo system for user features extrac
 Considering the huge amount of users, we carefully selected one typical user for analysis.
 Here we chose Mary(a famous drama and movie actor in China) as a representative.
 The features extraction result for Mary is displayed in Fig.\ \ref{fig:userFeatures}.
-Then we can see the basic information of Mary from the result. Her nickname is Actor Mary(ÑİÔ±ÂíÀö) and she is from Beijing(±±¾©). 
+Then we can see the basic information of Mary from the result. Her nickname is Actor Mary(Ã‘ÃÃ”Â±Ã‚Ã­Ã€Ã¶) and she is from Beijing(Â±Â±Â¾Â©). 
 The number of followers of Mary is much more than the number of her friends.
-The Sina Microblog tag she made for herself is "actor"(ÑİÔ±).
-As the result of the long-term interest extraction shows, she is interested in stage performances(ÎèÌ¨ºÈ²Ê), drama performances(»°¾ç±íÑİ),films(µçÓ°¹âÓ°) and so on, which is consistent with her actual situation.
+The Sina Microblog tag she made for herself is "actor"(Ã‘ÃÃ”Â±).
+As the result of the long-term interest extraction shows, she is interested in stage performances(ÃÃ¨ÃŒÂ¨ÂºÃˆÂ²ÃŠ), drama performances(Â»Â°Â¾Ã§Â±Ã­Ã‘Ã),films(ÂµÃ§Ã“Â°Â¹Ã¢Ã“Â°) and so on, which is consistent with her actual situation.
 What's more, the probability distribution of tweeting and retweeting behavior on different time periods in one day indicates that her activities at night is much more than daytime.
 The time interval distribution of her behaviors is also shown in Fig.\ \ref{fig:userFeatures}. The time interval is mostly distributed within 48 hours, which indicates that she is a active user.
 We developed a function for querying user's short-term interest. 
-Here we queried Mary's short-term interest between 09/01/2016 and 09/30/2016, and got it as shown in Fig.\ \ref{fig:userFeatures}. We analyzed her microblogs in the this period, she has been working tirelessly to promote the drama "Earl of Oolong Mountain"(»ù¶½É½²®¾ô). So the results are in line with expectations.
+Here we queried Mary's short-term interest between 09/01/2016 and 09/30/2016, and got it as shown in Fig.\ \ref{fig:userFeatures}. We analyzed her microblogs in the this period, she has been working tirelessly to promote the drama "Earl of Oolong Mountain"(Â»Ã¹Â¶Â½Ã‰Â½Â²Â®Â¾Ã´). So the results are in line with expectations.
 
 \begin{figure}
   \centering

@@ -7,7 +7,7 @@
 %proof if applicable
 %self-explain
 
-Providing the \textit{Feature Data}, User Clusterer takes the charge of grouping each user concerned into a proper cluster.
+Providing the \textit{Feature Data}, User Clustering takes the charge of grouping each user concerned into a proper cluster.
 Algorithm \ref{alg:uc} illustrates such overall procedure.
 %
 The idea is to enumerate a number of clustering trials (line \ref{enu}) and select the optimal solution with the best Silhouette coefficient value ($v$ in line \ref{opti}).
@@ -53,7 +53,7 @@ Similar as K-Prototype, K-Gru randomly selects the cluster kernels among samples
 
 Unlike K-Prototype that supports vector samples in which each dimension is of numerical/categorical, K-Gru could also handle the case where a dimension is one normalized vector.
 %
-Recall the sample data for User Clusterer, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu-flat}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}.
+Recall the sample data for User Clustering, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu-flat}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}.
 
 \begin{table}[!htb]
 \centering
