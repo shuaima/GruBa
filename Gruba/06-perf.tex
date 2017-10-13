@@ -103,35 +103,42 @@ As shown in Fig.\ \ref{fig:11}, the default setting wins in most cases.
 \stitle{Case Study for Feature Extraction}
 In this section, we show the results of our demo system for user features extraction.
 Considering the huge amount of users, we carefully selected one typical user for analysis.
-Here we chose Mary(a famous drama and movie actor in China) as a representative.
-The features extraction result for Mary is displayed in Fig.\ \ref{fig:userFeatures}.
-Then we can see the basic information of Mary from the result. Her nickname is Actor Mary(演员马丽) and she is from Beijing(北京).
-The number of followers of Mary is much more than the number of her friends.
-The Sina Microblog tag she made for herself is "actor"(演员).
-As the result of the long-term interest extraction shows, she is interested in stage performances(舞台表演), drama performances(话剧表演),films(电影光影) and so on, which is consistent with her actual situation.
-What's more, the probability distribution of tweeting and retweeting behavior on different time periods in one day indicates that her activities at night is much more than daytime.
-The time interval distribution of her behaviors is also shown in Fig.\ \ref{fig:userFeatures}. The time interval is mostly distributed within 48 hours, which indicates that she is a active user.
-We developed a function for querying user's short-term interest.
-Here we queried Mary's short-term interest between 09/01/2016 and 09/30/2016, and got it as shown in Fig.\ \ref{fig:userFeatures}. We analyzed her microblogs in the this period, she has been working tirelessly to promote the drama "Earl of Oolong Mountain"(乌龙山伯爵). So the results are in line with expectations.
+Here we chose Mary(a famous drama and movie actress in China) as an example.
+The feature extraction result for Mary is depicted in Fig.\ \ref{fig:userFeatures}.
+Then we can see the basic information of Mary in Sub-Fig.\ \ref{fig:userFeatures:uf-1}: her nickname is Actress Mary (演员马丽) and she is from Beijing (北京).
+Mary has more followers than followees.
+The Sina Microblog tag she made for herself is ``actress'' (演员).
+As to the long-term interest, she is interested with stage performance (舞台表演), drama (话剧表演),film (电影光影) and so on as shown in Sub-Fig.\ \ref{fig:userFeatures:uf-2}, which is consistent with her tag.
+The probability distribution of tweeting and retweeting indicates that she is more active at night than daytime as shown in Sub-Fig.\ \ref{fig:userFeatures:uf-3} and \ref{fig:userFeatures:uf-4}.
+According to Sub-Fig.\ \ref{fig:userFeatures:uf-5} and \ref{fig:userFeatures:uf-6}, the interval between her two tweeted/retweeted microblogs is mostly within 48 hours, showing she is an active user.
+Mary's short-term interest, e.g. from 09/01/2016 to 09/30/2016, is shown in Sub-Fig.\ \ref{fig:userFeatures:uf-7}, which indicates she had been busy with promoting the drama ``Earl of Oolong Mountain'' (乌龙山伯爵). So the results are in line with expectations, as drama (话剧) and stage (舞台) in Sub-Fig.\ \ref{fig:userFeatures:uf-7}.
 
-\begin{figure}
+\begin{figure*}
   \centering
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/1.eps}}
+      \label{fig:userFeatures:uf-1}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/1.eps}}
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/2.eps}}
+      \label{fig:userFeatures:uf-2}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/2.eps}}
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/3.eps}}
+      \label{fig:userFeatures:uf-3}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/3.eps}}
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/4.eps}}
+      \label{fig:userFeatures:uf-4}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/4.eps}}
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/5.eps}}
+      \label{fig:userFeatures:uf-5}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/5.eps}}
   \subfigure{
-      \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/6.eps}}
+      \label{fig:userFeatures:uf-6}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/6.eps}}
   \subfigure{
-  \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/7.eps}}
+      \label{fig:userFeatures:uf-7}
+      \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/7.eps}}
   \subfigure{
-  \includegraphics[width=0.22\textwidth]{IMAGE/features/userFeatures/8.eps}}
+      \label{fig:userFeatures:uf-8}
+      \includegraphics[width=0.24\textwidth]{IMAGE/features/userFeatures/8.eps}}
   \caption{Visualization for User Features.}
   \label{fig:userFeatures} %% label for entire figure
-\end{figure}
+\end{figure*}
