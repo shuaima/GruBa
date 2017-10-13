@@ -18,7 +18,7 @@ For simplicity, assuming the microblogs that a user can \ret{} come from those o
 
 \begin{definition}
 \label{def:blog}
-A microblog $M_b = (O, T, M, flag)$ consists of the owner $O$ (a.k.a. user in this paper) to whom $M_b$ belongs (either created or \retd{}), the timestamp $T$ showing when $M_b$ is generated, the microblog message $M$ and a bit $flag$ denoting $M_b$ is \retd{} (1) or originally created (0) by the owner $O$.
+A microblog $M_b = (O, T, M, flag)$ has its owner $O$ (a.k.a. user in this paper) to whom $M_b$ belongs (either created or \retd{}), the generated time $T$ of $M_b$, the message context $M$, and $flag$ denoting $M_b$ is \retd{} (1) or originally created (0) by $O$.
 \end{definition}
 
 \begin{comment}
@@ -29,8 +29,7 @@ A blog $B = (O, T, M, C)$ consists of the owner $O$ to whom $B$ belongs (either 
 
 \begin{definition}
 \label{def:user}
-A user $u = (B_u, R_u, E_u)$ consists of three sets regarding the user's microblogs $B_u$, followers $R_u$ and followees $E_u$ separately.
-Each follower/followee per se refers to a user.
+A user $u = (B_u, R_u, E_u)$ consists of three sets regarding the user's microblogs $B_u$, followers $R_u$ and followees $E_u$, in which each follower/followee per se refers to a user.
 \end{definition}
 
 %The mapping between blog $B$ and user $U$ is a bilateral operation, i.e., $U = O(B)$ and $B \in B_s(U)$, through ID(s) of user and blog respectively.
@@ -41,15 +40,15 @@ Informally, providing a set of users $\mathbb{U}$ and the associated microblogs 
 
 \subsection{\sys{} Framework}
 \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media.
-Figure \ref{fig:framework} shows the architectural components of \sys{}, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
+Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
 
 \begin{figure}[tb!]
 \centering
-\includegraphics[width=.7\linewidth]{figures/architecture.pdf}
+\includegraphics[width=.67\linewidth]{figures/architecture.pdf}
 \vspace{-1ex}
 \caption{\sys{} Architecture}
 \label{fig:framework}
-\vspace{-3ex}
+\vspace{-4ex}
 \end{figure}
 
 
@@ -79,15 +78,54 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}, mainly 
 \sys{} consists of three key modules.
 %\begin{enumerate}
 
-	\stab(1)  Feature Extraction: By coalescing the microblog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Basics} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored data by Feature Extraction module and serve as the input of User Clustering module.
+	\stab(1)  Feature Extraction: By coalescing the microblog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Basics} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored  Sina Weibo data by Feature Extraction module, and serve as the input of the User Clustering module.
 	
 	\stab(2)  User Clustering: Providing the user-based features, User Clustering takes charge of the clustering task such that each user falls into a proper group.
 	
-	\stab(3)  Behavior Modeling: For each group obtained by User Clustering, Behavior Modeling employs both positive and negative samples (i.e., microblogs that were labeled with \retd{} and not \retd{}) to train a model, over which the testing of users' \retg{} behavior is performed.
+	\stab(3)  Behavior Modeling: For each group obtained by User Clustering, Behavior Modeling builds a  model by employing both positive and negative samples (i.e., microblogs that are labeled with \retd{} and not \retd{}), over which the testing of users' \retg{} behavior is performed.
 %\end{enumerate}
 	
 \stitle{Profile Demonstrator.} At the top layer of \sys{}, it is the Profile Demonstrator for visualization.
 %For the time being, Profile Demonstrator presents \tbc{}.
 
+
+System  \sys{} models user behaviors over groups instead of the mono model for all users.
+
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Illustration of Variables in Basic Feature}
+\vspace{0.3cm}
+\label{tbl:fe-info}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+\#$R_u$				& number of followers				\\	\midrule
+\#$E_u$				& number of followees				\\	\midrule
+                    & a ratio defined as the number of followers over \\
+\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
+$U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
+\end{tabular}
+\end{small}
+\vspace{-3ex}
+\end{table}
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Category of User Type}
+\vspace{0.3cm}
+\label{tbl:ucate}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Values}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
+\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
+ 						&                       									\\	\midrule
+\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
+						&															\\	\midrule
+3                   	& other cases 												\\ \bottomrule
+\end{tabular}
+\end{small}
+\end{table}
 
 
