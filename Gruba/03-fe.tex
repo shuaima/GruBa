@@ -172,7 +172,7 @@ S(u, L) = (s_0, s_1, \ldots,\ s_{n-1}),
 where $n$ refers to the cardinality of $L$ (i.e., number of topics in $L$) and $s_k$ is the overall similarity of user $u$ over topic $t_k$, which is given by:
 \begin{equation}
 \label{eq:simul-2}
-s_k = \sum_{\substack{m}} sim(b_m, t_k)
+s_k = \sum_{\substack{m}} sim(b_m, t_k).
 \end{equation}
 
 Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ (3 in \sys{}) similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_u$ as described in Definition \ref{def:inte}.
