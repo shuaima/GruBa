@@ -18,7 +18,7 @@ For simplicity, assuming the microblogs that a user can \ret{} come from those o
 
 \begin{definition}
 \label{def:blog}
-A microblog $M_b = (O, T, M, flag)$ has its owner $O$ (a.k.a. user in this paper) to whom $M_b$ belongs (either created or \retd{}), the generated time $T$ of $M_b$, the message context $M$, and $flag$ denoting $M_b$ is \retd{} (1) or originally created (0) by $O$.
+A microblog $M_b = (O, T, M, flag)$ has its owner $O$ (a.k.a. user in this paper) to whom $M_b$ belongs (either created or \retd{}), the generated time $T$ of $M_b$, the message context $M$, and $flag$ denoting $M_b$ is \retd{} (1) or originally \tw{} (0) by $O$.
 \end{definition}
 
 \begin{comment}
@@ -40,12 +40,12 @@ Providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$
 
 
 \subsection{\sys{} Framework}
-System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and 
+System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and
 Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
 
 \begin{figure}[tb!]
 \centering
-\includegraphics[width=.67\linewidth]{figures/architecture.pdf}
+\includegraphics[width=.67\linewidth]{figures/architecture.eps}
 \vspace{-1ex}
 \caption{\sys{} Architecture}
 \label{fig:framework}
@@ -101,15 +101,17 @@ As shown above, the distinctive feature of System  \sys{} is to model user \retg
 \begin{tabular}{ll}
 \toprule
 \multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+$G_u$				& gender of user $u$				\\	\midrule
+$P_u$				& province of user $u$				\\	\midrule
 \#$R_u$				& number of followers				\\	\midrule
 \#$E_u$				& number of followees				\\	\midrule
                     & a ratio defined as the number of followers over \\
-\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., $\frac{\#R_u}{\#E_u}$ \\  \midrule
+\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
 $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 \end{tabular}
 \end{small}
-\vspace{-3ex}
 \end{table}
+
 \begin{table}[tb!]
 \centering
 \begin{small}
