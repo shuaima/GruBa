@@ -3,6 +3,20 @@
 
 %This section shall look into the principle of each component in Processing Runtime subsystem, putting forth a full-fledged system.
 
+\subsection{\sys{} Framework}
+System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and
+Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
+
+\begin{figure}[tb!]
+\centering
+\includegraphics[width=.67\linewidth]{figures/architecture.eps}
+\vspace{-1ex}
+\caption{\sys{} Architecture}
+\label{fig:framework}
+\vspace{-5ex}
+\end{figure}
+
+
 \subsection{Problem Formulation}
 % {user, blog, user-blog} => model
 % query (a user u, a blog b that is created or forwarded by u's friend)
@@ -39,18 +53,6 @@ Note that $M_b.O$ is a user $u$, and $B_u$ is a set of $M_b$.
 Providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$, as well as a microblog $b$ and a follower $f$ of its onwer $b.O$, i.e., $f \in R_{b.O}$, system \sys{} builds a \retg{} model for $\mathbb{U}$ and $\mathbb{B}$, upon which 1/0 is returned regarding whether $f$ \ret{s} $b$ or not.
 
 
-\subsection{\sys{} Framework}
-System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and
-Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
-
-\begin{figure}[tb!]
-\centering
-\includegraphics[width=.67\linewidth]{figures/architecture.eps}
-\vspace{-1ex}
-\caption{\sys{} Architecture}
-\label{fig:framework}
-\vspace{-4ex}
-\end{figure}
 
 
 % #like and #comment are saved; could generalize \sys{} to model the liking behavior (among commented blogs)
@@ -73,6 +75,48 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}. %, main
 \end{comment}
 
 
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Illustration of Variables in Basic Feature}
+%\vspace{0.3cm}
+\label{tbl:fe-info}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+$G_u$				& gender of user $u$				\\	\midrule
+$P_u$				& province of user $u$				\\	\midrule
+\#$R_u$				& number of followers				\\	\midrule
+\#$E_u$				& number of followees				\\	\midrule
+                    & a ratio defined as the number of followers  \\
+\raisebox{1.5ex}{$R_{ee}$}  & over that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
+$U_t$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottomrule
+\end{tabular}
+\end{small}
+\vspace{-2ex}
+\end{table}
+
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Category of User Type}
+%\vspace{0.3cm}
+\label{tbl:ucate}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Types}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
+\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
+ 						&                       									\\	\midrule
+\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
+						&															\\	\midrule
+3                   	& other cases 												\\ \bottomrule
+\end{tabular}
+\end{small}
+\vspace{-2ex}
+\end{table}
+
+
 \stitle{Sina Microblog Data.} It is the data crawled to be processed by \sys{}, i.e., data of microblogs and users, as shown in \textit{Definitions} \textit{\ref{def:blog}} and \textit{\ref{def:user}}.
 
 \stitle{Key Modules.}
@@ -92,44 +136,5 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}. %, main
 
 As shown above, the distinctive feature of System  \sys{} is to model user \retg{} behaviors over groups instead of the mono model for all users.
 
-\begin{table}[tb!]
-\centering
-\begin{small}
-\caption{Illustration of Variables in Basic Feature}
-%\vspace{0.3cm}
-\label{tbl:fe-info}
-\begin{tabular}{ll}
-\toprule
-\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
-$G_u$				& gender of user $u$				\\	\midrule
-$P_u$				& province of user $u$				\\	\midrule
-\#$R_u$				& number of followers				\\	\midrule
-\#$E_u$				& number of followees				\\	\midrule
-                    & a ratio defined as the number of followers over \\
-\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
-$U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
-\end{tabular}
-\end{small}
-\end{table}
-
-\begin{table}[tb!]
-\centering
-\begin{small}
-\caption{Category of User Type}
-%\vspace{0.3cm}
-\label{tbl:ucate}
-\begin{tabular}{ll}
-\toprule
-\multicolumn{1}{l}{\textbf{Values}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
-0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
-\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
- 						&                       									\\	\midrule
-\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
-						&															\\	\midrule
-3                   	& other cases 												\\ \bottomrule
-\end{tabular}
-\end{small}
-\vspace{-2ex}
-\end{table}
 
 
