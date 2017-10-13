@@ -35,7 +35,7 @@ A user $u = (B_u, R_u, E_u)$ consists of three sets regarding the user's microbl
 %The mapping between blog $B$ and user $U$ is a bilateral operation, i.e., $U = O(B)$ and $B \in B_s(U)$, through ID(s) of user and blog respectively.
 By Definition \textit{\ref{def:blog}} and \textit{\ref{def:user}}, $u = M_b.O$ and $M_b \in B_u$.
 %
-Informally, providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$, as well as a microblog $b$ and a follower of $b.O$ written as $f$, i.e., $f \in R_{b.O}$, \sys{} shall build a \retg{} model for $\mathbb{U}$ and $\mathbb{B}$, upon which 1/0 is returned regarding whether $f$ shall \ret{} $b$ or not.
+Providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$, as well as a microblog $b$ and a follower of $b.O$ written as $f$, i.e., $f \in R_{b.O}$, \sys{} builds a \retg{} model for $\mathbb{U}$ and $\mathbb{B}$, upon which 1/0 is returned regarding whether $f$ shall \ret{} $b$ or not.
 
 
 \subsection{\sys{} Framework}
@@ -89,7 +89,7 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}. %, main
 %For the time being, Profile Demonstrator presents \tbc{}.
 
 
-System  \sys{} models user behaviors over groups instead of the mono model for all users.
+The distinctive feature of System  \sys{} is to model user \retg{} behaviors over groups instead of the mono model for all users.
 
 \begin{table}[tb!]
 \centering
