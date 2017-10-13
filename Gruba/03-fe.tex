@@ -118,12 +118,28 @@ Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the no
 
 
 TF-IDF based similarity is then calculated.
-For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
+%For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined %as:
+%\begin{equation}
+%\label{eq:sim-tf1}
+%sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t),
+%\end{equation}
+%where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector %\cite{IEEEexample:mikolov2013distributed}.
+For example, the similarity of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as formula \ref{eq:sim-tf1}.
+Here $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, $VEC_{W_f}$ is defined as formula \ref{eq:sum-tf1}, $VEC_t$ is defined as formula \ref{eq:sum-lexion},
+where $N_t$ is the number of words in topic $t$ and $vec[w]$ is the word vector of word $w$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
 \begin{equation}
 \label{eq:sim-tf1}
-sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t),
+sim(W_f, t) = VEC_{W_f} \cdot VEC_t
 \end{equation}
-where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
+\begin{equation}
+\label{eq:sum-tf1}
+VEC_{W_f} = \sum_{\substack{i}} p_i*vec[w_i]
+\end{equation}
+\begin{equation}
+\label{eq:sum-lexion}
+VEC_t = \sum_{\substack{j}} \frac{1}{N_t}*vec[c_j]
+\end{equation}
+%where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector %\cite{IEEEexample:mikolov2013distributed}.
 
 \etitle{Step 3.2:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained by using Twitter-LDA  %\ref{IEEEexample:zhao2011comparing}
 to result the word weight distribution of microblog $b$.
