@@ -1,41 +1,45 @@
 \section{Feature Extraction}
 \label{sec:fe}
 
-With the underlying Sina Microblog Data, Feature Extraction is responsible for ``mining'' the user characteristics, resulting three features for each user.
-These features are \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, which constitute the \textit{Feature Data} in \sys{}, i.e., \textit{Feature Data} = \{\textit{Basic Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
+With the underlying Sina Microblog Data, the Feature Extraction module is responsible for ``mining'' the user characteristics, and produces three classes of features for each user: \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, referred to as  \textit{Feature Data} in \sys{}.
+%, i.e., \textit{Feature Data} = \{\textit{Basic Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
 
 
 
 
 \subsection{Basic Feature}
 
-\textit{Basic Feature} employs a vector $I$ to cover the basic info of user.
+The \textit{Basic Feature} employs a vector $I$ to depict the basic characteristics of a user $u$.
 \begin{equation}
 \label{eq:info}
-	I = (G_u,\ P_u,\ \#R_u,\ \#E_u,\ R_{ee},\ \ U_t)
+	I_u = (G_u, P_u, \#R_u, \#E_u, R_{ee,u}, U_{t,u}),
 \end{equation}
-where each variable is illustrated in Table \ref{tbl:fe-info}.
+in which the variable details are illustrated in Table \ref{tbl:fe-info}.
 %Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
 
 \subsection{Behavior Feature}
 
-Unlike \textit{Basic Feature}, \textit{Behavior Feature} shows several statistics regarding the user's \retg{} behavior.
-Such statistics include:
-\begin{itemize}
-	\item a value for the number of owned microblogs $\#B_u$
-	\item a ratio $R_{oc}$ that is defined as the number of \retd{} microblogs over that of originally \twd{}, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$
-	\item values showing the average number of \retd{} and \twd{} microblogs per week: $\#W_r$, $\#W_t$
-	\item normalized vectors regarding the time distribution of a user's \retg{}/\twg{} behavior: $P_{rt}\ = (p'_{r0},\ p'_{r1},\ ...,\ p'_{r11})$, $P_{tt}\ = (p'_{t0},\ p'_{t1},\ ...,\ p'_{t11})$, where $p'_{r0}$/$p'_{t0}$ is the probability that the \retg{}/\twg{} activity happens from 0am to 2am, $p'_{r1}$/$p'_{t1}$ is the probability that the \retg{}/\twg{} activity happens from 2am to 4am, and so on.
+Unlike \textit{Basic Feature}, the \textit{Behavior Feature} of a user $u$ is certain statistics regarding the \retg{} behavior of $u$, shown below:
 
-	\item normalized vectors with respect to the gap distribution of a user's \retg{}/\twg{} behavior: $P_{rg}\ = (p''_{r0},\ p''_{r1},\ ...,\ p''_{r5})$, $P_{tg}\ = (p''_{t0},\ p''_{t1},\ ...,\ p''_{t5})$, in which $p''_{r0}$/$p''_{t0}$ is the probability that the gap between two \retd{}/\twg{} microblogs is within 1 min. Ditto for $p''_{r1}$/$p''_{t1}$ (1 min to 1 hour), $p''_{r2}$/$p''_{t2}$ (1 to 12 hours), $p''_{r3}$/$p''_{t3}$ (12 to 24 hours), $p''_{r4}$/$p''_{t4}$ (24 to 48 hours) and  $p''_{r5}$/$p''_{t5}$ (more than 48 hours).
-\end{itemize}
+\sstab(a) the number of owned microblogs $\#B_u$,
 
-Hence, \textit{Behavior Feature} $H$ per user comes with:
+\sstab(b) the ratio $R_{oc,u}$ that is the number of \retd{} microblogs over that of originally \twd{}, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$,
+
+\sstab(c) the average number of \retd{} and \twd{} microblogs per week: $\#W_{r,u}$ and $\#W_{t,u}$,
+
+\sstab(d) the normalized vectors regarding the time distribution of a user's \retg{}/\twg{} behavior: $P_{rt,u}\ = (p'_{r0},\ p'_{r1},\ ...,\ p'_{r11})$, $P_{tt,u}\ = (p'_{t0},\ p'_{t1},\ ...,\ p'_{t11})$, where $p'_{r0}$/$p'_{t0}$ is the probability that the \retg{}/\twg{} activity happens from 0am to 2am, $p'_{r1}$/$p'_{t1}$ is the probability that the \retg{}/\twg{} activity happens from 2am to 4am, and so on, and
+
+\sstab(e) the normalized vectors with respect to the gap distribution of a user's \retg{}/\twg{} behavior: $P_{rg,u}\ = (p''_{r0},\ p''_{r1},\ ...,\ p''_{r5})$, $P_{tg,u}\ = (p''_{t0},\ p''_{t1},\ ...,\ p''_{t5})$, in which $p''_{r0}$/$p''_{t0}$ is the probability that the gap between two \retd{}/\twg{} microblogs is within 1 min. Ditto for $p''_{r1}$/$p''_{t1}$ (1 min to 1 hour), $p''_{r2}$/$p''_{t2}$ (1 to 12 hours), $p''_{r3}$/$p''_{t3}$ (12 to 24 hours), $p''_{r4}$/$p''_{t4}$ (24 to 48 hours) and  $p''_{r5}$/$p''_{t5}$ (more than 48 hours).
+
+
+In summary, the \textit{Behavior Feature} $H_u$ of user $u$ consists of the following:
+
 \begin{equation}
 \label{eq:beha}
-	H = (\#B_u, R_{oc},\ \#W_r,\ P_{rt},\\
-    P_{rg},\ \#W_t,\ P_{tt},\ P_{tg})
+(\#B_u, R_{oc,u}, \#W_{r,u}, P_{rt,u}, P_{rg,u}, \#W_{t,u}, P_{tt,u}, P_{tg,u}).
 \end{equation}
+
+
 % where $\#B_u$, $R_{oc}$, $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
 
 \subsection{Interest Feature}

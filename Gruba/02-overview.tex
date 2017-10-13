@@ -22,7 +22,7 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}. %, main
 % query (a user u, a blog b that is created or forwarded by u's friend)
 % returns: Y/N u shall forward b
 
-We consider people's \retg{} behavior in social media.
+We consider the \retg{} behavior of users in social media.
 %For simplicity, with a given user, we assume that microblogs created or \retd{} by his/her followees cover the overall candidates, from which the said user may \ret{}.
 For simplicity, assuming the microblogs that a user can \ret{} come from those owned by his/her followees.
 
@@ -89,8 +89,8 @@ $P_u$				& province of user $u$				\\	\midrule
 \#$R_u$				& number of followers				\\	\midrule
 \#$E_u$				& number of followees				\\	\midrule
                     & a ratio defined as the number of followers  \\
-\raisebox{1.5ex}{$R_{ee}$}  & over that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
-$U_t$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottomrule
+\raisebox{1.5ex}{$R_{ee,u}$}  & over that of followees, i.e., $\frac{\#R_u}{\#E_u}$ \\  \midrule
+$U_{t,u}$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottomrule
 \end{tabular}
 \end{small}
 \vspace{-2ex}
