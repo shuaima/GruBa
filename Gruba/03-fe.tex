@@ -17,11 +17,30 @@ These features are \textit{Basic Feature}, \textit{Behavior Feature} and \textit
 \textit{Basic Feature} employs a vector $I$ to cover the basic info of user.
 \begin{equation}
 \label{eq:info}
-	I = (\#R_u,\ \#E_u,\ R_{ee},\ \ U_t)
+	I = (G_u,\ P_u,\ \#R_u,\ \#E_u,\ R_{ee},\ \ U_t)
 \end{equation}
 where each variable is illustrated in Table \ref{tbl:fe-info}.
 %Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
 
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Illustration of Variables in Basic Feature}
+\vspace{0.3cm}
+\label{tbl:fe-info}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+$G_u$				& gender of user $u$				\\	\midrule
+$P_u$				& province of user $u$				\\	\midrule
+\#$R_u$				& number of followers				\\	\midrule
+\#$E_u$				& number of followees				\\	\midrule
+                    & a ratio defined as the number of followers over \\  
+\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
+$U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
+\end{tabular}
+\end{small}
+\end{table}
 
 
 \subsection{Behavior Feature}
@@ -31,22 +50,25 @@ Such statistics include:
 \begin{itemize}
 	\item a value for the number of owned microblogs $\#B_u$
 	\item a ratio $R_{oc}$ that is defined as the number of \retd{} microblogs over that of originally created, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$
-	\item a value showing the average number of \retd{} microblogs per week: $\#W_r$
-	\item a normalized vector regarding the time distribution of a user's \retg{} behavior: $P_t\ = (p'_0,\ p'_1,\ ...,\ p'_{11})$, where $p'_0$ is the probability that the \retg{} activity happens from 0am to 2am, $p'_1$ is the probability that the \retg{} activity happens from 2am to 4am, and so on.
-	\item a normalized vector with respect to the gap distribution of a user's \retg{} behavior: $P_g\ = (p''_0,\ p''_1,\ ...,\ p''_{5})$, in which $p''_0$ is the probability that the gap between two \retd{} microblogs is within 1 min. Ditto for $p''_1$ (1 min to 1 hour), $p''_2$ (1 to 12 hours), $p''_3$ (12 to 24 hours), $p''_4$ (24 to 48 hours) and  $p''_5$ (more than 48 hours).
+	\item values showing the average number of \retd{} and \twe{} microblogs per week: $\#W_r$, $\#W_t$
+	\item a normalized vector regarding the time distribution of a user's \retg{} behavior: $P_{rt}\ = (p'_0,\ p'_1,\ ...,\ p'_{11})$, where $p'_0$ is the probability that the \retg{} activity happens from 0am to 2am, $p'_1$ is the probability that the \retg{} activity happens from 2am to 4am, and so on.
+    \item a normalized vector regarding the time distribution of a user's \twtg{} behavior: $P_{tt}$, obtained as $P_{rt}$.
+
+	\item a normalized vector with respect to the gap distribution of a user's \retg{} behavior: $P_{rg}\ = (p''_0,\ p''_1,\ ...,\ p''_{5})$, in which $p''_0$ is the probability that the gap between two \retd{} microblogs is within 1 min. Ditto for $p''_1$ (1 min to 1 hour), $p''_2$ (1 to 12 hours), $p''_3$ (12 to 24 hours), $p''_4$ (24 to 48 hours) and  $p''_5$ (more than 48 hours).
+    \item a normalized vector with respect to the gap distribution of a user's \twtg{} behavior: $P_{tg}$, obtained as $P_{rg}$.
 \end{itemize}
 
 Hence, \textit{Behavior Feature} $H$ per user comes with:
 \begin{equation}
 \label{eq:beha}
-	H = (\#W_r,\ P_t,\ P_g)
+	H = (\#B_u, R_{oc},\ \#W_r,\ P_{rt},\ P_{rg},\ \#W_t,\ P_{tt},\ P_{tg})
 \end{equation}
-where $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
+% where $\#B_u$, $R_{oc}$, $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
 
 \subsection{Interest Feature}
 
 Different from the straightforward notions of \textit{Basic Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics.
-In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the probability that the said user matches a \textit{topic}.
+In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the degree that the said user is interested in the corresponding \textit{topic}.
 
 \begin{definition}
 \label{def:lexi}
@@ -72,7 +94,7 @@ in which the said user matches $x$ \textit{topics} in lexicon and $p_i$ refers t
 
 Next, we shall present the ``mining'' process for interest features.
 In short, \sys{} employs a well established lexicon to discover the explicit interests of users.
-In case no proper explicit interests are found, TF-IDF and Twitter-LDA are leveraged to explore the implicit interests, during which word2vector participates to provide the similarity between two words.
+In case no proper explicit interests are found, TF-IDF(term-frequency and inverse document-frequency) and Twitter-LDA \cite{IEEEexample:zhao2011comparing} are leveraged to explore the implicit interests, during which word2vector participates to provide the similarity between two words.
 
 In \sys{}, a word, either in the form of $c$ or $w$, acts as the minimum unit for analysis.
 Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be generalized to the similarity of a microblog against one topic $sim(b, t)$, and finally to a user versus each topic in lexicon $sim(u, t)$; topics with similarity satisfying certain thresholds are allocated to the user $u$ and constitute the interests of $u$.
@@ -97,7 +119,7 @@ Thus, by looking into the similarity of $b$ against all topics in lexicon, the e
 
 If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textbf{Step 3} and \textbf{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$.
 
-\stitle{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF (term-frequency and inverse document-frequency) to calculate the weight distribution of words in microblog $b$:
+\stitle{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF to calculate the weight distribution of words in microblog $b$:
 \begin{equation}
 \label{eq:tf}
 W_f = \{(w_i, p_i)\}
@@ -116,7 +138,6 @@ Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the no
 Go to \textbf{Step 5}.
 
 \stitle{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA  %\ref{IEEEexample:zhao2011comparing}
-\cite{IEEEexample:zhao2011comparing}
 to result the word weight distribution of microblog $b$.
 Unlike TF-IDF, Twitter-LDA first trains the overall microblogs, allocating each microblog with a \textit{tag}.
 %
@@ -204,7 +225,8 @@ where $I$, $H$ and $P_f$ refer to \textit{Basic Feature}, \textit{Behavior Featu
 And it could be written as a vector:
 \begin{equation}
 \label{eq:fu-flat}
-	F(u) = (\#R_s, \#E_s, R_{ee}, \#B_s, R_{oc}, U_t, \#W_r, P_t, P_g, P_f)
+	F(u) = (G_u,\ P_u, \#R_s, \#E_s, R_{ee}, U_t, \#B_u,\ R_{oc},\ \#W_r,\ P_{rt},\ P_{rg},\ \#W_t,\ P_{tt},\ P_{tg}, P_f)
+%(\#R_s, \#E_s, R_{ee}, \#B_s, R_{oc}, U_t, \#W_r, P_t, P_g, P_f)
 \end{equation}
 where each dimension refers to a data item of \sys{}.
 
