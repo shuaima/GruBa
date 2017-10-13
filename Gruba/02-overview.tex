@@ -40,7 +40,7 @@ Providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$
 
 
 \subsection{\sys{} Framework}
-System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media.
+System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and 
 Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
 
 \begin{figure}[tb!]
@@ -79,7 +79,7 @@ Figure \ref{fig:framework} shows the architectural components of \sys{}. %, main
 \sys{} consists of three key modules.
 %\begin{enumerate}
 
-	\stab(1)  Feature Extraction: By coalescing the microblog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Basics} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., the long-term/recent interests, as well as the explicit/implicit interests). These features are extracted from the stored  Sina Weibo data by Feature Extraction module, and serve as the input of the User Clustering module.
+	\stab(1)  Feature Extraction: By coalescing the microblog data, each user is depicted by a bunch of features, which are grouped into three categories. They are features of \textit{Basics} (e.g., the number of followers and followees), \textit{Behavior} (e.g., the frequency and the popular slots of \retg{}) and \textit{Interest} (e.g., long and short term interests, as well as explicit and implicit interests). These features are extracted from the stored  Sina Weibo data by Feature Extraction module, and serve as the input of the User Clustering module.
 	
 	\stab(2)  User Clustering: Providing the user-based features, User Clustering takes charge of the clustering task such that each user falls into a proper group.
 	
