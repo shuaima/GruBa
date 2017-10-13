@@ -129,13 +129,39 @@ Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which
 Go to \textbf{Step 6}.
 
 \stitle{Step 5:} TF-IDF based similarity is calculated.
-For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
+%For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined %as:
+%\begin{equation}
+%\label{eq:sim-tf1}
+%sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t)
+%\end{equation}
+%where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector %\cite{IEEEexample:mikolov2013distributed}.
+%Go to \textbf{Step 7}.
+
+
+
+For example, the similarity of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as formula \ref{eq:sim-tf1}. Here $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, $VEC_{W_f}$ is defined as formula \ref{eq:sum-tf1}, $VEC_t$ is defined as formula \ref{eq:sum-lexion}, where $N_t$ is the word count in topic $t$ and $vec[w]$ is the word vector of word $w$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
 \begin{equation}
 \label{eq:sim-tf1}
-sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t)
+%\cdot
+sim(W_f, t) = VEC_{W_f} \cdot VEC_t
+%\sum_{\substack{i}} p_i*sim(w_i, t)
 \end{equation}
-where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
-Go to \textbf{Step 7}.
+\begin{equation}
+\label{eq:sum-tf1}
+%\cdot
+VEC_{W_f} = \sum_{\substack{i}} p_i*vec[w_i]
+%\sum_{\substack{i}} p_i*sim(w_i, t)
+\end{equation}
+\begin{equation}
+\label{eq:sum-lexion}
+%\cdot
+VEC_t = \sum_{\substack{j}} \frac{1}{N_t}*vec[c_j]
+%\sum_{\substack{i}} p_i*sim(w_i, t)
+\end{equation}
+
+
+%and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$
+%Go to \textbf{Step 7}.
 
 \begin{comment}
 :
@@ -145,18 +171,24 @@ sim(w_i, t) = \sum_{\substack{j}} sim(w_i, c_j)
 \end{equation}
 \end{comment}
 
-
-
 \stitle{Step 6:} Accordingly, Twitter-LDA based similarity is available.
+%Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined %as:
+%\begin{equation}
+%\label{eq:sim-tw1}
+%sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
+%\end{equation}
+%%%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
+%where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$,
+%and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
+%Go to \textbf{Step 7}.
+
 Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined as:
 \begin{equation}
 \label{eq:sim-tw1}
-sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
+sim(W_w, t) = VEC_{W_w} \cdot VEC_t
 \end{equation}
-%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
-where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$,
-and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
-Go to \textbf{Step 7}.
+%%%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
+where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$, and $VEC_{W_w}$ can be obtained similarly as $VEC_{W_f}$.
 
 \begin{comment}
 :
