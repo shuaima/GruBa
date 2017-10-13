@@ -30,7 +30,7 @@ finally, the averaged Silhouette coefficient value of all users serves as the Si
 	\ForAll {$u \in \{u\}$}
 		\State in-cluster distance $d_i(u)$ \label{v-b};
 		\State out-cluster distance $d_o(u)$;
-		\State Silhouette coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$; \label{v-e}
+		\State Silhouette coefficient value $v(u)\ :=\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$; \label{v-e}
 	\EndFor
 	\State $v(t)\ :=\ Avg\{v(u)\}$; \label{avg}
 \EndFor
@@ -53,43 +53,42 @@ Similar as K-Prototype, K-Gru randomly selects the cluster kernels among samples
 
 Unlike K-Prototype that supports vector samples in which each dimension is of numerical/categorical, K-Gru could also handle the case where a dimension is one normalized vector.
 %
-Recall the sample data for User Clustering, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu-flat}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}.
+Recall the sample data for User Clustering, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}.
 
 \begin{table}[!htb]
 \centering
 \begin{small}
 %\caption{Types of Dimensional Data in \textit{Feature Data} Vector}
 \caption{Dimension Types in \textit{Feature Data} Vector}
-\vspace{0.3cm}
+%\vspace{0.3cm}
 \label{tbl:data-type}
 \begin{tabular}{ll}
 \toprule
-\multicolumn{1}{c}{\textbf{type}} & \multicolumn{1}{c}{\textbf{data dimensions}}	\\	\midrule \midrule
+\multicolumn{1}{l}{\textbf{Types}} & \multicolumn{1}{l}{\textbf{Data Dimensions}}	\\	\midrule \midrule
 numerical data				& $\#R_u$, $\#E_u$, $R_{ee,u}$, $\#B_u$,\\
                             &  $R_{oc,u}$, $\#W_{r,u}$,$\#W_{t,u}$				\\	\midrule
-categorical data			& $G_u$,$P_u$,$U_{t,u}$				\\	\midrule
-normalized vectors			& $P_{rt,u}$, $P_{rg,u}$,$P_{tt,u}$,$P_{tg,u}$,$P_{f,u}$			\\ \bottomrule
+categorical data			& $G_u, P_u, U_{t,u}$				\\	\midrule
+normalized vectors			& $P_{rt,u}$, $P_{rg,u}$, $P_{tt,u}$, $P_{tg,u}$, $P_{f,u}$			\\ \bottomrule
 \end{tabular}
 \end{small}
 \end{table}
 
-As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers(normalized to 0-1 range), categories and normalized vectors.
-For simplicity, we shall first illustrate the distance calculation of the simple vectors with mono data type on each dimension and then demonstrate that of complex vectors in K-Gru.
+As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers (normalized to 0-1 range), categories and normalized vectors. For simplicity, we shall first illustrate the distance calculation of the simple vectors with a mono data type on each dimension, and then demonstrate that of complex vectors. 
 
-Given two numerical vectors $Y'\ = (y'_0, y'_1, ...)$ and $Z'\ = (z'_0, z'_1, ...)$, the \od{} \cite{IEEEexample:books/mk/HanKP2011} between $Y'$ and $Z'$ is given by :
+For numerical vectors $Y'\ = (y'_0, y'_1, \ldots)$ and $Z'\ = (z'_0, z'_1, \ldots)$, the \od{} \cite{IEEEexample:books/mk/HanKP2011} between $Y'$ and $Z'$ is given by :
 %
 \begin{equation}
 \label{eq:od}
 D_n(Y', Z') = \sum_{\substack{e}} (y_e - z_e)^2
 \end{equation}
 
-As to the categorical vectors $Y''\ = (y''_0, y''_1, ...)$ and  $Z''\ = (z''_0, z''_1, ...)$, the \hd{} \cite{IEEEexample:huang1997clustering} of $Y''$ and $Z''$ is:
+For categorical vectors $Y''\ = (y''_0, y''_1, \ldots)$ and  $Z''\ = (z''_0, z''_1, \ldots)$, the \hd{} \cite{IEEEexample:huang1997clustering} of $Y''$ and $Z''$ is:
 %
 \begin{equation}
 \label{eq:hd}
-D_h(Y'', Z'') = \sum_{\substack{e}} H_e
+D_h(Y'', Z'') = \sum_{\substack{e}} H_e,
 \end{equation}
-where $H_e$ refers to the \hd{} over each dimension, with $H_e\ =\ 1$ if $y''_e$ and $z''_e$ share the identical value, and $H_e\ =\ 0$ otherwise.
+where $H_e$ refers to the \hd{} over each dimension, with $H_e = 1$ if $y''_e$ and $z''_e$ share the identical value, and $H_e = 0$, otherwise.
 
 Regarding two vectors where each dimension is a normalized vector per se, Cosine Similarity is leveraged to compute the distance.
 Then, the distance between such two vectors $Y^{\ast}\ = (Y^{\ast}_0, Y^{\ast}_1, ...)$ and $Z^{\ast}\ = (Z^{\ast}_0, Z^{\ast}_1, ...)$ is:
@@ -100,7 +99,7 @@ D_v(Y^{\ast}, Z^{\ast}) = 1- \sum_{\substack{e}} Y^{\ast}_e \cdot Z^{\ast}_e
 \end{equation}
 where $\cdot$ refers to the dot product operation between two normalized vectors $Y^{\ast}_e$ and $Z^{\ast}_e$.
 
-Hence, the said distance regarding the complex vectors ($Y\ =\ (Y_0, Y_1, ...)$ and $Z\ =\ (Z_0, Z_1, ...)$ ) in K-Gru, named \gd{}, could be deduced as:
+Putting these together, the distance regarding the complex vectors $Y\ =\ (Y_0, Y_1, ...)$ and $Z\ =\ (Z_0, Z_1, ...)$ in K-Gru, referred to as \gd{}, is defined as:
 %
 \begin{equation}
 \label{eq:gd}
@@ -112,9 +111,9 @@ where the distance on each dimension $G_e$ is given by:
 \label{eq:ge}
 G_e =
   \begin{cases}
-    (Y_e - Z_e)^2       & \quad \text{if } Y_e/Z_e \text{ is numerical}\\
-    H_e\ (1\ or\ 0)       	& \quad \text{if } Y_e/Z_e \text{ is categorical}\\
-    1 - Y_e \cdot Z_e  		& \quad \text{if } Y_e/Z_e \text{ is of normalized vector}
+    (Y_e - Z_e)^2       &  \text{if } Y_e/Z_e \text{ is numerical}\\
+    H_e\ (1\ or\ 0)       	&  \text{if } Y_e/Z_e \text{ is categorical}\\
+    1 - Y_e \cdot Z_e  		&  \text{if } Y_e/Z_e \text{ is of normalized vector}
   \end{cases}
 \end{equation}
 
@@ -122,41 +121,41 @@ G_e =
 \subsection{Silhouette Coefficient Metric Computation}
 \label{sec:compu}
 
-In \sys{}, Silhouette coefficient value serves as the fundamental criteria for the optimal clustering selection.
+In system \sys{}, the Silhouette coefficient metric serves as the fundamental criteria for deriving an optimal clustering result.
 Providing a clustering result, each user is associated with a cluster.
 
-For a given user $u$ of cluster $l$, we employ the vector $Y$ to denote the \textit{Feature Data} as in formula \ref{eq:fu-flat}.
+%For a user $u$ of cluster $l$, we employ the vector $Y$ to denote the \textit{Feature Data} as in formula \ref{eq:fu}.
 
 \begin{definition}
 \label{def:di}
-The in-cluster distance $d_i(u)$ is the average distance to all the other users in the same cluster, i.e., $\forall u'' \in l$ \& $u \neq u''$:
+The in-cluster distance $d_i(u)$ is the average distance to all the other users in the same cluster:
 \begin{equation}
-	d_i(u) = Avg\{D_g(Y_u, Y_u'')\}
+	d_i(u) = Avg\{D_g(F_u, F_u'')\ |\ u'' \in l \wedge  u \neq u''\}.
 \end{equation}
 \end{definition}
 
 \begin{definition}
 \label{def:do}
-The out-cluster distance $d_o(u)$ is measured as the minimum of the distances $\{d^{\ast}\}$ between $u$ and other clusters ($\forall l' \neq l$), i.e.:
+The out-cluster distance $d_o(u)$ is measured as the minimum of the distances $\{d^{\ast}\}$ between $u$ and other clusters:
 \begin{equation}
-	d_o(u) = Min\{d^{\ast}(u, l')\}
+	d_o(u) = Min\{d^{\ast}(u, l')\ |\  l' \neq l \},
 \end{equation}
 where $d^{\ast}$ is given by:
 \begin{equation}
-	d^{\ast}(u, l') = Avg\{D_g(Y_u, Y_u')\}\ \forall u' \in l'
+	d^{\ast}(u, l') = Avg\{D_g(Y_u, Y_u') \ | \ u' \in l'\}.
 \end{equation}
 \end{definition}
 
 \begin{definition}
 \label{def:coef}
-The Silhouette coefficient value $v(u)$ is thus concluded:
+The Silhouette coefficient value $v(u)$ is defined as:
 \begin{equation}
 \label{eq:coef}
-v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}	
+v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}.	
 \end{equation}
 \end{definition}
 
-Intuitively, a good clustering solution should result bigger $d_o$ and smaller $d_i$, such that samples with obvious differences go to various clusters and vice versa.
+Intuitively, a good clustering solution should have a bigger $d_o$ and a smaller $d_i$, such that samples with obvious differences go to various clusters and vice versa.
 When $d_o$ is far more than $d_i$, Silhouette coefficient value approaches to 1.
 Hence, the larger Silhouette coefficient value is, the better clustering performs, by which the optimal solution is selected.
 
