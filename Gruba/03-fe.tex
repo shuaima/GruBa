@@ -129,15 +129,15 @@ Here $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, $VEC_{W_f}$ is defined as formula \r
 where $N_t$ is the number of words in topic $t$ and $vec[w]$ is the word vector of word $w$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
 \begin{equation}
 \label{eq:sim-tf1}
-sim(W_f, t) = VEC_{W_f} \cdot VEC_t
+sim(W_f, t) = VEC_{W_f} \cdot VEC_t, where
 \end{equation}
 \begin{equation}
 \label{eq:sum-tf1}
-VEC_{W_f} = \sum_{\substack{i}} p_i*vec[w_i]
+VEC_{W_f} = \sum_{\substack{i}} p_i*vec[w_i], and
 \end{equation}
 \begin{equation}
 \label{eq:sum-lexion}
-VEC_t = \sum_{\substack{j}} \frac{1}{N_t}*vec[c_j]
+VEC_t = \sum_{\substack{j}} \frac{1}{N_t}*vec[c_j].
 \end{equation}
 %where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector %\cite{IEEEexample:mikolov2013distributed}.
 
