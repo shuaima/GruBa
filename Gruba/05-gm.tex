@@ -5,6 +5,7 @@
 %road map
 %detail of each step, with motivation
 
+
 Recall the central problem of \sys{}, where the \retg{} behaviors of users are modeled.
 Specifically, such model is built by Group Modeling for each user group and thus named as group model.
 To avoid ambiguity, we shall use the term of \textit{items} to denote the data for training the group model.
@@ -26,12 +27,13 @@ E \in
 And the data of item $E$ could be further divided into three parts.
 %\begin{itemize}
 
-	\stab(1) \stitle{User Info} contains a list of aforementioned metrics \{\#$R_u$, \#$E_u$, $R_{ee}$, \#$B_u$, \#$W_r$\}.
+	\stab(1) \stitle{User Info} contains a list of aforementioned metrics \{$G_u$, $P_u$,\#$R_u$, \#$E_u$, $R_{ee,u}$ \}.
 	
-	\stab(2) \stitle{Microblog Info} considers the correlation between microblog contents and recent events, where the latter is returned by Ring \cite{IEEEexample:ring}. The correlation metric $C_h$ is in the form of a normalized vector with each dimension represents one event (similar as $P_f$ in formula \ref{eq:inte}). Each event could be viewed as a topic $t$, over which the correlation of a microblog $b$ could be obtained by formula \ref{eq:simbt}.
-	
-	\stab(3) \stitle{Interaction Info} includes three correlation metrics. They are of microblog $b$ versus the user $u$'s \textit{Interest Feature} $P_f(u)$ (a.k.a. long-term/stable interest in this work), $b$ versus $u$'s short-term interest $P_s(u)$ that is mined from $u$'s recent microblogs (e.g., within 30 days) in the same manner of $P_f(u)$, and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_t$.
+	\stab(2) \stitle{Microblog Info} refers to metrics related to the microblog $b$. The number of times the $b$ be retweeted, be commented, be liked and the length of the microblog contents are considered. What's more, we also considers the correlation between microblog contents and recent events, where the latter is returned by Ring \cite{IEEEexample:ring}. The correlation metric $C_h$ is in the form of a normalized vector with each dimension represents one event (similar as $P_{f,u}$ in formula \ref{eq:inte}). Each event could be viewed as a topic $t$, over which the correlation of a microblog $b$ could be obtained by formula \ref{eq:sim-tw1}.
+
+	\stab(3) \stitle{Interaction Info} includes seven correlation metrics. They are of \#$B_u$, $R_{oc,u}$, \#$W_{r,u}$, \#$W_{t,u}$, microblog $b$ versus the user $u$'s \textit{Interest Feature} $P_f(u)$ (a.k.a. long-term/stable interest in this work), $b$ versus $u$'s short-term interest $P_s(u)$ that is mined from $u$'s recent microblogs (e.g., within 30 days) in the same manner of $P_f(u)$, and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_{rt,u}$.
 %\end{itemize}
+
 In this paper, we see modeling retweeting behavior of group as a classification problem and use random forest classifier to solve the problem. The advantage of using classification model is that we can integrate different combinations of the features into the model conveniently. As a result, the obtained group behavior model could learn what does a positive/negative item look like over each metric mentioned above.\par
 
 
