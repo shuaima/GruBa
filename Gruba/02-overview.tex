@@ -96,25 +96,6 @@ $U_{t,u}$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottom
 \vspace{-2ex}
 \end{table}
 
-\begin{table}[tb!]
-\centering
-\begin{small}
-\caption{Category of User Type}
-%\vspace{0.3cm}
-\label{tbl:ucate}
-\begin{tabular}{ll}
-\toprule
-\multicolumn{1}{l}{\textbf{Types}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
-0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
-\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
- 						&                       									\\	\midrule
-\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
-						&															\\	\midrule
-3                   	& other cases 												\\ \bottomrule
-\end{tabular}
-\end{small}
-\vspace{-2ex}
-\end{table}
 
 
 \stitle{Sina Microblog Data.} It is the data crawled to be processed by \sys{}, i.e., data of microblogs and users, as shown in \textit{Definitions} \textit{\ref{def:blog}} and \textit{\ref{def:user}}.
@@ -137,4 +118,23 @@ $U_{t,u}$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottom
 As shown above, the distinctive feature of System  \sys{} is to model user \retg{} behaviors over groups instead of the mono model for all users.
 
 
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Category of User Type}
+%\vspace{0.3cm}
+\label{tbl:ucate}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Types}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
+\multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
+ 						&                       									\\	\midrule
+\multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
+						&															\\	\midrule
+3                   	& other cases 												\\ \bottomrule
+\end{tabular}
+\end{small}
+\vspace{-2ex}
+\end{table}
 

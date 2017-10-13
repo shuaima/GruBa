@@ -1,7 +1,7 @@
 \section{Feature Extraction}
 \label{sec:fe}
 
-With the underlying Sina Microblog Data, the Feature Extraction module is responsible for ``mining'' the user characteristics, and produces three classes of features for each user: \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, referred to as  \textit{Feature Data} in \sys{}.
+With the underlying Sina Microblog Data, the Feature Extraction module is responsible for mining the user characteristics, and produces three classes of features for each user: \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature}, referred to as  \textit{Feature Data} in \sys{}.
 %, i.e., \textit{Feature Data} = \{\textit{Basic Feature}, \textit{Behavior Feature}, \textit{Interest Feature}\}.
 
 
@@ -44,177 +44,114 @@ In summary, the \textit{Behavior Feature} $H_u$ of user $u$ consists of the foll
 
 \subsection{Interest Feature}
 
-Different from the straightforward notions of \textit{Basic Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics.
-In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the degree that the said user is interested with the corresponding \textit{topic}.
+Different from the slightly straightforward \textit{Basic Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users with their interested topics.
+In short, with a given lexicon (made by some professionals) consisting of several \textit{topics}, the interest feature of a user $u$ is a normalized vector, in which each entry refers to the degree that $u$ is interested in the corresponding \textit{topic}.
 
 \begin{definition}
 \label{def:lexi}
-A lexicon $L$ consists of a set of topics $t$ such that each topic is associated with a set of cell words $c$. Each cell word depicts an aspect of the topic.
+A lexicon $L$ consists of a set of topics $t$ such that each topic is associated with a set of cell words $c$, in which each cell word depicts an aspect of the topic.
 \end{definition}
 
 \begin{definition}
 \label{def:bw}
 %used \label{def:blog} previously
-With a given user $u$, each microblog $b \in B_u$ could be decomposed into a set of words $w$.
+For a user $u$, each microblog $b \in B_u$ is represented by a set of words $w$.
 \end{definition}
 
 \begin{definition}
 \label{def:inte}
-The interest feature of a given user is a normalized vector
+The interest feature $P_u$ of a user $u$ is a normalized vector
 \begin{equation}
 \label{eq:inte}
-P_f\ = (p_0,\ p_1,\ ...,\ p_{x-1})
+(p_0, p_1, \ldots, p_{x-1})
 \end{equation}
-in which the said user matches $x$ \textit{topics} in lexicon and $p_i$ refers to the similarity of the user and each matched topic (interest). The definition of such similarity shall be detailed in each scenario (explicit/implicit interest analysis, towards words/topics, etc).
+in which user $u$ matches $x$ \textit{topics} in lexicon $L$, and $p_i$ refers to the degree that $u$ is interested in topic $i$.
 \end{definition}
 
+The similarity $p_i$¡¡$(i\in[0, x-1])$ will be detailed in each scenario (explicit/implicit interest analysis, towards words/topics, etc).
 
-Next, we shall present the ``mining'' process for interest features.
-In short, \sys{} employs a well established lexicon to discover the explicit interests of users.
-In case no proper explicit interests are found, TF-IDF(term-frequency and inverse document-frequency) and Twitter-LDA \cite{IEEEexample:zhao2011comparing} are leveraged to explore the implicit interests, during which word2vector participates to provide the similarity between two words.
 
-In \sys{}, a word, either in the form of $c$ or $w$, acts as the minimum unit for analysis.
-Hence, the similarity of a word pair ($w$, $c$), i.e., $sim(w, c)$, could be generalized to the similarity of a microblog against one topic $sim(b, t)$, and finally to a user versus each topic in lexicon $sim(u, t)$; topics with similarity satisfying certain thresholds are allocated to the user $u$ and constitute the interests of $u$.
+In system \sys{}, a word, either in the form of $c$ or $w$, acts as the minimum unit for analysis.
+Hence, the similarity $sim(w, c)$ of a word pair ($w$, $c$) could be generalized to the similarity of a microblog against one topic $sim(b, t)$, and finally to a user $u$ versus each topic $t$ in lexicon $sim(u, t)$; topics with similarity satisfying certain thresholds are allocated to user $u$ and constitute the interests of $u$.
 
-For instance, the following steps depict the ``mining'' process of the interest feature $P_f$ for a user $u$.
+System \sys{} employs a well established lexicon to discover the explicit interests of users.
+In case when no proper explicit interests are found, TF-IDF (Term-Frequency and Inverse Document-Frequency) and Twitter-LDA \cite{IEEEexample:zhao2011comparing} are leveraged to explore the implicit interests, during which word2vector \cite{IEEEexample:mikolov2013distributed} is adopted to measure the similarity between two words.
+We now present the detailed process for mining the interest features of a user $u$.
 
-\stitle{Step 1:} Each microblog of $u$ is decomposed into a word set. %, i.e., $b = \{w\}$ where $b \in B_s(u)$.
+%For instance, the following steps depict the ``mining'' process of the interest feature $P_f$ for a user $u$.
 
-\stitle{Step 2:} Explicit interests are explored. Specifically, every word $w$ is sent to match each cell word $c$ of lexicon topics.
-If $w$ and $c$ are identical, $sim(w, c) = 1$.
-Otherwise, $sim(w, c) = 0$.
-As to the similarity of $b$ against a lexicon topic $t$, it is:
+\stitle{Step 1:} Each microblog $b$ in $B_u$ of user $u$ is decomposed into a word set $WS$. %, i.e., $b = \{w\}$ where $b \in B_s(u)$.
+
+\stitle{Step 2:} Explicit interests are explored. Specifically, every word $w$ in $WS$ is sent to match each cell word $c$ of lexicon topics.
+If $w$ and $c$ are identical, $sim(w, c) = 1$, and $sim(w, c) = 0$, otherwise.
+The similarity of $b$ with a lexicon topic $t$ is defined as
 \begin{equation}
 \label{eq:bt}
-sim(b, t) = \sum_{\substack{i, j}} sim(w_i, c_j)
+sim(b, t) = \sum_{\substack{i, j}} sim(w_i, c_j).
 \end{equation}
-where $sim(w_i, c_j)$ refers to the similarity of a word pair.
 
-If $sim(b, t)$ satisfies a certain threshold (3 by default) , topic $t$ is labeled to microblog $b$;
+%where $sim(w_i, c_j)$ refers to the similarity of a word pair.
+
+If $sim(b, t)$ satisfies a certain threshold (3 by default), topic $t$ is labeled to microblog $b$;
 the user $u$ is then discovered having an explicit interest (topic) $t$.
-Thus, by looking into the similarity of $b$ against all topics in lexicon, the explicit interests of $u$ is returned, in the form of interest feature (see Definition \ref{def:inte}).
+Thus, by looking into the similarity of $b$ against all topics in lexicon $L$, the explicit interests of $u$ is derived, in the form of interest feature (see Definition \ref{def:inte}).
 
-If none of $sim(b, t)$ could meet the threshold, i.e., explicit interest discovery over user $u$ fails, go to \textbf{Step 3} and \textbf{Step 4} in parallel, so as to ``mine'' the implicit interests of $u$.
 
-\stitle{Step 3:} A metric \textit{TF-IDF weight} $W_f$ is computed, i.e., employing TF-IDF to calculate the weight distribution of words in microblog $b$:
+\stitle{Step 3:}. If the $sim(b, t)$ in {\bf Step 2} cannot meet the threshold, i.e., explicit interest discovery over user $u$ fails, the implicit interests of user $u$ are further mined, by running the following steps 3.1$\&$3.2 in parallel.
+
+\etitle{Step 3.1:} A metric \textit{TF-IDF weight} $W_f$ is computed by employing TF-IDF to calculate the weight distribution of words in microblog $b$:
 \begin{equation}
 \label{eq:tf}
-W_f = \{(w_i, p_i)\}
+W_f = \{(w_i, p_i)\},
 \end{equation}
 where $w_i$ refers to a single word, of which the weight is $p_i$, with $\sum_{\substack{i}} p_i = 1$.
 
 To compute such weight $p_i$ for word $w_i$, a metric $p''_i$ is first calculated as:
 \begin{equation}
 \label{eq:tf-w}
-p''_i = \frac{|b_i|}{|b|} * log(\frac{|D_i|}{|D|})
+p''_i = \frac{|b_i|}{|b|} * \log(\frac{|D_i|}{|D|}),
 \end{equation}
-in which we use the operator $|\ |$ to measure the cardinality, such that $|b_i|$ is the occurrences of word $w_i$ in microblog $b$ and $|b|$ the total occurrences of all words in $b$.
+in which we use the operator $|\ |$ to measure the cardinality, such that $|b_i|$ is the occurrences of word $w_i$ in microblog $b$, and $|b|$ the total occurrences of all words in $b$.
 Ditto for $|D_i|$ and $|D|$, except that the scope is the overall dataset, rather than a single microblog $b$.
 
-Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight} (see Definition \ref{eq:tf}).
-Go to \textbf{Step 5}.
+Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight}.
 
-\stitle{Step 4:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained, i.e., using Twitter-LDA  %\ref{IEEEexample:zhao2011comparing}
+
+TF-IDF based similarity is then calculated.
+For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as:
+\begin{equation}
+\label{eq:sim-tf1}
+sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t),
+\end{equation}
+where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
+
+\etitle{Step 3.2:} Similarly, another metric \textit{Twitter-LDA weight} $W_w$ is obtained by using Twitter-LDA  %\ref{IEEEexample:zhao2011comparing}
 to result the word weight distribution of microblog $b$.
 Unlike TF-IDF, Twitter-LDA first trains the overall microblogs, allocating each microblog with a \textit{tag}.
 %
 The structure of \textit{tag} is as follows:
 \begin{equation}
 \label{eq:tw-tag}
-W_t = \{(w'_i, p'_i)\}
+W_t = \{(w'_i, p'_i)\},
 \end{equation}
 where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in microblogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$ ($|W_t|\ =\ 30$ in this work by default).
 %
 Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
-Go to \textbf{Step 6}.
 
-\stitle{Step 5:} TF-IDF based similarity is calculated.
-%For example, the similarity (in the form of a value) of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined %as:
-%\begin{equation}
-%\label{eq:sim-tf1}
-%sim(W_f, t) = \sum_{\substack{i}} p_i*sim(w_i, t)
-%\end{equation}
-%where $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$ returned by word2vector %\cite{IEEEexample:mikolov2013distributed}.
-%Go to \textbf{Step 7}.
-
-
-
-For example, the similarity of $W_f$ over a single topic $t$ in lexicon, written as $sim(W_f, t)$, is defined as formula \ref{eq:sim-tf1}. Here $W_f = \{(w_i, p_i)\}$, $t = \{c_j\}$, $VEC_{W_f}$ is defined as formula \ref{eq:sum-tf1}, $VEC_t$ is defined as formula \ref{eq:sum-lexion}, where $N_t$ is the word count in topic $t$ and $vec[w]$ is the word vector of word $w$ returned by word2vector \cite{IEEEexample:mikolov2013distributed}.
-\begin{equation}
-\label{eq:sim-tf1}
-%\cdot
-sim(W_f, t) = VEC_{W_f} \cdot VEC_t
-%\sum_{\substack{i}} p_i*sim(w_i, t)
-\end{equation}
-\begin{equation}
-\label{eq:sum-tf1}
-%\cdot
-VEC_{W_f} = \sum_{\substack{i}} p_i*vec[w_i]
-%\sum_{\substack{i}} p_i*sim(w_i, t)
-\end{equation}
-\begin{equation}
-\label{eq:sum-lexion}
-%\cdot
-VEC_t = \sum_{\substack{j}} \frac{1}{N_t}*vec[c_j]
-%\sum_{\substack{i}} p_i*sim(w_i, t)
-\end{equation}
-
-
-%and $sim(w_i, t)$ is the averaged word similarity $sim(w_i, c_j)$
-%Go to \textbf{Step 7}.
-
-\begin{comment}
-:
-\begin{equation}
-\label{eq:sim-tf2}
-sim(w_i, t) = \sum_{\substack{j}} sim(w_i, c_j)
-\end{equation}
-\end{comment}
-
-\stitle{Step 6:} Accordingly, Twitter-LDA based similarity is available.
-%Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined %as:
-%\begin{equation}
-%\label{eq:sim-tw1}
-%sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
-%\end{equation}
-%%%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
-%where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$,
-%and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
-%Go to \textbf{Step 7}.
-
-Again, a single topic $t$ in lexicon is used for yardstick and the similarity of $W_w$ over $t$, written as $sim(W_w, t)$, is defined as:
-\begin{equation}
-\label{eq:sim-tw1}
-sim(W_w, t) = VEC_{W_w} \cdot VEC_t
-\end{equation}
-%%%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
-where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$, and $VEC_{W_w}$ can be obtained similarly as $VEC_{W_f}$.
-
-\begin{comment}
-:
-\begin{equation}
-\label{eq:sim-tw2}
-sim(w'_i, t) = \sum_{\substack{j}} sim(w'_i, c_j)
-\end{equation}
-\end{comment}
-
-
-
-\stitle{Step 7:} Hence, the similarity of a microblog $b$ against a lexicon topic $t$ is given by:
+\stitle{Step 4:} Hence, the similarity of a microblog $b$ against a lexicon topic $t$ is given by:
 \begin{equation}
 \label{eq:simbt}
-sim(b, t) = \alpha * sim(W_f, t) + (1 - \alpha) * sim(W_t, t)
+sim(b, t) = \alpha * sim(W_f, t) + (1 - \alpha) * sim(W_t, t),
 \end{equation}
 where the $\alpha$ is a parameter by which \sys{} could set flexible priorities between TF-IDF and Twitter-LDA.
-Go to \textbf{Step 8}.
 
-\stitle{Step 8:} Repeat the above steps (Step 1 to Step 7) for the microblog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$.
+\stitle{Step 5:} Repeat Steps 1 to 4 for the microblog $b$ over every topic in lexicon, i.e., $\forall t_k \in L$ results one similarity value of $sim(b, t_k)$.
 Such computation further extends to all the microblogs owned by user $u$, such that:
 $\forall b_m \in B_s(u)$, $\forall t_k \in L$, there exists a similarity of $sim(b_m, t_k)$.
 Hence, the overall similarity of user $u$ over lexicon topics $\{t\}$ (i.e., $L$), written as $S(u,\ L)$, could be denoted by a vector:
 \begin{equation}
 \label{eq:simul}
-S(u, L) = (s_0,\ s_1,\ ...,\ s_{n-1})
+S(u, L) = (s_0, s_1, \ldots,\ s_{n-1}),
 \end{equation}
 where $n$ refers to the cardinality of $L$ (i.e., number of topics in $L$) and $s_k$ is the overall similarity of user $u$ over topic $t_k$, which is given by:
 \begin{equation}
@@ -222,23 +159,24 @@ where $n$ refers to the cardinality of $L$ (i.e., number of topics in $L$) and $
 s_k = \sum_{\substack{m}} sim(b_m, t_k)
 \end{equation}
 
-Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ (3 in \sys{}) similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_f$ as described in Definition \ref{def:inte}.
+Among the $n$ dimensions of $S(u,\ L)$, those with top $x$ (3 in \sys{}) similarity values are selected to label the implicit interests of user $u$, which results an $x$ dimensional vector $P_u$ as described in Definition \ref{def:inte}.
 Similarly, interest features of all users are returned.
 
-As a result, the \textit{Feature Data} for every user $u$, written as $F(u)$, is given by:
+As a result, the \textit{Feature Data} $F_u$ for a user $u$ is
 \begin{equation}
 \label{eq:fu}
-	F(u) = (I,\ H,\ P_f)
+	F_u = (I_u, H_u, P_u),
 \end{equation}
-where $I$, $H$ and $P_f$ refer to \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature} separately (see formulas \ref{eq:info}, \ref{eq:beha} and \ref{def:inte}).
-And it could be written as a vector:
-\begin{equation}
-\label{eq:fu-flat}
-\begin{aligned}
-	F(u) = (G_u, P_u, \#R_s, \#E_s, R_{ee}, U_t, \#B_u, R_{oc},\\
-    \#W_r, P_{rt}, P_{rg}, \#W_t, P_{tt}, P_{tg}, P_f)
+where $I_u$, $H_u$ and $P_u$ are the \textit{Basic Feature}, \textit{Behavior Feature} and \textit{Interest Feature} of $u$, respectively.
+
+%And it could be written as a vector
+%\begin{equation}
+%\label{eq:fu-flat}
+%\begin{aligned}
+%	F(u) = (G_u, P_u, \#R_s, \#E_s, R_{ee}, U_t, \#B_u, R_{oc},\\
+%    \#W_r, P_{rt}, P_{rg}, \#W_t, P_{tt}, P_{tg}, P_f),
 %(\#R_s, \#E_s, R_{ee}, \#B_s, R_{oc}, U_t, \#W_r, P_t, P_g, P_f)
-\end{aligned}
-\end{equation}
-where each dimension refers to a data item of \sys{}.
+%\end{aligned}
+%\end{equation}
+%where each entry refers to a data item of \sys{}.
 
