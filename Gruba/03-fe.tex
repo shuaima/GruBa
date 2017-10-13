@@ -22,7 +22,7 @@ These features are \textit{Basic Feature}, \textit{Behavior Feature} and \textit
 where each variable is illustrated in Table \ref{tbl:fe-info}.
 %Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
 
-\begin{table}[!htb]
+\begin{table}[tb!]
 \centering
 \begin{small}
 \caption{Illustration of Variables in Basic Feature}
@@ -114,7 +114,7 @@ in which the said user matches $x$ \textit{topics} in lexicon and $p_i$ refers t
 \end{definition}
 
 
-Next, we shall present the ``mining'' process for interest features. 
+Next, we shall present the ``mining'' process for interest features.
 In short, \sys{} employs a well established lexicon to discover the explicit interests of users.
 In case no proper explicit interests are found, TF-IDF and Twitter-LDA are leveraged to explore the implicit interests, during which word2vector participates to provide the similarity between two words.
 
@@ -199,8 +199,8 @@ Again, a single topic $t$ in lexicon is used for yardstick and the similarity of
 \label{eq:sim-tw1}
 sim(W_w, t) = \sum_{\substack{i}} p'_i*sim(w'_i, t)
 \end{equation}
-%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$, 
-where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$, 
+%where $W_w = \{(w'_i, p'_i)\}$, $t = \{c_j\}$,
+where $W_w$ is a set of $(w'_i, p'_i)$, $t$ covers each $c_j$,
 and $sim(w'_i, t)$ is the averaged word similarity $sim(w'_i, c_j)$ returned by word2vector.
 Go to \textbf{Step 7}.
 
