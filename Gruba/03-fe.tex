@@ -30,13 +30,11 @@ where each variable is illustrated in Table \ref{tbl:fe-info}.
 \label{tbl:fe-info}
 \begin{tabular}{ll}
 \toprule
-\multicolumn{1}{c}{\textbf{variable}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
 \#$R_u$				& number of followers				\\	\midrule
 \#$E_u$				& number of followees				\\	\midrule
-\multirow{4}{*}{$R_{ee}$} & \multirow{2}{*}{a ratio defined as the number of followers} \\
-                   &                     \\
-                   & \multirow{2}{*}{over that of followees, i.e., $\frac{\#R_u}{\#E_u}$} \\
-                   & 						\\	\midrule
+                    & a ratio defined as the number of followers over \\  
+\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
 $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 \end{tabular}
 \end{small}
@@ -48,7 +46,7 @@ $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 
 %replace 50 and 5 by variables of threshold
 
-\begin{table}[!htb]
+\begin{table}[tb!]
 \centering
 \begin{small}
 \caption{Category of User Type}
@@ -56,8 +54,8 @@ $U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
 \label{tbl:ucate}
 \begin{tabular}{ll}
 \toprule
-\multicolumn{1}{c}{\textbf{value}} & \multicolumn{1}{c}{\textbf{illustration}}	\\	\midrule \midrule
-0                       & $\#E_u \le 50 \ \& \ \#R_u \le 50$				\\	\midrule
+\multicolumn{1}{l}{\textbf{Values}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+0                       & $\#E_u \le 50 \ {\bf and} \ \#R_u \le 50$				\\	\midrule
 \multirow{2}{*}{1}      & \multirow{2}{*}{$\frac{\#E_u}{\#R_u} \ \ge 5$}	\\
  						&                       									\\	\midrule
 \multirow{2}{*}{2}		& \multirow{2}{*}{$\frac{\#R_u}{\#E_u} \ \ge 5$}  \\
