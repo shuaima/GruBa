@@ -7,8 +7,8 @@
 %proof if applicable
 %self-explain
 
-Providing the \textit{Feature Data}, User Clustering takes the charge of grouping each user concerned into a proper cluster.
-Algorithm \ref{alg:uc} illustrates such overall procedure.
+Providing the \textit{Feature Data}, the User Clustering module takes the charge of grouping each user concerned into a proper cluster,
+as illustrated in  Algorithm \ref{alg:uc}.
 %
 The idea is to enumerate a number of clustering trials (line \ref{enu}) and select the optimal solution with the best Silhouette coefficient value ($v$ in line \ref{opti}).
 In principle, each trial (referred by $t$ in line \ref{enu}) first performs a clustering task (line \ref{task}; to be detailed in section \ref{sec:cluster}), resulting a cluster (by $l(u)$) for each user $u$ (line \ref{l});
@@ -20,28 +20,28 @@ finally, the averaged Silhouette coefficient value of all users serves as the Si
 \begin{small}
 \caption{User Clustering in \sys{}}
 \label{alg:uc}
-
 \begin{algorithmic}[1]
-\State Input: \textit{Feature Data} of users $\{F(u)\}$, the minimum/maximum number of clusters $N_i$ and $N_a$
+\State Input: \textit{Feature Data} $F$  of a set of users, the minimum/maximum number of clusters $N_i$ and $N_a$
 \State Output: Optimal user clustering result $R$
-\\
+\vspace{1ex}
 \ForAll {$t \in [N_i, N_a]$} \label{enu}
-	\State group users $\{u\}$ into $t$ clusters by $\{F(u)\}$ \label{task}
-	\State clustering result $R'(t)\ =\ \{(u,\ l(u))\}$ with cluster info $l(u)$ for each user $u$ \label{l}
+	\State group users into $t$ clusters by $F$; \label{task}
+	\State clustering result $R'(t)\ =\ \{(u,\ l(u))\}$ with cluster info $l(u)$ for each user $u$; \label{l}
 	\ForAll {$u \in \{u\}$}
-		\State in-cluster distance $d_i(u)$ \label{v-b}
-		\State out-cluster distance $d_o(u)$
-		\State Silhouette coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$ \label{v-e}
+		\State in-cluster distance $d_i(u)$ \label{v-b};
+		\State out-cluster distance $d_o(u)$;
+		\State Silhouette coefficient value $v(u)\ =\ \frac{(d_o - d_i)}{max(d_o,\ d_i)}$; \label{v-e}
 	\EndFor
-	\State $v(t)\ =\ Avg\{v(u)\}$ \label{avg}
+	\State $v(t)\ :=\ Avg\{v(u)\}$; \label{avg}
 \EndFor
-\If {$v(a)\ ==\ \ Max\{v(t)\}$} \label{opti}
-	\State $R$ = $R'(a)$
+\If {$v(a)\ =\ \ Max\{v(t)\}$}; \label{opti}
+	\State $R$ := $R'(a)$;
 \EndIf
-\State \bfseries{return} $R$
+\State \bfseries{return} $R$.
 \end{algorithmic}
 \end{small}
 \end{algorithm}
+
 
 Next, we shall now first detail how \sys{} performs the clustering task and subsequently illustrate the computation for the metric of Silhouette coefficient value.
 
