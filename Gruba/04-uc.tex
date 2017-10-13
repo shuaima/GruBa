@@ -65,9 +65,10 @@ Recall the sample data for User Clustering, i.e., \textit{Feature Data} in form 
 \begin{tabular}{ll}
 \toprule
 \multicolumn{1}{c}{\textbf{type}} & \multicolumn{1}{c}{\textbf{data dimensions}}	\\	\midrule \midrule
-numerical data				& $\#R_u$, $\#E_u$, $R_{ee}$, $\#B_u$, $R_{oc}$, $\#W_r$				\\	\midrule
-categorical data			& $U_t$				\\	\midrule
-normalized vectors			& $P_t$, $P_g$, $P_f$			\\ \bottomrule
+numerical data				& $\#R_u$, $\#E_u$, $R_{ee,u}$, $\#B_u$,\\
+                            &  $R_{oc,u}$, $\#W_{r,u}$,$\#W_{t,u}$				\\	\midrule
+categorical data			& $G_u$,$P_u$,$U_{t,u}$				\\	\midrule
+normalized vectors			& $P_{rt,u}$, $P_{rg,u}$,$P_{tt,u}$,$P_{tg,u}$,$P_{f,u}$			\\ \bottomrule
 \end{tabular}
 \end{small}
 \end{table}
@@ -113,7 +114,7 @@ G_e =
   \begin{cases}
     (Y_e - Z_e)^2       & \quad \text{if } Y_e/Z_e \text{ is numerical}\\
     H_e\ (1\ or\ 0)       	& \quad \text{if } Y_e/Z_e \text{ is categorical}\\
-    Y_e \cdot Z_e  		& \quad \text{if } Y_e/Z_e \text{ is of normalized vector}
+    1 - Y_e \cdot Z_e  		& \quad \text{if } Y_e/Z_e \text{ is of normalized vector}
   \end{cases}
 \end{equation}
 
