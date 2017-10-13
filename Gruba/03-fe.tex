@@ -22,53 +22,31 @@ These features are \textit{Basic Feature}, \textit{Behavior Feature} and \textit
 where each variable is illustrated in Table \ref{tbl:fe-info}.
 %Specifically, we use $\#(B_s | R(B)==1)$ and $\#(B_s | R(B)==0)$ to represent the number of \retd{} microblogs and microblogs that are originally created by the user.
 
-\begin{table}[tb!]
-\centering
-\begin{small}
-\caption{Illustration of Variables in Basic Feature}
-\vspace{0.3cm}
-\label{tbl:fe-info}
-\begin{tabular}{ll}
-\toprule
-\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
-$G_u$				& gender of user $u$				\\	\midrule
-$P_u$				& province of user $u$				\\	\midrule
-\#$R_u$				& number of followers				\\	\midrule
-\#$E_u$				& number of followees				\\	\midrule
-                    & a ratio defined as the number of followers over \\  
-\raisebox{1.5ex}{$R_{ee}$}  & that of followees, i.e., ${\#R_u}/{\#E_u}$ \\  \midrule
-$U_t$					& user type (as detailed in Table \ref{tbl:ucate})			\\ \bottomrule
-\end{tabular}
-\end{small}
-\end{table}
-
-
 \subsection{Behavior Feature}
 
 Unlike \textit{Basic Feature}, \textit{Behavior Feature} shows several statistics regarding the user's \retg{} behavior.
 Such statistics include:
 \begin{itemize}
 	\item a value for the number of owned microblogs $\#B_u$
-	\item a ratio $R_{oc}$ that is defined as the number of \retd{} microblogs over that of originally created, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$
-	\item values showing the average number of \retd{} and \twe{} microblogs per week: $\#W_r$, $\#W_t$
-	\item a normalized vector regarding the time distribution of a user's \retg{} behavior: $P_{rt}\ = (p'_0,\ p'_1,\ ...,\ p'_{11})$, where $p'_0$ is the probability that the \retg{} activity happens from 0am to 2am, $p'_1$ is the probability that the \retg{} activity happens from 2am to 4am, and so on.
-    \item a normalized vector regarding the time distribution of a user's \twtg{} behavior: $P_{tt}$, obtained as $P_{rt}$.
+	\item a ratio $R_{oc}$ that is defined as the number of \retd{} microblogs over that of originally \twd{}, i.e., $\frac{\#(B_u | flag ==1)}{\#(B_u | flag ==0)}$
+	\item values showing the average number of \retd{} and \twd{} microblogs per week: $\#W_r$, $\#W_t$
+	\item normalized vectors regarding the time distribution of a user's \retg{}/\twg{} behavior: $P_{rt}\ = (p'_{r0},\ p'_{r1},\ ...,\ p'_{r11})$, $P_{tt}\ = (p'_{t0},\ p'_{t1},\ ...,\ p'_{t11})$, where $p'_{r0}$/$p'_{t0}$ is the probability that the \retg{}/\twg{} activity happens from 0am to 2am, $p'_{r1}$/$p'_{t1}$ is the probability that the \retg{}/\twg{} activity happens from 2am to 4am, and so on.
 
-	\item a normalized vector with respect to the gap distribution of a user's \retg{} behavior: $P_{rg}\ = (p''_0,\ p''_1,\ ...,\ p''_{5})$, in which $p''_0$ is the probability that the gap between two \retd{} microblogs is within 1 min. Ditto for $p''_1$ (1 min to 1 hour), $p''_2$ (1 to 12 hours), $p''_3$ (12 to 24 hours), $p''_4$ (24 to 48 hours) and  $p''_5$ (more than 48 hours).
-    \item a normalized vector with respect to the gap distribution of a user's \twtg{} behavior: $P_{tg}$, obtained as $P_{rg}$.
+	\item normalized vectors with respect to the gap distribution of a user's \retg{}/\twg{} behavior: $P_{rg}\ = (p''_{r0},\ p''_{r1},\ ...,\ p''_{r5})$, $P_{tg}\ = (p''_{t0},\ p''_{t1},\ ...,\ p''_{t5})$, in which $p''_{r0}$/$p''_{t0}$ is the probability that the gap between two \retd{}/\twg{} microblogs is within 1 min. Ditto for $p''_{r1}$/$p''_{t1}$ (1 min to 1 hour), $p''_{r2}$/$p''_{t2}$ (1 to 12 hours), $p''_{r3}$/$p''_{t3}$ (12 to 24 hours), $p''_{r4}$/$p''_{t4}$ (24 to 48 hours) and  $p''_{r5}$/$p''_{t5}$ (more than 48 hours).
 \end{itemize}
 
 Hence, \textit{Behavior Feature} $H$ per user comes with:
 \begin{equation}
 \label{eq:beha}
-	H = (\#B_u, R_{oc},\ \#W_r,\ P_{rt},\ P_{rg},\ \#W_t,\ P_{tt},\ P_{tg})
+	H = (\#B_u, R_{oc},\ \#W_r,\ P_{rt},\\
+    P_{rg},\ \#W_t,\ P_{tt},\ P_{tg})
 \end{equation}
 % where $\#B_u$, $R_{oc}$, $\#W_r$, $P_t$ and $P_g$ are illustrated as above.
 
 \subsection{Interest Feature}
 
 Different from the straightforward notions of \textit{Basic Feature} and \textit{Behavior Feature}, \textit{Interest Feature} involves a process of labeling users by their interested topics.
-In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the degree that the said user is interested in the corresponding \textit{topic}.
+In short, with a given lexicon(made by some professionals) consisting of several \textit{topics}, the interest feature of a user is a normalized vector, in which each dimension refers to the degree that the said user is interested with the corresponding \textit{topic}.
 
 \begin{definition}
 \label{def:lexi}
@@ -225,7 +203,8 @@ where $I$, $H$ and $P_f$ refer to \textit{Basic Feature}, \textit{Behavior Featu
 And it could be written as a vector:
 \begin{equation}
 \label{eq:fu-flat}
-	F(u) = (G_u,\ P_u, \#R_s, \#E_s, R_{ee}, U_t, \#B_u,\ R_{oc},\ \#W_r,\ P_{rt},\ P_{rg},\ \#W_t,\ P_{tt},\ P_{tg}, P_f)
+	F(u) = (G_u, P_u, \#R_s, \#E_s, R_{ee}, U_t, \#B_u, R_{oc},\\
+    \#W_r, P_{rt}, P_{rg}, \#W_t, P_{tt}, P_{tg}, P_f)
 %(\#R_s, \#E_s, R_{ee}, \#B_s, R_{oc}, U_t, \#W_r, P_t, P_g, P_f)
 \end{equation}
 where each dimension refers to a data item of \sys{}.
