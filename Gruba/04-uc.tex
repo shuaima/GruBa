@@ -55,12 +55,12 @@ Unlike K-Prototype that supports vector samples in which each dimension is of nu
 %
 Recall the sample data for User Clustering, i.e., \textit{Feature Data} in form of vectors (see formula \ref{eq:fu}), of which the data type regarding each dimension is shown as Table \ref{tbl:data-type}.
 
-\begin{table}[!htb]
+\begin{table}[tb!]
 \centering
 \begin{small}
 %\caption{Types of Dimensional Data in \textit{Feature Data} Vector}
 \caption{Dimension Types in \textit{Feature Data} Vector}
-%\vspace{0.3cm}
+\vspace{0.3cm}
 \label{tbl:data-type}
 \begin{tabular}{ll}
 \toprule
@@ -73,7 +73,7 @@ normalized vectors			& $P_{rt,u}$, $P_{rg,u}$, $P_{tt,u}$, $P_{tg,u}$, $P_{f,u}$
 \end{small}
 \end{table}
 
-As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers (normalized to 0-1 range), categories and normalized vectors. For simplicity, we shall first illustrate the distance calculation of the simple vectors with a mono data type on each dimension, and then demonstrate that of complex vectors. 
+As aforementioned, the clustering of K-Gru rests on the distance between vector samples, where the dimensions are combined with numbers (normalized to 0-1 range), categories and normalized vectors. For simplicity, we shall first illustrate the distance calculation of the simple vectors with a mono data type on each dimension, and then demonstrate that of complex vectors.
 
 For numerical vectors $Y'\ = (y'_0, y'_1, \ldots)$ and $Z'\ = (z'_0, z'_1, \ldots)$, the \od{} \cite{IEEEexample:books/mk/HanKP2011} between $Y'$ and $Z'$ is given by :
 %
