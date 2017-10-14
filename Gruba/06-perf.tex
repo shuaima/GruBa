@@ -12,7 +12,7 @@ We have employed a real-world dataset Sina Weibo that consists of 24 million mic
 With respect to the parameters of \sys{}, we use the default values as mentioned in previous sections.
 Particularly, for the Feature Extraction module, for practical reasons, we employed a smaller testing dataset to obtain the proper value of $\alpha$ for extracting \textit{Interest Feature};
 For the User Cluster module, we studied the clustering solutions with the minimum/maximum number of clusters 2 and 10;
-For the Behavior Modeling module, the recent 30 days microblogs of users are used for their short-term interest analysis, 
+For the Behavior Modeling module, the recent 30 days microblogs of users are used for their short-term interest analysis,
 and popular words in the latest 24 hours are returned by Ring as the Hot Event keywords \cite{IEEEexample:ring}.
 
 \subsection{Result and Analysis}
@@ -23,7 +23,7 @@ Next, we shall report the performance of system \sys{} over each component.
 Fig.\ \ref{fig:fe} shows the testing results of using various $\alpha$ values.
 System \sys{} reaches the optimal results when $\alpha$ is 0.7,
 upon which the interest feature extracting is performed for the overall dataset with 43.5K users and 24 million microblogs.
-In general, it performs well when $\alpha$ falls into $[0, 0.8]$.  
+In general, it performs well when $\alpha$ falls into $[0, 0.8]$.
 
 
 
@@ -75,7 +75,7 @@ Except for \textit{Data1}, solutions for \textit{\{Data2,\ldots, Data5\}} are th
 Fig.\ \ref{fig:10} shows the performance of \sys{} against the state of the art approach LRC-BQ \cite{IEEEexample:conf/ijcai/ZhangLTCL13}.
 We evaluate the performance using the metrics of precision, recall, and $F_1$ score.
 LRC-BQ does not deal with user grouping.
-Hence, we not only study the modeling effect per group (i.e., ``Group-One/Two/Three/Four'' with user clustering), 
+Hence, we not only study the modeling effect per group (i.e., ``Group-One/Two/Three/Four'' with user clustering),
 but also examine \sys{} versus LRC-BQ in the case that all users are in a single group (i.e., ``All-Users'').
 The results show that:
 %\begin{itemize}
@@ -129,28 +129,28 @@ Mary's short-term interest, e.g. from 09/01/2016 to 09/30/2016, is shown in Sub-
 
 \begin{figure*}
   \centering
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-1}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/1.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-2}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/2.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-3}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/3.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-4}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/4.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-5}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/5.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-6}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/6.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-7}
       \includegraphics[width=0.23\textwidth]{IMAGE/features/userFeatures/7.eps}}
-  \subfigure{
+  \subfigure[]{
       \label{fig:userFeatures:uf-8}
       \includegraphics[width=0.24\textwidth]{IMAGE/features/userFeatures/8.eps}}
   \caption{Visualization for User Features.}
