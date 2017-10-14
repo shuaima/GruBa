@@ -52,7 +52,26 @@ Providing a set of users $\mathbb{U}$ and the associated microblogs $\mathbb{B}$
 System \sys{} is designed from the ground up as a system for modeling users' \retg{} behavior in social media, and
 Figure \ref{fig:framework} shows the architectural components of \sys{}. %, mainly comprising Sina Microblog Data, Key Modules and Profile Demonstrator.
 
-
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Illustration of Variables in Basic Feature}
+\vspace{0.3cm}
+\label{tbl:fe-info}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	\\	\midrule \midrule
+$G_u$				& gender of user $u$				\\	\midrule
+$P_u$				& province of user $u$				\\	\midrule
+\#$R_u$				& number of followers				\\	\midrule
+\#$E_u$				& number of followees				\\	\midrule
+                    & a ratio defined as the number of followers  \\
+\raisebox{1.5ex}{$R_{ee,u}$}  & over that of followees, i.e., $\frac{\#R_u}{\#E_u}$ \\  \midrule
+$U_{t,u}$					& user type (as illustrated in Table \ref{tbl:ucate})			\\ \bottomrule
+\end{tabular}
+\end{small}
+\vspace{-1ex}
+\end{table}
 
 
 
