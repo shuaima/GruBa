@@ -1,0 +1,44 @@
+\section{Introduction}
+\label{sec:intro}
+
+Social media is overwhelming nowadays, and popular social networks, e.g., Facebook, Twitter and Weibo, has attracted  massive users.
+These users behave variously, knowledge of which is significant for various applications such as recommendation system and activity analysis.
+Hence there is an emergent demand of developing systems and algorithms that could properly model user behaviors, which has already attracted the attention from both academia and industry.
+
+Central to user behavior modeling is the need to choose the right granularity of model (i.e., how many users share one model), as well as the variety of features to be utilized for differentiating users.
+Already, there exist works of building a single model for all the users \cite{IEEEexample:conf/wsdm/FengW13,IEEEexample:conf/ijcai/ZhangLTCL13,IEEEexample:journals/tkdd/ZhangTLLX15}.
+Apparently, such model bears the limitation of being coarse.
+On the other hand, modeling each user is not practical, due to the tremendous number of users.
+
+The key driver of our work is the observation that in social media applications, users could fall into groups and each group shares representative behaviors.
+%
+As one example, consider the film \textit{Brave Heart}, fans of which are probably addicted to highland, bagpipe and war films, and thus likely to \ret{} blogs of these topics.
+Particularly, we study the \retg{} behavior of users and our work can be readily generalized to other behaviors of like and comment as well.
+In the realm of social network behavior modeling, few work has been done over grouping, which however has been proved to be effective in other fields such as economic behavior analysis.
+This motivates us to incorporate user grouping into the \retg{} behavior modeling, filling the gap of existed studies that build a single model for all users.
+
+The contributions of our work are as follows:
+
+\stab(1) We present a system named \sys{} with the novel perspective to model user behaviors over groups instead of the mono model as in existed research.
+
+\stab(2) We leverage user interests to facilitate the modeling of \retg{} behavior and look into interests with various dimensions, including long-term/short-term interests and explicit/implicit interests.
+
+\stab(3) We evaluate the performance of \sys{} using real-world datasets, showcasing its benefits against competitive state of the art approaches.
+
+
+
+Our paper is organized as follows.
+Section \ref{sec:overv} gives the problem formulation and system overview, followed by detailed explanations in Sections \ref{sec:fe}, \ref{sec:uc} and \ref{sec:gm}.
+Section \ref{sec:perf} is performance evaluation, followed by
+related work in Section \ref{sec:rela} and conclusions in Section \ref{sec:conclu}.
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: /Users/wjseawind/GruBa/Gruba/.texpadtmp/zhu-sdm.aux
+The style file: abbrv.bst
+Database file #1: ../zhu-sdm.bib
+Repeated entry---line 1046 of file ../zhu-sdm.bib
+ : @book{IEEEexample:books/mk/HanKP2011
+ :                                     ,
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in IEEEexample:ring
+You've used 35 entries,
+            2118 wiz_defined-function locations,
+            711 strings with 11570 characters,
+and the built_in function-call counts, 16057 in all, are:
+= -- 1583
+> -- 741
+< -- 23
++ -- 294
+- -- 256
+* -- 1077
+:= -- 2378
+add.period$ -- 103
+call.type$ -- 35
+change.case$ -- 231
+chr.to.int$ -- 0
+cite$ -- 36
+duplicate$ -- 675
+empty$ -- 1277
+format.name$ -- 256
+if$ -- 3543
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 35
+newline$ -- 176
+num.names$ -- 68
+pop$ -- 304
+preamble$ -- 1
+purify$ -- 198
+quote$ -- 0
+skip$ -- 569
+stack$ -- 0
+substring$ -- 1157
+swap$ -- 279
+text.length$ -- 23
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 138
+warning$ -- 1
+while$ -- 150
+width$ -- 37
+write$ -- 378
+(There was 1 error message)
