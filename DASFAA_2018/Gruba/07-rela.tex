@@ -16,10 +16,10 @@
 %So we divided users into several groups by users clustering. Then we get different behavior model for each group users respectively. \par
 
 
-In this section, we review related work in literature from the aspects of analyzing features, mining groups and modeling behavior within the realm of social network modeling.
+\par In this section, we review related work in literature from the aspects of analyzing features, mining groups and modeling behavior within the realm of social network modeling.
 As aforementioned, \sys{} leverages the user features of basics, behavior and interest.
 
-For feature analysis, there has been existing work of mining user features, such as race \cite{IEEEexample:conf/icwsm/PennacchiottiP11}, gender \cite{IEEEexample:conf/emnlp/CiotSR13}, age \cite{IEEEexample:conf/icde/ParkHHL09}, political preference \cite{IEEEexample:conf/icwsm/PennacchiottiP11,IEEEexample:conf/acl/VolkovaCD14,IEEEexample:kosinski2013private} and occupation \cite{IEEEexample:journals/tmm/FangSXH15,IEEEexample:conf/icde/FanCTWC16}.
+For feature analysis, there has been existing work of mining user features, such as race \cite{IEEEexample:conf/icwsm/PennacchiottiP11}, gender \cite{IEEEexample:conf/emnlp/CiotSR13}, age \cite{IEEEexample:conf/icde/ParkHHL09}, political preference \cite{IEEEexample:conf/icwsm/PennacchiottiP11,IEEEexample:conf/acl/VolkovaCD14} and occupation \cite{IEEEexample:conf/icde/FanCTWC16}.
 Our work, however, does not focus on the mining process, but uses the mined features as the input for user clustering and group based behavior modeling.
 
 Studies of behavior analysis put emphasis on exploring the characteristics.
@@ -47,7 +47,7 @@ More recent studies also look into mining user communities.
 Providing the diversity of user features, \sys{} employs basic, behavior and interest features into user clustering.
 
 The main problem of current approaches for behavior modeling lies in that the model is for either the overall users or a single user.
-\cite{IEEEexample:journals/tkdd/ZhangTLLX15,IEEEexample:conf/wsdm/FengW13,IEEEexample:conf/ijcai/ZhangLTCL13} discovered that users' \retg{} behavior is largely influenced by their followees, whereas \cite{IEEEexample:conf/cikm/JiangLSW15} employed matrix decomposition, \cite{IEEEexample:conf/sigir/JiangLSLLMW16} used collaborative filtering methods and \cite{IEEEexample:zhang2015retweet} leveraged statistical models for \retg{} analysis.
+\cite{IEEEexample:conf/wsdm/FengW13,IEEEexample:conf/ijcai/ZhangLTCL13} discovered that users' \retg{} behavior is largely influenced by their followees, whereas \cite{IEEEexample:conf/cikm/JiangLSW15} employed matrix decomposition, \cite{IEEEexample:conf/sigir/JiangLSLLMW16} used collaborative filtering methods and \cite{IEEEexample:zhang2015retweet} leveraged statistical models for \retg{} analysis.
 \cite{IEEEexample:conf/pakdd/GiatsoglouCSFV15} and \cite{IEEEexample:journals/corr/RanganathMHTL15} focused on identifying whether the \retg{} is fraudulent or of protest.
-Whereas our work \sys{} builds the \retg{} model for each user group, instead of the mono model for all users or one model per user.
+Whereas our work \sys{} builds the \retg{} model for each user group, instead of a single model for all users or one model per user.
 

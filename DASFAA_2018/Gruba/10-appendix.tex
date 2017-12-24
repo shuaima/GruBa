@@ -1,8 +1,9 @@
 
-\section*{Appendix: Extra Experiments}
-\label{sec:appendix}
+%\section*{Appendix: Extra Experiments}
+%\label{sec:appendix}
 
 %\subsection{Case Study for Feature Extraction}
+
 \begin{figure*}
   \centering
   \subfigure[]{
@@ -35,7 +36,6 @@
   \caption{The Statistics of User Group One}
   \label{fig:subfig1} %% label for entire figure
 \end{figure*}
-
 \subsection*{Exp-5: Case Study for User Clustering}
 
 In this section, we show the results of \sys{} for User Clustering. We carefully analyzed the statistical information of four groups obtained from user clustering.
@@ -51,7 +51,6 @@ In this section, we show the results of \sys{} for User Clustering. We carefully
 According to Fig. \ref{fig:subfig1:fig13}, \ref{fig:subfig2:fig23}, \ref{fig:subfig3:fig33} and \ref{fig:subfig4:fig43},
 the number distribution of microblogs for four groups is similar with each other.
 We visualize each group's long-term interest expressed as words cloud (shown in Figs. \ref{fig:subfig1:fig19}, \ref{fig:subfig2:fig29}, \ref{fig:subfig3:fig39} and \ref{fig:subfig4:fig49}). As we can see, group one and group three have similar interests.
-
 
 
 \begin{figure*}
@@ -153,3 +152,155 @@ We visualize each group's long-term interest expressed as words cloud (shown in 
   \caption{The Statistics of User Group Four}
   \label{fig:subfig4} %% label for entire figure
 \end{figure*}
+
+
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Variables}
+\vspace{0.1cm}
+\label{tbl:Variables1}
+\begin{tabular}{lll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	& \multicolumn{1}{l}{\textbf{Section}} \\	\midrule \midrule
+$M_b$             & a microblog     	  &2			\\	\midrule
+$O$               & owner of a microblog           	  &2			\\	\midrule
+$T$               & the generated time of a microblog	  &2			\\	\midrule
+$M$               & the message context of a microblog	  &2			\\	\midrule
+$flag$            & flag denoting $M_b$ is retweeted (1) or originally tweet (0) by O	  &2			\\	\midrule
+$u$               & user $u$	  &2			\\	\midrule
+$B_u$             & microblogs of user $u$	  &2			\\	\midrule
+$R_u$             & followers of user $u$	  &2			\\	\midrule
+$E_u$             & followees of user $u$	  &2			\\	\midrule
+$\mathbb{U}$      & a set of users	  &2			\\	\midrule
+$\mathbb{B}$      & a set of microblogs	  &2			\\	\midrule
+$b$               & a microblog	  &2			\\	\midrule
+$f$               & a follower	  &2			\\	\midrule
+$G_u$				& gender of user $u$		        &3       		\\	\midrule
+$P_u$				& province of user $u$				&3              \\	\midrule
+                    & a ratio defined as the number     &         \\	
+                    & of followers over that of         &3         \\		
+\raisebox{1.5ex}{$R_{ee,u}$}  &followees,i.e.,$\frac{\#R_u}{\#E_u}$       &      \\  \midrule
+$U_{t,u}$		    & user type (as illustrated in Table \ref{tbl:ucate}) &3        \\ \midrule	
+$R_{oc,u}$          & ratio that is the number of retweeted microblogs over that of originally tweeted	  &3			\\	\midrule
+$W_{r,u}$           & average number of retweeted microblogs per week	  &3			\\	\midrule
+$W_{t,u}$           & average number of tweeted microblogs per week	  &3			\\	\midrule
+$P_{rt,u}$          & normalized vector regarding the time distribution of a user¡¯s retweeting  behavior	  &3			\\	\midrule
+$P_{tt,u}$          & normalized vector regarding the time distribution of a user¡¯s tweeting  behavior	  &3			\\	\midrule
+$P_{rg,u}$          & normalized vector with respect to the gap distribution of a user¡¯s retweeting behavior	  &3			\\	\midrule
+$P_{tg,u}$          & normalized vector with respect to the gap distribution of a user¡¯s tweeting behavior	  &3			\\	\midrule
+$L$                 & A lexicon consists of a set of topics	  &3			\\	\midrule
+$t$                 & A topic in $L$	  &3			\\	\midrule
+$c$                 & A cell word in $L$	  &3			\\	\midrule
+$P_u$               & The interest feature of a user $u$	  &3			\\	\midrule
+$WS$                & a word set	  &3			\\	\midrule
+$W_f$               & a metric TF-IDF weight	  &3			\\	\midrule
+$b_i$               & the occurrences of word $w_i$ in microblog $b$	  &3			\\	\midrule
+$|D_i|$             & the number of microblogs which contains word $w_i$	  &3			\\	\midrule
+$|D|$               & the number of all microblogs	  &3			\\	\midrule
+$N_t$               & the number of words in topic $t$	  &3			\\	\midrule
+$W_w$               & A metric Twitter-LDA weight	  &3			\\ \bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Variables}
+\vspace{0.1cm}
+\label{tbl:Variables2}
+\begin{tabular}{lll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}	& \multicolumn{1}{l}{\textbf{Section}} \\	\midrule \midrule
+$\alpha$            & a parameter set flexible priorities between TF-IDF and Twitter-LDA	  &3			\\	\midrule
+$t_k$               & a topic in $L$	  &3			\\	\midrule
+$b_m$               & a microblog of user $u$	  &3			\\	\midrule
+$B_s(u)$            & microblogs of user $u$	  &3			\\	\midrule
+$s_k$               & overall similarity of user $u$ over topic $t_k$	  &3			\\	\midrule
+
+$Y'$,$Z'$           & numerical vectors	  &4			\\	\midrule
+$Y''$,$Z''$          & categorical vectors	  &4			\\	\midrule
+$Y^{\ast}$,$Z^{\ast}$     & vectors where each dimension is a normalized vector per se	  &4			\\	\midrule
+$d_i(u)$            & the average distance to all the other users in the same cluster	  &4			\\	\midrule
+$d_o(u)$            & the minimum of the distances between $u$ and other clusters	  &4			\\	\midrule
+$v(u)$              & The Silhouette coefficient value	  &4			\\	\midrule
+
+$E$                 & An item $E$ involves a microblog $b$ and a user $f$ such that $f\ \in R_{b.O}$	  &5			\\	\midrule
+$C_h$               & the correlation metric $C_h$ of $b$ and event	  &5			\\	\midrule
+$W_s$               & $u$'s short-term interest	  &5			\\ \bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+
+\begin{table}[tb!]
+\centering
+\begin{small}
+\caption{Variables}
+\vspace{0.1cm}
+\label{tbl:Variables2}
+\begin{tabular}{ll|ll}
+\toprule
+\multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}}
+& \multicolumn{1}{l}{\textbf{Variables}} & \multicolumn{1}{l}{\textbf{Illustration}} \\	\midrule \midrule
+$L$                 & A lexicon consists of a set of topics	
+&$t$                 & A topic in $L$	 			\\	\midrule
+$c$                 & A cell word in $L$	
+&$P_u$               & The interest feature of a user $u$	 			\\	\midrule
+$WS$                & a word set	 			
+&$W_f$               & a metric TF-IDF weight				\\	\midrule
+$b_i$               & the occurrences of word $w_i$ in microblog $b$	
+&$|D_i|$             & the number of microblogs which contains word $w_i$			\\	\midrule
+$|D|$               & the number of all microblogs
+&$N_t$               & the number of words in topic $t$				\\	\midrule
+$W_w$               & A metric Twitter-LDA weight
+&$\alpha$            & a parameter set flexible priorities between TF-IDF and Twitter-LDA			\\	\midrule
+$t_k$               & a topic in $L$	
+&$b_m$               & a microblog of user $u$			\\	\midrule
+$B_s(u)$            & microblogs of user $u$	
+&$s_k$               & overall similarity of user $u$ over topic $t_k$			\\	\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+
+
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\alpha & accuracy & precision & recall &  \\ \hline
+0	&0.488500	&0.636667	&0.560833     \\ \hline
+0.1	&0.479167	&0.633333	&0.557500     \\ \hline
+0.2	&0.481333	&0.636667	&0.564167     \\ \hline
+0.3	&0.506500	&0.663333	&0.588333     \\ \hline
+0.4	&0.497167	&0.660000	&0.587500     \\ \hline
+0.5	&0.497583	&0.666667	&0.600833     \\ \hline
+0.6	&0.524417	&0.693333	&0.622500     \\ \hline
+0.7	&0.576583	&0.720000	&0.649167     \\ \hline
+0.8	&0.502250	&0.650000	&0.590833     \\ \hline
+0.9	&0.450583	&0.596667	&0.550833     \\ \hline
+1	&0.396417	&0.536667	&0.501667     \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
