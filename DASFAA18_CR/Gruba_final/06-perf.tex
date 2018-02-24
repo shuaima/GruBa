@@ -18,6 +18,8 @@ and popular words in the latest 24 hours are returned by Ring as the Hot Event k
 \subsection{Result and Analysis}
 Next, we shall report the performance of system \sys{} over each component.
 
+
+
 \stitle{Exp-1: Feature Extraction}
 %
 Fig.\ \ref{fig:fe} shows the testing results of using various $\alpha$ values.
@@ -30,13 +32,28 @@ upon which the interest feature extracting is performed for the overall dataset 
 In general, it performs well when $\alpha$ falls into $[0, 0.8]$.
 
 
-
+\begin{figure}[H]
+\begin{minipage}[t]{0.45\linewidth}
+\centering
+ \hspace{1.5in}
+\includegraphics[width=1\textwidth]{figures/Interests}
+\caption{Interest Extraction: Varying $\alpha$.}\label{fig:fe}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\linewidth}
+\centering
+ \hspace{1.5in}
+\includegraphics[width=1\textwidth]{figures/clustering}
+\caption{Silhouette Coefficient Tests.}\label{fig:10-c}
+\end{minipage}
+\end{figure}
 
 \stitle{Exp-2: User Clustering}
 %
 Fig.\ \ref{fig:10-c} depicts the Silhouette Coefficient Values of multiple clustering solutions, with the cluster number varied from 2 to 10.
 Specially, we used different testing datasets, with \textit{Data} containing the overall 43.5K users, and each of \textit{\{Data1,\ldots, Data5\}} contains 10K randomly selected users.
 Except for \textit{Data1}, solutions for \textit{\{Data2,\ldots, Data5\}} are the best for 4 clusters.
+
 
 
 %\begin{figure}[tb!]
@@ -55,29 +72,7 @@ Except for \textit{Data1}, solutions for \textit{\{Data2,\ldots, Data5\}} are th
 %\vspace{-5ex}
 %\end{figure}
 
-\begin{figure*}[tb!]
-  \centering
-  \subfigure[Tests with Various $\alpha$.]{
-    \label{fig:fe}
-\includegraphics[width=.355\linewidth]{figures/Interests}}
-  \hspace{0.5in}
-   \subfigure[Silhouette Coefficient Tests.]{
-    \label{fig:10-c}
-  \includegraphics[width=.355\linewidth]{figures/clustering}}
-%  \caption{Performance of \sys{} Versus LRC-BQ.}
-    \label{fig:fig-1}
-      
-  \subfigure[Accuracy of \sys{} Versus LRC-BQ.]{
-    \label{fig:10-a}
-    \includegraphics[width=0.355\textwidth]{figures/precision-1.eps}}
-  \hspace{0.5in}
-   \subfigure[Accuracy of Using Various Data Items for Modeling of \sys{}.]{
-    \label{fig:11-a}
-  \includegraphics[width=0.45\textwidth]{figures/precisionofdifferentfeatures.eps}}
-  \caption{Performance of \sys{} }
-  \label{fig:fig-2}
-  \vspace{-4ex}
-\end{figure*}
+
 
 \begin{comment}
 \begin{figure*}[tb!]
@@ -99,6 +94,8 @@ Except for \textit{Data1}, solutions for \textit{\{Data2,\ldots, Data5\}} are th
 \end{figure*}
 \end{comment}
 
+
+
 \stitle{Exp-3: Behavior Modeling}
 %
 Fig.\ \ref{fig:10-a} shows the performance of \sys{} against the state of the art approach LRC-BQ \cite{IEEEexample:conf/ijcai/ZhangLTCL13}.
@@ -113,6 +110,19 @@ The results show that:
 	
 	\stab(2) For \sys{}, having user clustering is better than the alternative single group. Ditto for LRC-BQ.
 %\end{itemize}
+
+\begin{figure*}[tb!]
+  \centering
+  \subfigure[Accuracy of \sys{} Versus LRC-BQ.]{
+    \label{fig:10-a}
+    \includegraphics[width=0.355\textwidth]{figures/precision-1.eps}}
+  \hspace{0.5in}
+   \subfigure[Accuracy of Using Various Data Items for Modeling of \sys{}.]{
+    \label{fig:11-a}
+  \includegraphics[width=0.45\textwidth]{figures/precisionofdifferentfeatures.eps}}
+  \caption{Performance of \sys{} }
+  \label{fig:fig-2}
+\end{figure*}
 
 Fig.\ \ref{fig:11-a} explores the performance of \sys{} when using alternative data items for modeling.
 By default, \sys{} uses ``UI+II+MI'', i.e., items of users (UI), microblogs (MI) and interactions (II).
@@ -138,6 +148,7 @@ As shown in Fig.\ \ref{fig:11-a}, the default setting wins in most cases.
   \vspace{-4ex}
 \end{figure*}
 \end{comment}
+
 
 \begin{figure*}
   \centering
@@ -170,6 +181,7 @@ As shown in Fig.\ \ref{fig:11-a}, the default setting wins in most cases.
   \vspace{-2ex}
 \end{figure*}
 
+
 \stitle{Exp-4: Case Study for Feature Extraction}
 In this test, we show the results of our demo system for user features extraction.
 %
@@ -184,5 +196,7 @@ As to the long-term interest, she is interested with stage performance (ÎèÌ¨±íÑÝ
 The probability distribution of tweeting and retweeting indicates that she is more active at night than daytime as shown in Fig.\ \ref{fig:userFeatures:uf-3} and \ref{fig:userFeatures:uf-4}.
 According to Fig.\ \ref{fig:userFeatures:uf-5} and \ref{fig:userFeatures:uf-6}, the interval between her two tweeted/retweeted microblogs is mostly within 48 hours, showing she is an active user.
 Mary's short-term interest, e.g. from 09/01/2016 to 09/30/2016, is shown in Fig.\ \ref{fig:userFeatures:uf-7}, which indicates she had been busy with promoting the drama ``Earl of Oolong Mountain'' (ÎÚÁúÉ½²®¾ô). So the results are in line with expectations, as drama (»°¾ç) and stage (ÎèÌ¨) in Fig.\ \ref{fig:userFeatures:uf-7}.
+
+
 
 To conclude, by modeling user behaviors over groups instead of a single model for all users such as LRC-BQ, we improve the average accuracy over LRC-BQ by 6\%. What deserves to be mentioned is that the performance of LRC-BQ is also improved significantly by user clustering.
