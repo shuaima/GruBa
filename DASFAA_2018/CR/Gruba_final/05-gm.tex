@@ -1,0 +1,76 @@
+\section{Group based Behavior Modeling}
+\label{sec:gm}
+
+%clear points
+%road map
+%detail of each step, with motivation
+
+
+\par Recall the central problem of \sys{}, where the \retg{} behaviors of users are modeled.
+Specifically, such model is built by the Group Modeling module for each user group and thus named as group model.
+To avoid ambiguity, we shall use the term of \textit{items} to denote the data for training the group model.
+A given \textit{item} is either positive or negative.
+
+\begin{definition}
+\label{def:gm-it}
+An item $E$ involves a microblog $b$ and a user $f$ such that $f\ \in R_{b.O}$, i.e., $f$ is a follower of  the owner of microblog $b$.
+\begin{equation}
+\label{eq:gm-it}
+E \in
+  \begin{cases}
+    \text{positive items}       & \quad \text{if } f \text{ \retd{} } b\\
+    \text{negative items}  		& \quad \text{if } f \text{ did not \ret{} } b
+  \end{cases}
+\end{equation}
+\end{definition}
+
+And the data of item $E$ consists of three parts.
+%\begin{itemize}
+
+	\stab(1) \stitle{User Info} contains a list of aforementioned metrics \{$G_u$, $P_u$,\#$R_u$, \#$E_u$, $R_{ee,u}$\}.
+	
+%	\stab(2) \stitle{Microblog Info} refers to metrics related to the microblog $b$. The number of times the $b$ be retweeted, be %commented, be liked and the length of the microblog contents are considered. What's more, we also considers the correlation between %microblog contents and recent events, where the latter is returned by Ring \cite{IEEEexample:ring}. The correlation metric $C_h$ is in %the form of a normalized vector with each dimension represents one event (similar as $P_{f,u}$ in formula \ref{eq:inte}). Each event %could be viewed as a topic $t$, over which the correlation of a microblog $b$ could be obtained by formula \ref{eq:sim-tw1}.
+
+\stab(2) \stitle{Microblog Info} refers to metrics related to the microblog $b$.
+%The number of times the $b$ has been retweeted, commented, liked and the length of the microblog contents are considered.
+The number that $b$ has been retweeted, commented, liked and the length of $b.M$ (microblog message) are considered.
+What is more, we consider the correlation between $b$ and recent event, where the latter is expressed as several core words returned by Ring \cite{IEEEexample:ring}.
+Here we compute \textit{TF-IDF weight} $W_f$ of $b.M$, and get correlation metric $C_h$ of $b$ and event by formula \ref{eq:sim-tf1}.
+
+%	\stab(3) \stitle{Interaction Info} includes seven correlation metrics. They are of \#$B_u$, $R_{oc,u}$, \#$W_{r,u}$, \#$W_{t,u}$, %microblog $b$ versus the user $u$'s \textit{Interest Feature} $P_f(u)$ (a.k.a. long-term/stable interest in this work), $b$ versus %$u$'s short-term interest $P_s(u)$ that is mined from $u$'s recent microblogs (e.g., within 30 days) in the same manner of $P_f(u)$, %and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_{rt,u}$.
+%\end{itemize}
+	\stab(3) \stitle{Interaction Info} includes seven correlation metrics: \#$B_u$, $R_{oc,u}$, \#$W_{r,u}$, \#$W_{t,u}$, microblog $b$ versus the user $u$'s \textit{Interest Feature} $P_u$ (a.k.a. long-term/stable interest in this work), and $b$'s timestamp versus the time distribution of $u$'s \retg{} behavior $P_{rt,u}$.
+%In addition, the correlation between microblog contents and $u$'s short-term interest mined from $u$'s recent microblogs (e.g., within 30 days) is also taken in consideration.
+%In addition, the correlation between microblog contents and $u$'s short-term interest is also taken in consideration. The short-term %interest is expressed as
+In addition, we consider $u$'s short-term interest, which is mined from $u$'s recent microblogs (e.g., within 30 days) and calculated by \textit{TF-IDF}, namely $W_s$.
+The correlation between microblog and $u$'s short-term interest is computed by $W_f$ and $W_s$ (using formula \ref{eq:sim-tf1}).
+%%
+
+The modeling of retweeting behavior of groups is treated as a classification problem, and utilize the random forest classifier to address it. Details for random forest \cite{IEEEexample:conf/icdar/Ho1995} are omitted here for space reason.
+The advantage of this classification model lies in that it could integrate different features conveniently, and
+%The advantage of using classification model is that we can integrate different combinations of the features into the model conveniently.
+the obtained group behavior model could learn what a positive/negative item looks like over each metric mentioned above. \par
+Here we use accuracy to evaluate our model. To define accuracy, we set four variables: $E_{tp}$,$E_{fp}$,$E_{tn}$ and $E_{fn}$. For a given item $E$, if $E$ is a positive item and our model also determines it a positive item, then we set $E_{tp}$ to 1, else we set $E_{tp}$ to 0. If $E$ is a negative item and our model determines it a positive item, then we set $E_{fp}$ to 1, else we set $E_{fp}$ to 0. If $E$ is a negative item and our model determines it a negative item, then we set $E_{tn}$ to 1, else we set $E_{tn}$ to 0. If $E$ is a positive item and our model determines it a negative item, then we set $E_{fn}$ to 1, else we set $E_{fn}$ to 0. So the accuracy can be defined as:
+
+\begin{equation}
+\label{eq:def-precision1}
+accuracy = \frac{\sum_{\substack{E}} (E_{tp} + E_{tn} )}{ \sum_{\substack{E}} (E_{tp} + E_{tn} + E_{fp} + E_{fn}) }
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
