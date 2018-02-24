@@ -21,6 +21,10 @@ Next, we shall report the performance of system \sys{} over each component.
 \stitle{Exp-1: Feature Extraction}
 %
 Fig.\ \ref{fig:fe} shows the testing results of using various $\alpha$ values.
+We report the interest accuracy with various $\alpha$ values. Suppose the label set manually labeled for each microblog is $A$, the label set our method labeled is $B$.
+The interest accuracy is defined as $\frac{ A \cap B }{ A \cup B }$.
+
+
 System \sys{} reaches the optimal results when $\alpha$ is 0.7,
 upon which the interest feature extracting is performed for the overall dataset with 43.5K users and 24 million microblogs.
 In general, it performs well when $\alpha$ falls into $[0, 0.8]$.

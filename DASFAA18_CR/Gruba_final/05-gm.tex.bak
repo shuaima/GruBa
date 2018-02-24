@@ -60,7 +60,20 @@ accuracy = \frac{\sum_{\substack{E}} (E_{tp} + E_{tn} )}{ \sum_{\substack{E}} (E
 
 
 
+We use accuracy to test results of using various $\alpha$ values. Suppose the label set we manually labeled for each microblog is $A$, the label set our method labeled is $B$.
+The accuracy can be defined as:
+\begin{equation}
+\label{eq:def-accuracy}
+accuracy = \frac{ A \cap B }{ A \cup B }
+\end{equation}
 
+
+To define accuracy, we set four variables: $E_{tp}$,$E_{fp}$,$E_{tn}$ and $E_{fn}$. For a given item $E$, if $E$ is a positive item and our model also determines it a positive item, then we set $E_{tp}$ to 1, else we set $E_{tp}$ to 0. If $E$ is a negative item and our model determines it a positive item, then we set $E_{fp}$ to 1, else we set $E_{fp}$ to 0. If $E$ is a negative item and our model determines it a negative item, then we set $E_{tn}$ to 1, else we set $E_{tn}$ to 0. If $E$ is a positive item and our model determines it a negative item, then we set $E_{fn}$ to 1, else we set $E_{fn}$ to 0. So the accuracy can be defined as:
+
+\begin{equation}
+\label{eq:def-precision2}
+accuracy = \frac{\sum_{\substack{E}} (E_{tp} + E_{tn} )}{ \sum_{\substack{E}} (E_{tp} + E_{tn} + E_{fp} + E_{fn}) }
+\end{equation}
 
 
 

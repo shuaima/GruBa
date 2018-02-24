@@ -19,7 +19,7 @@
 \par In this section, we review related work in literature from the aspects of analyzing features, mining groups and modeling behavior within the realm of social network modeling.
 As aforementioned, \sys{} leverages the user features of basics, behavior and interest.
 
-For feature analysis, there has been existing work of mining user features, such as race \cite{IEEEexample:conf/icwsm/PennacchiottiP11}, gender \cite{IEEEexample:conf/emnlp/CiotSR13}, age \cite{IEEEexample:conf/icde/ParkHHL09} and occupation \cite{IEEEexample:conf/icde/FanCTWC16}.
+For feature analysis, there has been existing work of mining user features, such as race \cite{IEEEexample:conf/icwsm/PennacchiottiP11}, gender \cite{IEEEexample:conf/emnlp/CiotSR13}, age \cite{IEEEexample:conf/icde/ParkHHL09}, political preference \cite{IEEEexample:conf/icwsm/PennacchiottiP11,IEEEexample:conf/acl/VolkovaCD14} and occupation \cite{IEEEexample:conf/icde/FanCTWC16}.
 Our work, however, does not focus on the mining process, but uses the mined features as the input for user clustering and group based behavior modeling.
 
 Studies of behavior analysis put emphasis on exploring the characteristics.
@@ -31,19 +31,23 @@ Considering the behavior characteristics, \sys{} makes use of them to feed the m
 There have been established work of extracting user interests.
 \cite{IEEEexample:journals/fcsc/LiuCS12} mined the user interests by exploring keywords of microblogs with the aid of word frequency and machine translation.
 \cite{IEEEexample:conf/webi/XuLXY11} proposed a method of extending the topic model to obtain use interests.
-Also, \cite{IEEEexample:conf/and/MichelsonM10} used a knowledge base for interest analysis. Similarly, \cite{IEEEexample:conf/recsys/BhattacharyaZGGG14} leveraged the followed experts to result interest characteristics.
+Also, \cite{IEEEexample:conf/and/MichelsonM10} used a knowledge base and \cite{IEEEexample:conf/icde/FengW14} provided a solution of using hashtag for interest analysis.
+\cite{IEEEexample:conf/wikis/LimD13} summarized user interest by exploring the mentioned celebrities;
+Similarly, \cite{IEEEexample:conf/recsys/BhattacharyaZGGG14} leveraged the followed experts to result interest characteristics.
 Different from these existing solutions, \sys{} employs a cell lexicon to properly express user interests, in which Twitter-LDA \cite{IEEEexample:zhao2011comparing} and TF-IDF are employed.
 
 Approaches of grouping users in social networks could fall into a variety of categories.
 \cite{IEEEexample:conf/icwsm/PennacchiottiP11} grouped users by the info of race, political view and etc.
 \cite{IEEEexample:journals/tkdd/ZhangCFLYZY17} studied the social groups on Facebook and Wechat, resulting various patterns of group evolution.
 \cite{IEEEexample:conf/aaai/WangDNGEB16} proposed a time-varying factor to measure the affinity between users and groups such that proper group proposals are recommended.
-Much recent studies also look into mining user communities.
+More recent studies also look into mining user communities.
 \cite{IEEEexample:conf/wsdm/YangL13} employed matrix decomposition to mine user community;
+\cite{IEEEexample:conf/www/RuanFP13} and \cite{IEEEexample:he2014overlapping} considered followees info for user clustering;
 \cite{IEEEexample:conf/aaai/ShiokawaFO13} proposed an incremental algorithm to mine user community using modular degree as the clustering yardstick.
 Providing the diversity of user features, \sys{} employs basic, behavior and interest features into user clustering.
 
 The main problem of current approaches for behavior modeling lies in that the model is for either the overall users or a single user.
 \cite{IEEEexample:conf/wsdm/FengW13,IEEEexample:conf/ijcai/ZhangLTCL13} discovered that users' \retg{} behavior is largely influenced by their followees, whereas \cite{IEEEexample:conf/cikm/JiangLSW15} employed matrix decomposition, \cite{IEEEexample:conf/sigir/JiangLSLLMW16} used collaborative filtering methods and \cite{IEEEexample:zhang2015retweet} leveraged statistical models for \retg{} analysis.
+\cite{IEEEexample:conf/pakdd/GiatsoglouCSFV15} and \cite{IEEEexample:journals/corr/RanganathMHTL15} focused on identifying whether the \retg{} is fraudulent or of protest.
 Whereas our work \sys{} builds the \retg{} model for each user group, instead of the mono model for all users or one model per user.
 
