@@ -25,8 +25,8 @@ finally, the averaged Silhouette coefficient value of all users serves as the Si
 \State Output: Optimal user clustering result $R$
 \vspace{1ex}
 \ForAll {$t \in [N_i, N_a]$} \label{enu}
-	%\State group users into $t$ clusters by $F$; \label{task}
-    \State perform K-Gru over F to get t clusters
+	%\State group users into $t$ clusters by $F$; 
+    \State perform K-Gru over F to get t clusters;\label{task}
 	\State clustering result $R'(t)\ =\ \{(u,\ l(u))\}$ with cluster info $l(u)$ for each user $u$; \label{l}
 	\ForAll {$u \in \{u\}$}
 		\State in-cluster distance $d_i(u)$ \label{v-b};
