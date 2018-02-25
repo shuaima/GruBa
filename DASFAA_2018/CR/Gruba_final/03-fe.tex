@@ -69,7 +69,7 @@ Unlike \textit{Basic Feature}, the \textit{Behavior Feature} of a user $u$ is ce
 
 \sstab(d) the normalized vectors regarding the time distribution of a user's \retg{}/\twg{} behavior: $P_{rt,u}\ = (p'_{r0},\ p'_{r1},\ ...,\ p'_{r11})$, $P_{tt,u}\ = (p'_{t0},\ p'_{t1},\ ...,\ p'_{t11})$, where $p'_{r0}$/$p'_{t0}$ is the probability that the \retg{}/\twg{} activity happens from 0am to 2am, $p'_{r1}$/$p'_{t1}$ is the probability that the \retg{}/\twg{} activity happens from 2am to 4am, and so on, and
 
-\sstab(e) the normalized vectors with respect to the gap distribution of a user's \retg{}/\twg{} behavior: $P_{rg,u}\ = (p''_{r0},\ p''_{r1},\ ...,\ p''_{r5})$, $P_{tg,u}\ = (p''_{t0},\ p''_{t1},\ ...,\ p''_{t5})$, in which $p''_{r0}$/$p''_{t0}$ is the probability that the gap between two \retd{}/\twg{} microblogs is within 1 min. Ditto for $p''_{r1}$/$p''_{t1}$ (1 min to 1 hour), $p''_{r2}$/$p''_{t2}$ (1 to 12 hours), $p''_{r3}$/$p''_{t3}$ (12 to 24 hours), $p''_{r4}$/$p''_{t4}$ (24 to 48 hours) and  $p''_{r5}$/$p''_{t5}$ (more than 48 hours).
+\sstab(e) the normalized vectors with respect to the gap distribution of a user's \retg{}/\twg{} behavior: $P_{rg,u}\ = (p''_{r0},\ p''_{r1},\ ...,\ p''_{r5})$, $P_{tg,u}\ = (p''_{t0},\ p''_{t1},\ ...,\ p''_{t5})$, in which $p''_{r0}$/$p''_{t0}$ is the probability that the gap between two \retd{}/\twd{} microblogs is within 1 min. Ditto for $p''_{r1}$/$p''_{t1}$ (1 min to 1 hour), $p''_{r2}$/$p''_{t2}$ (1 to 12 hours), $p''_{r3}$/$p''_{t3}$ (12 to 24 hours), $p''_{r4}$/$p''_{t4}$ (24 to 48 hours) and  $p''_{r5}$/$p''_{t5}$ (more than 48 hours).
 
 
 In summary, the \textit{Behavior Feature} $H_u$ of user $u$ consists of the following:
@@ -136,7 +136,7 @@ sim(b, \gamma) = \sum_{\substack{i, j}} sim(w_i, c_j).
 %where $sim(w_i, c_j)$ refers to the similarity of a word pair.
 
 If $sim(b, \gamma)$ satisfies a certain threshold (3 by default), topic $\gamma$ is labeled to microblog $b$;
-the user $u$ is then discovered having an explicit interest (topic) $\gamma$.
+the user $u$ is then discovered having an explicit interest (topic $\gamma$).
 Thus, by looking into the similarity of $b$ against all topics in lexicon $L$, the explicit interests of $u$ is derived, in the form of interest feature (see Definition \ref{def:inte}).
 
 

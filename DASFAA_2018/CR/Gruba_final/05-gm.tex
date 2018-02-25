@@ -43,7 +43,7 @@ Here we compute \textit{TF-IDF weight} $W_f$ of $b.M$, and get correlation metri
 %In addition, the correlation between microblog contents and $u$'s short-term interest mined from $u$'s recent microblogs (e.g., within 30 days) is also taken in consideration.
 %In addition, the correlation between microblog contents and $u$'s short-term interest is also taken in consideration. The short-term %interest is expressed as
 In addition, we consider $u$'s short-term interest, which is mined from $u$'s recent microblogs (e.g., within 30 days) and calculated by \textit{TF-IDF}, namely $W_s$.
-The correlation between microblog and $u$'s short-term interest is computed by $W_f$ and $W_s$ (using formula \ref{eq:sim-tf1}).
+The correlation between microblog $b$ and $u$'s short-term interest is computed by $W_f$ and $W_s$ (using formula \ref{eq:sim-tf1}).
 %%
 
 The modeling of retweeting behavior of groups is treated as a classification problem, and utilize the random forest classifier to address it. Details for random forest \cite{IEEEexample:conf/icdar/Ho1995} are omitted here for space reason.
