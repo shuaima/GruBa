@@ -137,7 +137,7 @@ sim(b, \gamma) = \sum_{\substack{i, j}} sim(w_i, c_j).
 
 If $sim(b, \gamma)$ satisfies a certain threshold (3 by default), topic $\gamma$ is labeled to microblog $b$;
 the user $u$ is then discovered having an explicit interest (topic $\gamma$).
-Thus, by looking into the similarity of $b$ against all topics in lexicon $L$, the explicit interests of $u$ is derived, in the form of interest feature (see Definition \ref{def:inte}).
+Thus, by looking into the similarity of $b$ against all topics in lexicon $L$, the explicit interests of $u$ are derived, in the form of interest feature (see Definition \ref{def:inte}).
 
 
 \stitle{Step 3:}. If the $sim(b, \gamma)$ in {\bf Step 2} cannot meet the threshold, i.e., explicit interest discovery over user $u$ fails, the implicit interests of user $u$ are further mined, by running the following steps 3.1$\&$3.2 in parallel.
@@ -156,7 +156,7 @@ p''_i = \frac{|b_i|}{|b|} * \log(\frac{|D|}{|D_i|+1}),
 \end{equation}
 in which we use the operator $|\ |$ to measure the cardinality, such that $|b_i|$ is the occurrences of word $w_i$ in microblog $b$, and $|b|$ the total occurrences of all words in $b$.
 $|D|$ is the total number of microblogs in the dataset and $|D_i|$ is the number of microblogs where $w_i$ appears.
-Hence, each word $w_i$ shall get an initial weight of $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight}.
+Hence, each word $w_i$ shall get an initial weight $p''_i$, upon which the normalization is performed and $p_i$ is obtained, resulting the \textit{TF-IDF weight}.
 
 
 TF-IDF based similarity is then calculated.
@@ -194,7 +194,7 @@ W_t = \{(w'_i, p'_i)\},
 \end{equation}
 where $w'_i$ refers to a word in \textit{tag} $W_t$, and $p'_i$ is the probability that $w'_i$ appears in microblogs with the said \textit{tag}, with $\sum_{\substack{i}} p'_i = 1$ ($|W_t|\ =\ 30$ in this work by default).
 %
-Subsequently, $W_t$ are leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
+Subsequently, $W_t$ is leveraged to conclude $W_w$, i.e., $W_w\ =\ W_t$ , which shares the format with that of $W_f$.
 
 \stitle{Step 4:} Hence, the similarity of a microblog $b$ against a lexicon topic $\gamma$ is given by:
 \begin{equation}
@@ -205,7 +205,7 @@ where the $\alpha$ is a parameter by which \sys{} could set flexible priorities 
 
 \stitle{Step 5:} Repeat Steps 1 to 4 for the microblog $b$ over every topic in lexicon, i.e., $\forall {\gamma}_k \in L$ results one similarity value of $sim(b, {\gamma}_k)$.
 Such computation further extends to all the microblogs owned by user $u$, such that:
-$\forall b_m \in B_s(u)$, $\forall {\gamma}_k \in L$, there exists a similarity of $sim(b_m, {\gamma}_k)$.
+$\forall b_m \in B_u$, $\forall {\gamma}_k \in L$, there exists a similarity of $sim(b_m, {\gamma}_k)$.
 Hence, the overall similarity of user $u$ over lexicon topics $\{\gamma\}$ (i.e., $L$), written as $S(u,\ L)$, could be denoted by a vector:
 \begin{equation}
 \label{eq:simul}

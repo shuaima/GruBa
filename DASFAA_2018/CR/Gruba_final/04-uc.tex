@@ -25,7 +25,7 @@ finally, the averaged Silhouette coefficient value of all users serves as the Si
 \State Output: Optimal user clustering result $R$
 \vspace{1ex}
 \ForAll {$t \in [N_i, N_a]$} \label{enu}
-	%\State group users into $t$ clusters by $F$; 
+	%\State group users into $t$ clusters by $F$;
     \State perform K-Gru over F to get t clusters;\label{task}
 	\State clustering result $R'(t)\ =\ \{(u,\ l(u))\}$ with cluster info $l(u)$ for each user $u$; \label{l}
 	\ForAll {$u \in \{u\}$}
@@ -79,7 +79,7 @@ For numerical vectors $Y'\ = (y'_0, y'_1, \ldots)$ and $Z'\ = (z'_0, z'_1, \ldot
 %
 \begin{equation}
 \label{eq:od}
-D_n(Y', Z') = \sum_{\substack{e}} (y_e - z_e)^2.
+D_n(Y', Z') = \sum_{\substack{e}} (y'_e - z'_e)^2.
 \end{equation}
 
 For categorical vectors $Y''\ = (y''_0, y''_1, \ldots)$ and  $Z''\ = (z''_0, z''_1, \ldots)$, the \hd{} \cite{IEEEexample:huang1997clustering} of $Y''$ and $Z''$ is:
@@ -95,7 +95,7 @@ Then, the distance between such two vectors $Y^{\ast}\ = (Y^{\ast}_0, Y^{\ast}_1
 %
 \begin{equation}
 \label{eq:vd}
-D_v(Y^{\ast}, Z^{\ast}) = 1- Y^{\ast}_e \cdot Z^{\ast}_e,
+D_v(Y^{\ast}, Z^{\ast}) = \sum_{\substack{e}} (1- Y^{\ast}_e \cdot Z^{\ast}_e),
 \end{equation}
 where $\cdot$ refers to the dot product operation between two normalized vectors $Y^{\ast}_e$ and $Z^{\ast}_e$.
 
@@ -130,7 +130,7 @@ Providing a clustering result, each user is associated with a cluster.
 \label{def:di}
 The in-cluster distance $d_i(u)$ is the average distance to all the other users in the same cluster:
 \begin{equation}
-	d_i(u) = Avg\{D_g(F_u, F_u'')\ |\ u'' \in l \wedge  u \neq u''\}.
+	d_i(u) = Avg\{D_g(F_u, F_{u''})\ |\ u'' \in l \wedge  u \neq u''\}.
 \end{equation}
 \end{definition}
 
@@ -142,7 +142,7 @@ The out-cluster distance $d_o(u)$ is measured as the minimum of the distances $\
 \end{equation}
 where $d^{\ast}$ is given by:
 \begin{equation}
-	d^{\ast}(u, l') = Avg\{D_g(Y_u, Y_u') \ | \ u' \in l'\}.
+	d^{\ast}(u, l') = Avg\{D_g(Y_u, Y_{u'}) \ | \ u' \in l'\}.
 \end{equation}
 \end{definition}
 
